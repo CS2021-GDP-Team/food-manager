@@ -1,4 +1,3 @@
-//const async = require('async');
 const mysql = require('mysql2');
 
 class DB {};
