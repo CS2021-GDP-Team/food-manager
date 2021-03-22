@@ -1,0 +1,40 @@
+{
+  "name": "food-manager",
+  "version": "0.1.0",
+  "description": "Food Manager is a graduation project for students in the Department of Computer Science, University of Seoul in 2021.",
+  "main": "routes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kcoms555/food-manager.git"
+  },
+  "keywords": [
+    "food-manager",
+    "meal-history"
+  ],
+  "author": "kcoms555 <kcoms555@naver.com> (https://jeto.ga/)",
+  "contributors": [
+    "gusrb3164",
+    "donghoonKang-dev",
+    "jdrae"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kcoms555/food-manager/issues"
+  },
+  "homepage": "https://github.com/kcoms555/food-manager#readme",
+  "dependencies": {
+    "async": "^3.2.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+	  "start": "node routes.js"
+  }
+}
