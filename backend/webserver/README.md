@@ -1,4 +1,11 @@
 # Node Web Server
+## Installation
+``` bash
+npm install
+npm run start
+```
+
+## Description
 - routes.js : defines app settings and routings
 - frontcontroller/ : defines in-out-bound-traffic-controllers to authenticate, pre-process and log traffics. .
 - controller/ : defines controllers for routed traffics
