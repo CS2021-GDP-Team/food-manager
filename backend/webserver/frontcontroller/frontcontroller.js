@@ -2,7 +2,7 @@ const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 const util = require('../utils/util.js');
 
-class FrontController {};
+class FrontController {}
 
 _errorHandle = (req, res, error) => {
 	if(error instanceof APIError) {
@@ -18,7 +18,7 @@ _addTimes = (req) => {
 	}
 }
 
-_logInTraffic = (req, res) => {
+_logInTraffic = (req) => {
 	try {
 		console.log();
 		if(req.session && !util.isEmpty(req.session.user)){
@@ -27,7 +27,7 @@ _logInTraffic = (req, res) => {
 			console.log(`from ${req.headers['x-real-ip']} ${req.method} ${req.originalUrl}`);
 		}
 	} catch(e) {
-		console.log(`Error occured while logging: `+e);
+		console.log(`Error occurred while logging: `+e);
 	}
 }
 
@@ -36,14 +36,14 @@ _logOutTraffic = (req, res, status, body) => {
 		console.log(`server response status : ${status}`);
 		console.log(body ? body : '<Empty body>');
 	} catch(e) {
-		console.log(`Error occured while logging: `+e);
+		console.log(`Error occurred while logging: `+e);
 	}
 }
 
 //async nonLoginWrapper setting. It enables async routers without user logined.
 FrontController.nonLoginWrapper = asyncFn => {
 	return (async (req, res, next) => {
-		_logInTraffic(req, res);
+		_logInTraffic(req);
 		try {
 			_addTimes(req);
 			return await asyncFn(req, res, next);
@@ -56,7 +56,7 @@ FrontController.nonLoginWrapper = asyncFn => {
 //async loginRequiredWrapper setting. It enables async routers with user logined
 FrontController.loginRequiredWrapper = asyncFn => {
 	return (async (req, res, next) => {
-		_logInTraffic(req, res);
+		_logInTraffic(req);
 		try {
 			if(util.isEmpty(req.session.user)) {
 				throw new APIError(sc.HTTP_UNAUTHORIZED, "세션이 발급되지 않았습니다");

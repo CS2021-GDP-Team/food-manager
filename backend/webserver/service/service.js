@@ -1,7 +1,7 @@
 const users = require('../dao/users.js');
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
-class Service {};
+class Service {}
 
 Service.getUser = async (userId, password) => {
 	const userFound = await users.getUser(userId, password);

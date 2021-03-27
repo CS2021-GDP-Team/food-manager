@@ -1,10 +1,10 @@
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 
-class Util{};
+class Util{}
 
 Util.validate = (object, items)=>{
-	for(var i=0; i<items.length; i++){
+	for(let i=0; i<items.length; i++){
 		if(Util.isEmpty(object[items[i]])){
 			throw new APIError(sc.HTTP_BAD_REQUEST, `${items[i]} 가 필요합니다`);
 		}

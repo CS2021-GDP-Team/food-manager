@@ -1,4 +1,4 @@
-class HttpStatusCode {};
+class HttpStatusCode {}
 HttpStatusCode.HTTP_OK = 200;
 HttpStatusCode.HTTP_BAD_REQUEST = 400;
 HttpStatusCode.HTTP_UNAUTHORIZED = 401;
