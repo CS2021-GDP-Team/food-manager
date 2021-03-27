@@ -9,6 +9,7 @@ import PermIdentityOutlinedIcon from "@material-ui/icons/PermIdentityOutlined";
 
 const useStylesParent = makeStyles({
     root: {
+        borderTop: "1px solid #606060",
         display: "fixed",
         backgroundColor: "#414141",
         height: "10%",
@@ -29,9 +30,16 @@ const useStylesChild = makeStyles({
     selected: {}
 });
 
+const useStylesIcon = makeStyles({
+    root: {
+        fontSize: "30px"
+    }
+});
+
 export default function BottomNavBar() {
     const parentClasses = useStylesParent();
     const childClasses = useStylesChild();
+    const iconClasses = useStylesIcon();
     const [value, setValue] = React.useState(0);
 
     return (
@@ -47,22 +55,22 @@ export default function BottomNavBar() {
                 label="Add"
                 selected
                 classes={{ root: childClasses.root, selected: childClasses.selected }}
-                icon={<CropFreeOutlinedIcon />}
+                icon={<CropFreeOutlinedIcon classes={{ root: iconClasses.root }} />}
             />
             <BottomNavigationAction
                 label="List"
                 classes={{ root: childClasses.root, selected: childClasses.selected }}
-                icon={<KitchenOutlinedIcon />}
+                icon={<KitchenOutlinedIcon classes={{ root: iconClasses.root }} />}
             />
             <BottomNavigationAction
                 label="Recipe"
                 classes={{ root: childClasses.root, selected: childClasses.selected }}
-                icon={<MenuBookOutlinedIcon />}
+                icon={<MenuBookOutlinedIcon classes={{ root: iconClasses.root }} />}
             />
             <BottomNavigationAction
                 label="My Page"
                 classes={{ root: childClasses.root, selected: childClasses.selected }}
-                icon={<PermIdentityOutlinedIcon />}
+                icon={<PermIdentityOutlinedIcon classes={{ root: iconClasses.root }} />}
             />
         </BottomNavigation>
     );
