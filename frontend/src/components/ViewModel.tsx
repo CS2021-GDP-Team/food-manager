@@ -12,7 +12,7 @@ const ViewModel: React.FC = () => {
     const setMenuList = useMenuListDispatchContext();
     // handel 함수를 사용하고자 하는 view에다가 전달한다음에 이 핸들 안에서 setMenuList 를 해야
     // menuList 가 바뀔 때 view 가 업데이트 됨
-    const handleMenuList = () => {};
+    const handleMenuList = () => {}; //test
 
     return (
         <div className="background-container">
