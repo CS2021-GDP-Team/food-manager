@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -34,14 +35,31 @@ const useStyles = makeStyles({
 
 const BottomNavBar = () => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(1);
+    const history = useHistory();
+    // 강 버튼별 링크로 이동 함수
+    const handleChange = (e: React.ChangeEvent<{}>, value: number) => {
+        setValue(value);
+        switch (value) {
+            case 0:
+                history.push("/picture");
+                break;
+            case 1:
+                history.push("/");
+                break;
+            case 2:
+                history.push("/recipe");
+                break;
+            case 3:
+                history.push("/info");
+                break;
+        }
+    };
 
     return (
         <BottomNavigation
             value={value}
-            onChange={(event, newValue) => {
-                setValue(newValue);
-            }}
+            onChange={handleChange}
             showLabels
             className={classes.parent}
         >

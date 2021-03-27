@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { Login, MenuList, SignUp, Picture, Info } from "./index";
+import { Login, MenuList, SignUp, Picture, Info, Recipe } from "./index";
 import { useMenuListContext, useMenuListDispatchContext } from "./Model";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -23,6 +23,7 @@ const ViewModel: React.FC = () => {
                         <Route exact path="/" render={() => <MenuList menu={menuList} />} />
                         <Route path="/picture" render={() => <Picture />} />
                         <Route path="/info" render={() => <Info />} />
+                        <Route path="/recipe" render={() => <Recipe />} />
                         {/* 백엔드 연결하면 로그인, 회원가입 페이지는 상위로 빼낼 예정 */}
                         <Route path="/login" render={() => <Login />} />
                     </div>
