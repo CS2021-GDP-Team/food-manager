@@ -1,0 +1,3 @@
+# environments for api test codes
+
+URL="http://localhost:3001"
