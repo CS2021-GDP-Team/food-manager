@@ -18,4 +18,13 @@ router.post('/logout', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
+router.post('/recommend', async (req, res)=>{
+    try{
+        data = await service.recommendRecipes(req.body.userIngredients);
+        return fctl.send(req, res, hsc.HTTP_OK, data);
+    } catch (error){
+        return fctl.send(req, res, hsc.HTTP_INTERNAL_SERVER_ERROR, {"message": error});
+    }
+});
+
 module.exports = router;
