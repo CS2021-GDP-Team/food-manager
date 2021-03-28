@@ -28,6 +28,7 @@ const ViewModel: React.FC = () => {
                         <Route path="/info" render={() => <Info />} />
                         <Route path="/recipe" render={() => <Recipe />} />
                         <Route path="/login" render={() => <Login />} />
+                        <Route path="/signup" render={() => <SignUp />} />
                     </div>
                     {/* checkUrl 이 true 면 Nav 안 띄움 */}
                     {!checkUrl && <BottomNavBar />}
