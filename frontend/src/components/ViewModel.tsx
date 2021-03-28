@@ -21,14 +21,12 @@ const ViewModel: React.FC = () => {
     return (
         <div className="background-container">
             <CssBaseline>
-                {/* <Paper className="login-container" elevation={10}></Paper> 로그인 할 때 사용 */}
                 <Paper className="main-container" elevation={10}>
                     <div className="main-content">
                         <Route exact path="/" render={() => <MenuList menu={menuList} />} />
                         <Route path="/picture" render={() => <Picture />} />
                         <Route path="/info" render={() => <Info />} />
                         <Route path="/recipe" render={() => <Recipe />} />
-                        {/* 백엔드 연결하면 로그인, 회원가입 페이지는 상위로 빼낼 예정 */}
                         <Route path="/login" render={() => <Login />} />
                     </div>
                     {/* checkUrl 이 true 면 Nav 안 띄움 */}
