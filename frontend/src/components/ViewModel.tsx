@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import { Login, MenuList, SignUp, Picture, Info, Recipe } from "./index";
 import { useMenuListContext, useMenuListDispatchContext } from "./Model";
 
@@ -8,6 +8,10 @@ import Paper from "@material-ui/core/Paper";
 import BottomNavBar from "./BottomNavBar";
 
 const ViewModel: React.FC = () => {
+    // 현재 페이지에 login 이나 signup text가 있으면 checkUrl 이 true
+    const location = useLocation();
+    const checkUrl =
+        location.pathname.indexOf("login") !== -1 || location.pathname.indexOf("signup") !== -1;
     const menuList = useMenuListContext();
     const setMenuList = useMenuListDispatchContext();
     // handel 함수를 사용하고자 하는 view에다가 전달한다음에 이 핸들 안에서 setMenuList 를 해야
@@ -27,7 +31,8 @@ const ViewModel: React.FC = () => {
                         {/* 백엔드 연결하면 로그인, 회원가입 페이지는 상위로 빼낼 예정 */}
                         <Route path="/login" render={() => <Login />} />
                     </div>
-                    <BottomNavBar />
+                    {/* checkUrl 이 true 면 Nav 안 띄움 */}
+                    {!checkUrl && <BottomNavBar />}
                 </Paper>
             </CssBaseline>
         </div>
