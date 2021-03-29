@@ -13,11 +13,11 @@ import PermIdentityOutlinedIcon from "@material-ui/icons/PermIdentityOutlined";
 const useStyles = makeStyles({
     parent: {
         borderTop: "1px solid #606060",
-        display: "fixed",
+        position: "absolute",
         backgroundColor: "#414141",
         height: "10%",
         width: "100%",
-        marginTop: "auto"
+        bottom: "0"
     },
     child: {
         color: "#FFFFFF",

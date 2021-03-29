@@ -5,3 +5,4 @@ export { default as Picture } from "./pages/Picture";
 export { default as Info } from "./pages/Info";
 export { default as Recipe } from "./pages/Recipe";
 export { default as InputField } from "./public/InputField";
+export { default as ListItem } from "./public/ListItem";

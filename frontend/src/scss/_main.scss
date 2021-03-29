@@ -27,11 +27,12 @@ body,
         height: 100%;
         color: $fnt-white;
         overflow: hidden;
+        position: relative;
         @media all and (max-width: 1200px) {
-            width: 80%;
+            width: 65%;
         }
         @media all and (max-width: 1000px) {
-            width: 90%;
+            width: 80%;
         }
         @media all and (max-width: 800px) {
             width: 100%;
