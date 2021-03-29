@@ -1,6 +1,5 @@
 import React from "react";
-import SubmitButton from "../SubmitButton";
-import PictureButton from "../PictureButton";
+import { SubmitButton, PictureButton } from "../index";
 import Grid from "@material-ui/core/Grid";
 
 const Picture = () => {
