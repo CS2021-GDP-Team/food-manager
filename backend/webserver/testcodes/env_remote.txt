@@ -1,3 +1,0 @@
-# environments for api test codes
-
-URL="https://jeto.ga/food-manager"

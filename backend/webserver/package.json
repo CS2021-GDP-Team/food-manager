@@ -4,7 +4,8 @@
   "description": "Food Manager is a graduation project for students in the Department of Computer Science, University of Seoul in 2021.",
   "main": "routes.js",
   "scripts": {
-    "start": "node routes.js"
+    "serve": "node routes.js",
+    "test": "./run_test.sh"
   },
   "repository": {
     "type": "git",

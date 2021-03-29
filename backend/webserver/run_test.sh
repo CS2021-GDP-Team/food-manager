@@ -2,29 +2,44 @@
 if [ $# -ne 1 ]
 then
   echo "usage: $0 [local|remote]"
-  return 1
+  exit 0
 fi
 
-rm ./testcodes/output.txt
-rm ./testcodes/.cookies.txt
+if [[ $1 == 'local' ]] ; then
+	URL="http://localhost:3001"
+else
+	URL="https://jeto.ga/food-manager"
+fi
+
+rm .output.txt 2>/dev/null
+rm .cookies.txt 2>/dev/null
 
 all_count=0
 pass_count=0
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUELK='\033[38;5;69m'
+NC='\033[0m' # No Color
+
 function runcode(){
   all_count=$((all_count+1))
+  printf "$all_count ${BLUELK}RUNNING${NC}\t$1 $2\n" | tee -a .output.txt
   bash "$1" "$2"
-  local result=$?
-  if [[ result -eq 1 ]] ; then
+  if [[ $? -eq 0 ]] ; then
     pass_count=$((pass_count+1))
-    echo "$1 passed"
+    printf "$all_count ${GREEN}PASSED${NC}\t$1\n" | tee -a .output.txt
   else
-    echo "$1 failed"
+    printf "$all_count ${RED}FAILED${NC}\t$1\n" | tee -a .output.txt
   fi
+  echo >> .output.txt
 }
 
-runcode ./testcodes/login.sh "$1"
-runcode ./testcodes/logout.sh "$1"
+####################
+# Add testcodes here
+runcode ./testcodes/login.sh "$URL"
+runcode ./testcodes/logout.sh "$URL"
+####################
 
-echo "pass count / all tests : $pass_count/$all_count"
-echo "All tests are done. You can see outputs by 'cat ./testcodes/output.txt'"
+printf "${GREEN}passes${NC}/all : ${GREEN}$pass_count${NC}/$all_count\n" | tee -a .output.txt
+printf "All tests are done. You can see outputs by '${BLUELK}cat .output.txt${NC}'\n"

@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const app = express();
 
-const PORT = 3001;
+port = process.argv[2] ? Number.parseInt(process.argv[2]) : 3001
 
 //express setting
 app.use(express.json());
@@ -27,6 +27,6 @@ app.use(session({
 const api = require('./controller/api.js')
 app.use('/api', api);
 
-app.listen(PORT, () => {
-    console.log(`port ${PORT} open!\n`);
+app.listen(port, () => {
+    console.log(`port ${port} open!\n`);
 });
