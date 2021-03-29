@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import ProfilePicture from "../ProfilePicture";
-import LogoutButton from "../LogoutButton";
+import ProfilePicture from "../public/ProfilePicture";
+import LogoutButton from "../public/LogoutButton";
 
 const Info = () => {
     return (

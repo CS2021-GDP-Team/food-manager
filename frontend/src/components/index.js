@@ -6,3 +6,8 @@ export { default as Info } from "./pages/Info";
 export { default as Recipe } from "./pages/Recipe";
 export { default as InputField } from "./public/InputField";
 export { default as ListItem } from "./public/ListItem";
+export { default as BottomNavBar } from "./BottomNavBar";
+export { default as LogoutButton } from "./public/LogoutButton";
+export { default as PictureButton } from "./public/PictureButton";
+export { default as ProfilePicture } from "./public/ProfilePicture";
+export { default as SubmitButton } from "./public/SubmitButton";

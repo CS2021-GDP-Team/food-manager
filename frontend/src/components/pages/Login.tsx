@@ -1,6 +1,5 @@
 import AcUnitIcon from "@material-ui/icons/AcUnit";
-import { InputField } from "../index";
-import SubmitButton from "../SubmitButton";
+import { InputField, SubmitButton } from "../index";
 
 const Login = () => {
     return (

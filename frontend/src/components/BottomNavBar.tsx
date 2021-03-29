@@ -1,12 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import CropFreeOutlinedIcon from "@material-ui/icons/CropFreeOutlined";
-import KitchenOutlinedIcon from "@material-ui/icons/KitchenOutlined";
-import MenuBookOutlinedIcon from "@material-ui/icons/MenuBookOutlined";
-import PermIdentityOutlinedIcon from "@material-ui/icons/PermIdentityOutlined";
+import { makeStyles, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import {
+    CropFreeOutlined,
+    KitchenOutlined,
+    MenuBookOutlined,
+    PermIdentityOutlined
+} from "@material-ui/icons";
 
 //TODO : 스타일링 코드 바깥으로 빼내기, TS로 변경, 이벤트처리->라우팅 연결
 
@@ -67,22 +67,22 @@ const BottomNavBar = () => {
                 label="Add"
                 selected
                 classes={{ root: classes.child, selected: classes.selected }}
-                icon={<CropFreeOutlinedIcon classes={{ root: classes.icon }} />}
+                icon={<CropFreeOutlined classes={{ root: classes.icon }} />}
             />
             <BottomNavigationAction
                 label="List"
                 classes={{ root: classes.child, selected: classes.selected }}
-                icon={<KitchenOutlinedIcon classes={{ root: classes.icon }} />}
+                icon={<KitchenOutlined classes={{ root: classes.icon }} />}
             />
             <BottomNavigationAction
                 label="Recipe"
                 classes={{ root: classes.child, selected: classes.selected }}
-                icon={<MenuBookOutlinedIcon classes={{ root: classes.icon }} />}
+                icon={<MenuBookOutlined classes={{ root: classes.icon }} />}
             />
             <BottomNavigationAction
                 label="My Page"
                 classes={{ root: classes.child, selected: classes.selected }}
-                icon={<PermIdentityOutlinedIcon classes={{ root: classes.icon }} />}
+                icon={<PermIdentityOutlined classes={{ root: classes.icon }} />}
             />
         </BottomNavigation>
     );

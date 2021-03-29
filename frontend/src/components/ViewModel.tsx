@@ -1,11 +1,8 @@
 import React from "react";
 import { Route, useLocation } from "react-router-dom";
-import { Login, MenuList, SignUp, Picture, Info, Recipe } from "./index";
+import { Login, MenuList, SignUp, Picture, Info, Recipe, BottomNavBar } from "./index";
 import { useMenuListContext, useMenuListDispatchContext } from "./Model";
-
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from "@material-ui/core/Paper";
-import BottomNavBar from "./BottomNavBar";
+import { CssBaseline, Paper } from "@material-ui/core";
 
 const ViewModel: React.FC = () => {
     // 현재 페이지에 login 이나 signup text가 있으면 checkUrl 이 true

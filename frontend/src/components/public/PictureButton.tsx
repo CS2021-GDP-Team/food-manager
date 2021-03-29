@@ -1,6 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
+import { makeStyles, IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 //TODO : 크기 조절(아이콘 두께도 조절해야 함), 스타일링코드 바깥으로 빼내기, TS로 변경
