@@ -23,8 +23,8 @@ const Login = () => {
                 <b className="login-title">Food Manager</b>
             </div>
             <div className="login-form">
-                <InputField text="ID&nbsp;&nbsp;" />
-                <InputField text="PW" type="password" />
+                <InputField text="ID&nbsp;&nbsp;" hint="Username" />
+                <InputField text="PW" type="password" hint="Password" />
             </div>
             <div className="login-submit">
                 <Button variant="contained" color="primary" className={classes.root}>

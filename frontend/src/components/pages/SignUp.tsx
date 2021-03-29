@@ -1,5 +1,5 @@
 import AcUnitIcon from "@material-ui/icons/AcUnit";
-import { InputField, SubmitButton } from "../index";
+import { InputField } from "../index";
 import { Link } from "react-router-dom";
 import { Button, makeStyles } from "@material-ui/core";
 
@@ -23,13 +23,13 @@ const SignUp = () => {
                 <b className="login-title">Food Manager</b>
             </div>
             <div className="login-form">
-                <InputField text="ID&nbsp;&nbsp;" />
-                <InputField text="PW" type="password" />
-                <InputField text="PW Correction" type="password" />
+                <InputField text="ID&nbsp;&nbsp;" hint="Username" />
+                <InputField text="PW" type="password" hint="Password" />
+                <InputField text="PW" type="password" hint="PW Correction" />
             </div>
             <div className="login-submit">
                 <Button variant="contained" color="primary" className={classes.root}>
-                    Submit
+                    Create
                 </Button>
                 <div className="login-register">
                     I already have my account&nbsp;
