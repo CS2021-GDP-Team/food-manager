@@ -1,8 +1,18 @@
 # Node Web Server
 ## Installation
-``` bash
+```
 npm install
-npm run start
+```
+## Run a API server
+```
+npm run serve
+npm run serve -- PORT # if you need to run a sever with a specified port
+```
+
+## Run test codes
+```
+npm run test remote # run test codes by connecting remote server (https://jeto.ga/food-manager)
+npm run test local # run test codes by connecting local server (http://localhost:3001)
 ```
 
 ## Description
