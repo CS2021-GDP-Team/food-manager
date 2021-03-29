@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 interface InputProps {
     text: string;
+    hint?: string;
     type?: string;
 }
 
@@ -24,9 +25,10 @@ const CssTextField = withStyles({
     }
 })(Input);
 
-const InputField = ({ text, type }: InputProps) => {
+const InputField = ({ text, hint, type }: InputProps) => {
     return (
         <CssTextField
+            placeholder={hint}
             startAdornment={
                 <InputAdornment position="start">
                     <b>{text}</b>

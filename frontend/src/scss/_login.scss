@@ -5,9 +5,7 @@
     grid-template-rows: 2fr 1fr 1fr;
 }
 .login-head,
-.login-form,
-.login-submit {
-    width: 100%;
+.login-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,4 +13,20 @@
 }
 .login-title {
     font-size: 1.5rem;
+}
+.login-submit {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .login-register {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 1.1rem;
+        .login-link {
+            color: $fnt-blue;
+            text-decoration: none;
+        }
+    }
 }
