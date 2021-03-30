@@ -8,13 +8,22 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 const StyledBadge = withStyles({
     badge: {
         background: "linear-gradient(45deg, #00d6af 30%, #00c3cf 90%)",
-        color: "#414141"
+        color: "#414141",
+        height: 32,
+        width: 32,
+        borderRadius: 100,
+        fontSize: 24,
+        fontWeight: "bold"
     }
 })(Badge);
 
 const useStyles = makeStyles({
     root: {
         display: "flex"
+    },
+    avatar: {
+        width: "8rem",
+        height: "8rem"
     }
 });
 
@@ -22,8 +31,9 @@ const ProfilePicture = () => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <div>
             <StyledBadge
+                className={classes.root}
                 overlap="circle"
                 anchorOrigin={{
                     vertical: "bottom",
@@ -31,7 +41,11 @@ const ProfilePicture = () => {
                 }}
                 badgeContent={"+"}
             >
-                <Avatar alt="Elon" src={process.env.PUBLIC_URL + "images/elon.jpg"} />
+                <Avatar
+                    alt="Elon"
+                    className={classes.avatar}
+                    src={process.env.PUBLIC_URL + "images/elon.jpg"}
+                />
             </StyledBadge>
         </div>
     );

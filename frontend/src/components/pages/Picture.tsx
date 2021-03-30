@@ -15,18 +15,22 @@ const useStyles = makeStyles({
 const Picture = () => {
     const classes = useStyles();
     return (
-        <>
-            <div>여기에 바코드 등록</div>
-            <PictureButton />
-            <div>
-                <InputField text="Name" hint="Food Ingredient" />
-                <InputField text="Expiration Date" type="date" hint="Expiration Date" />
-                <InputField text="Cateogry" hint="Ingredient Category" />
+        <div className="picture-container">
+            <div className="picture-button">
+                <PictureButton />
+                <h3 className="picture-label">Add a barcode picture !</h3>
             </div>
-            <Button variant="contained" color="primary" className={classes.root}>
-                Save
-            </Button>
-        </>
+            <div className="picture-form">
+                <InputField font_size="1rem" text="Name" hint="Food Ingredient" />
+                <InputField font_size="1rem" text="Exp Date" type="date" hint="Expiration Date" />
+                <InputField font_size="1rem" text="Category" hint="Ingredient Category" />
+            </div>
+            <div className="picture-submit">
+                <Button variant="contained" color="primary" className={classes.root}>
+                    Save
+                </Button>
+            </div>
+        </div>
     );
 };
 
