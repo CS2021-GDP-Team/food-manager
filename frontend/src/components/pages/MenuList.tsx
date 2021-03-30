@@ -18,6 +18,13 @@ const MenuList = ({ menu }: any) => {
             </div>
             <List id="list-items">
                 <ListItem />
+                <ListItem />
+                <ListItem />
+                <ListItem />
+                <ListItem />
+                <ListItem />
+                <ListItem />
+                <ListItem />
             </List>
         </div>
     );
