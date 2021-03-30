@@ -18,7 +18,7 @@ const CssTextField = withStyles({
         marginBottom: "12px",
         color: "white",
         width: "60%",
-        fontSize: "1.3rem",
+        fontSize: "1rem",
         "& input": {
             textAlign: "center"
         }
