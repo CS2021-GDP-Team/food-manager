@@ -4,11 +4,15 @@ import LogoutButton from "../public/LogoutButton";
 
 const Info = () => {
     return (
-        <>
-            <LogoutButton />
+        <div className="info-container">
+            <div className="info-logout">
+                <LogoutButton />
+            </div>
+            <div>
+                <ProfilePicture />
+            </div>
             <div>여기에 마이페이지 등록</div>
-            <ProfilePicture />
-        </>
+        </div>
     );
 };
 

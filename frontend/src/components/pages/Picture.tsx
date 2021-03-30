@@ -23,7 +23,7 @@ const Picture = () => {
             <div className="picture-form">
                 <InputField text="Name" hint="Food Ingredient" />
                 <InputField text="Exp Date" type="date" hint="Expiration Date" />
-                <InputField text="Cateogry" hint="Ingredient Category" />
+                <InputField text="Category" hint="Ingredient Category" />
             </div>
             <div className="picture-submit">
                 <Button variant="contained" color="primary" className={classes.root}>
