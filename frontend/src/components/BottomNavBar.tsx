@@ -8,8 +8,6 @@ import {
     PermIdentityOutlined
 } from "@material-ui/icons";
 
-//TODO : 스타일링 코드 바깥으로 빼내기, TS로 변경, 이벤트처리->라우팅 연결
-
 const useStyles = makeStyles({
     parent: {
         borderTop: "1px solid #606060",
