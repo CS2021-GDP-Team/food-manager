@@ -1,4 +1,3 @@
-import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { InputField } from "../index";
 import { Link } from "react-router-dom";
 import { Button, makeStyles } from "@material-ui/core";
@@ -18,8 +17,11 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-head">
-                {/* TODO: 아이콘 바꿀 예정 */}
-                <AcUnitIcon fontSize="large" />
+                <img
+                    className="login-icon"
+                    alt="logo"
+                    src={process.env.PUBLIC_URL + "images/icon.png"}
+                ></img>
                 <b className="login-title">Food Manager</b>
             </div>
             <div className="login-form">

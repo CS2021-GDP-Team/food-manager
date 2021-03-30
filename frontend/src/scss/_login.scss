@@ -11,8 +11,16 @@
     justify-content: center;
     align-items: center;
 }
+.login-icon {
+    padding: 5%;
+    padding-bottom: 5px;
+    max-width: 300px;
+    @media all and (max-width: 1000px) {
+        max-width: 200px;
+    }
+}
 .login-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
 }
 .login-submit {
     width: 70%;

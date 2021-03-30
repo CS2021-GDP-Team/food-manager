@@ -5,27 +5,28 @@ interface InputProps {
     text: string;
     hint?: string;
     type?: string;
+    font_size?: string;
 }
 
-const CssTextField = withStyles({
-    root: {
-        "&:before": {
-            borderBottom: "1px solid white"
-        },
-        "&:after": {
-            borderBottom: "1px solid #00d6af"
-        },
-        marginBottom: "12px",
-        color: "white",
-        width: "60%",
-        fontSize: "1.3rem",
-        "& input": {
-            textAlign: "center"
+const InputField = ({ text, hint, type, font_size = "1.3rem" }: InputProps) => {
+    const CssTextField = withStyles({
+        root: {
+            "&:before": {
+                borderBottom: "1px solid white"
+            },
+            "&:after": {
+                borderBottom: "1px solid #00d6af"
+            },
+            marginBottom: "12px",
+            color: "white",
+            width: "60%",
+            fontSize: font_size,
+            "& input": {
+                textAlign: "center"
+            }
         }
-    }
-})(Input);
+    })(Input);
 
-const InputField = ({ text, hint, type }: InputProps) => {
     return (
         <CssTextField
             placeholder={hint}
