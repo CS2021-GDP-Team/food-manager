@@ -4,7 +4,6 @@ import { List, ListItem, ListItemText, Divider, makeStyles } from "@material-ui/
 const useStyles = makeStyles({
     root: {
         width: "100%",
-        maxWidth: 360,
         backgroundColor: "#414141"
     },
     border: {
