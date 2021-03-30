@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, useLocation } from "react-router-dom";
-import { Login, MenuList, SignUp, Picture, Info, Recipe, BottomNavBar } from "./index";
+import { Login, MenuList, SignUp, Picture, Info, RecipeList, BottomNavBar } from "./index";
 import { useMenuListContext, useMenuListDispatchContext } from "./Model";
 import { CssBaseline, Paper } from "@material-ui/core";
 
@@ -23,7 +23,7 @@ const ViewModel: React.FC = () => {
                         <Route exact path="/" render={() => <MenuList menu={menuList} />} />
                         <Route path="/picture" render={() => <Picture />} />
                         <Route path="/info" render={() => <Info />} />
-                        <Route path="/recipe" render={() => <Recipe />} />
+                        <Route path="/recipe" render={() => <RecipeList />} />
                         <Route path="/login" render={() => <Login />} />
                         <Route path="/signup" render={() => <SignUp />} />
                     </div>

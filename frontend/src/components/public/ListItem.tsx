@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme: Theme) =>
         large: {
             width: theme.spacing(11),
             height: theme.spacing(11),
-            marginLeft: "auto"
+            marginLeft: "auto",
+            borderRadius: "30px"
         }
     })
 );
@@ -20,7 +21,7 @@ const ListItem = () => {
             <ItemBox button>
                 <div className="listitem-container">
                     <Avatar
-                        variant="rounded"
+                        variant="square"
                         alt="food"
                         src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/fruit-salad-horizontal-jpg-1522181219.jpg"
                         className={classes.large}

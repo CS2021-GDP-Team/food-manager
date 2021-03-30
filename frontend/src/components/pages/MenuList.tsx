@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton, List } from "@material-ui/core";
 import { SwapVert, Search } from "@material-ui/icons";
-import { blue } from "@material-ui/core/colors";
+import { grey } from "@material-ui/core/colors";
 import { ListItem } from "../index";
 
 const MenuList = ({ menu }: any) => {
@@ -13,7 +13,7 @@ const MenuList = ({ menu }: any) => {
                     <Search id="list-icon" />
                 </div>
                 <IconButton aria-label="sort">
-                    <SwapVert style={{ color: blue[50], fontSize: 30 }} />
+                    <SwapVert style={{ color: grey[50], fontSize: 30 }} />
                 </IconButton>
             </div>
             <List id="list-items">
