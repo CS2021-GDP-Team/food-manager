@@ -10,4 +10,3 @@ export { default as BottomNavBar } from "./BottomNavBar";
 export { default as LogoutButton } from "./public/LogoutButton";
 export { default as PictureButton } from "./public/PictureButton";
 export { default as ProfilePicture } from "./public/ProfilePicture";
-export { default as SubmitButton } from "./public/SubmitButton";

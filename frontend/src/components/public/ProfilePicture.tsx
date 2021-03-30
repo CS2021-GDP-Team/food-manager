@@ -1,9 +1,9 @@
 import React from "react";
 import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
-import { Theme, makeStyles, withStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 
-//TODO : 크기 조절, 스타일링 코드 바깥으로 빼내기, TS로 변경, Badge이벤트처리
+//TODO : Badge이벤트처리
 
 const StyledBadge = withStyles({
     badge: {
@@ -31,7 +31,7 @@ const ProfilePicture = () => {
                 }}
                 badgeContent={"+"}
             >
-                <Avatar alt="Elon" src={process.env.PUBLIC_URL + "/elon.jpg"} />
+                <Avatar alt="Elon" src={process.env.PUBLIC_URL + "images/elon.jpg"} />
             </StyledBadge>
         </div>
     );
