@@ -1,0 +1,43 @@
+.info-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 3fr 6fr;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgb(54, 53, 53);
+    }
+    &::-webkit-scrollbar-track {
+        background-color: rgba(148, 147, 147, 0.096);
+    }
+}
+.logout-container {
+    position: relative;
+}
+.info-logout {
+    display: flex;
+    position: absolute;
+    top: 1rem;
+    right: 10px;
+}
+.info-picture {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+.info-label {
+    color: #00d6af;
+    margin-top: 0.5rem;
+}
+.info-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+}
