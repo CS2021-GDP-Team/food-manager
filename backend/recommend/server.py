@@ -1,6 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
+import vectorize
+
 host = "localhost"
 post = 8080
 
@@ -31,10 +33,23 @@ class RecommendHandler(BaseHTTPRequestHandler):
             self._error("Content type error: use json to send data")
 
         content_length = int(self.headers['Content-Length'])
-        body = json.loads(self.rfile.read(content_length))
+        body = json.loads(self.rfile.read(content_length), encoding="utf-8")
+        if "userIngredients" in body:
+            print(body)
+            response = self.handleRequest(body["userIngredients"])
+            self._json(response)
+        else:
+            self._error("'userIngredients' is missing")        
 
-        body["answer"] = "received"
-        self._json(body)
+    def handleRequest(self, userIngredients):
+        vec = vectorize.Vectorizer()
+        vec.connect_database()
+
+        vec.recipe_embedding()
+        result = vec.recommend_recipes([userIngredients])
+
+        vec.disconnect_database()
+        return result
 
 
 if __name__ == "__main__":        
