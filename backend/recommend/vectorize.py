@@ -31,26 +31,41 @@ class Vectorizer:
             columns.append(column[0])
         
         # Get data
-        self.db.execute('select * from {} limit 5',(self.view_name))
+        self.db.execute('select * from '+self.view_name+' where {} is not null',(self.ingredient_column))
+        # self.db.execute('select * from '+self.view_name+' where {} is not null limit 5',(self.ingredient_column))
         row = self.db.fetchall()
-        self.df = pd.DataFrame(row, columns=columns)
+        if not row:
+            print("Cannot fetch data")
+            return
+        self.recipe_idx = []
+        for r in row:
+            self.recipe_idx.append(r[0]) # index column must be the first one
+        df = pd.DataFrame(row, columns=columns)
         
         # Vectorize recipes
         self.cv = CountVectorizer(ngram_range=(1,1))
-        self.cv_ing = self.cv.fit_transform(self.df[self.ingredient_column])
+        self.cv_ing = self.cv.fit_transform(df[self.ingredient_column])
         # print(self.cv.vocabulary_)
-        print("recipe X ingredients:",self.cv_ing.shape)
+        print("recipe X ingredients:\t",self.cv_ing.shape)
 
-    def recommend_recipes(self, ingredients, top=10):
+    def recommend_recipes(self, ingredients, top=10): # form of ingredients: ['ing1,ing2,ing3']
         cv_user = self.cv.transform(ingredients)
-        print("user X ingredients:",cv_user.shape)
+        print("user X ingredients:\t",cv_user.shape)
         sim_ing = cosine_similarity(cv_user, self.cv_ing).argsort()[:, ::-1]
-        print("user X recipes:",sim_ing.shape)
+        print("user X recipes: \t",sim_ing.shape)
         
         sim_idx = sim_ing[:, :top].reshape(-1)
-        
-        result = self.df.iloc[sim_idx]
+        result = ""
+        for i in sim_idx:
+            result = result + str(self.recipe_idx[i])
+            if i != sim_idx[-1]:
+                result = result + ","
         return result
+
+    def print_recipe_names(self, recipe_idx):
+        self.db.execute("SELECT * FROM "+self.view_name+" WHERE FIND_IN_SET(id, '{}')",recipe_idx)
+        for r in self.db.fetchall():
+            print(r)
         
 
 
@@ -60,7 +75,9 @@ if __name__ == '__main__':
 
     vec.recipe_embedding()
     result = vec.recommend_recipes(['고구마,설탕,호두,은행'])
-    print(result)
+    print("recommended recipe idx:",result)
+
+    vec.print_recipe_names(result)
 
     vec.disconnect_database()
     
