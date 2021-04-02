@@ -12,24 +12,29 @@ class DBConnector:
         except mysql.connector.Error as err:
             print(err)
         self.curs = self.cnx.cursor()
+        print("Databse '{}' connected".format(database))
 
     def close(self):
-        self.curs.fetchall()
+        self.fetchall()
         self.curs.close()
         self.cnx.close()
+        print("Database disconnected")
 
     def execute(self, query, args={}):
         self.curs.execute(query.format(args))
 
+    def fetchall(self):
+        return self.curs.fetchall()
+
     def check_view(self):
         self.execute("show full tables in food_manager where table_type like '%VIEW%'", (self.database))
-        if not db.curs.fetchall():
+        if not self.fetchall():
             return False
         return True
         
     def create_view(self, view_name):
         if self.check_view():
-            print("views already exists")
+            print("Views already exists")
             return
 
         self.execute(
@@ -57,13 +62,13 @@ class DBConnector:
         , (view_name))
 
         if self.check_view():
-            print("views are created")
+            print("Views are created")
             self.execute('show tables')
-            print(self.curs.fetchall())
+            print(self.fetchall())
         else:
-            print("error occurred")
+            print("Error occurred")
 
-    
+
 
 
 if __name__ == '__main__':
@@ -78,7 +83,7 @@ if __name__ == '__main__':
     db = DBConnector(**config)
     
     db.execute("show tables")
-    row = db.curs.fetchall()
+    row = db.fetchall()
     print(row)
 
     print(db.check_view())
