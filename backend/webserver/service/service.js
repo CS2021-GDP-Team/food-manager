@@ -2,6 +2,7 @@ const users = require('../dao/users.js');
 const recipes = require('../dao/recipes.js');
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
+const fetch = require("node-fetch")
 
 class Service {}
 
@@ -14,9 +15,16 @@ Service.getUser = async (userId, password) => {
 }
 
 Service.recommendRecipes = async (userIngredients) => {
-    console.log(userIngredients);
     // 파이썬 서버 연결 -> 레시피 아이디 반환
-    const recipeIds = '24,25,26,27';
+    var recipeIds = await fetch('http://localhost:8080', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"userIngredients":userIngredients})
+    })
+    .then(res => res.json())
+    .catch(error => console.error('Error:', error));
 
     // 레시피 아이디로 다시 db 검색
     const recipesFound = await recipes.getRecipes(recipeIds);
