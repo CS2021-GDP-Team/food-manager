@@ -21,24 +21,32 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUELK='\033[38;5;69m'
 NC='\033[0m' # No Color
+PWD=`pwd`
 
-function runcode(){
+function run(){
   all_count=$((all_count+1))
-  printf "$all_count ${BLUELK}RUNNING${NC}\t$1 $2\n" | tee -a .output.txt
+  printf "$all_count ${BLUELK}RUNNING${NC}\t`basename $1` $2\n" | tee -a .output.txt
   bash "$1" "$2"
   if [[ $? -eq 0 ]] ; then
     pass_count=$((pass_count+1))
-    printf "$all_count ${GREEN}PASSED${NC}\t$1\n" | tee -a .output.txt
+    printf "$all_count ${GREEN}PASSED${NC}\t`basename $1`\n" | tee -a .output.txt
   else
-    printf "$all_count ${RED}FAILED${NC}\t$1\n" | tee -a .output.txt
+    printf "$all_count ${RED}FAILED${NC}\t`basename $1`\n" | tee -a .output.txt
   fi
   echo >> .output.txt
 }
 
 ####################
 # Add testcodes here
-runcode ./testcodes/login.sh "$URL"
-runcode ./testcodes/logout.sh "$URL"
+run $PWD/testcodes/login.sh "$URL"
+run $PWD/testcodes/logout.sh "$URL"
+run $PWD/testcodes/register_unregister.sh "$URL"
+run $PWD/testcodes/ingredients.sh "$URL"
+run $PWD/testcodes/picture.sh "$URL"
+run $PWD/testcodes/recommend.sh "$URL"
+run $PWD/testcodes/recipe.sh "$URL"
+run $PWD/testcodes/info.sh "$URL"
+# run $PWD/testcodes/favorite.sh "$URL"
 ####################
 
 printf "${GREEN}passes${NC}/all : ${GREEN}$pass_count${NC}/$all_count\n" | tee -a .output.txt
