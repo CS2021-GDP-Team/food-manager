@@ -15,6 +15,9 @@ npm run test remote # run test codes by connecting remote server (https://jeto.g
 npm run test local # run test codes by connecting local server (http://localhost:3001)
 ```
 
+## A running example of testcodes
+![output4](https://user-images.githubusercontent.com/48780754/113515299-9618fc00-95ae-11eb-9c49-5949d66de63c.gif)
+
 ## Description
 - routes.js : defines app settings and routings
 - frontcontroller/ : defines in-out-bound-traffic-controllers to authenticate, pre-process and log traffics. .
