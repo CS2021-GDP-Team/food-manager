@@ -18,6 +18,9 @@ npm run test local # run test codes by connecting local server (http://localhost
 ## A running example of testcodes
 ![output4](https://user-images.githubusercontent.com/48780754/113515299-9618fc00-95ae-11eb-9c49-5949d66de63c.gif)
 
+## API Docs
+https://docs.google.com/document/d/120bpMU0gqLH4gJJ3wLSf5G6JBDbCtdX576tx7T8PQ6o/edit?usp=sharing
+
 ## Description
 - routes.js : defines app settings and routings
 - frontcontroller/ : defines in-out-bound-traffic-controllers to authenticate, pre-process and log traffics. .
