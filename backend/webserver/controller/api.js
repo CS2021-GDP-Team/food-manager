@@ -18,9 +18,44 @@ router.post('/logout', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
+router.post('picture', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const text = await service.readPicture(res.body)
+    return fctl.send(req, res, hsc.HTTP_OK, {'text': text});
+}));
+
 router.post('/recommend', fctl.nonLoginWrapper(async (req, res, next) => {
-    data = await service.recommendRecipes(req.body.userIngredients);
+    const data = await service.recommendRecipes(req.body.userIngredients);
     return fctl.send(req, res, hsc.HTTP_OK, data);
+}));
+
+router.get('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const ingredients = await service.getUserIngredients(req.session.user.id);
+	return fctl.send(req, res, hsc.HTTP_OK, ingredients);
+}));
+
+router.post('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['ingredientId']);
+	const ingredientId = req.body.ingredientId;
+	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
+	const expireDate = util.isEmpty(req.body.expireDate) ? null : req.body.expireDate;
+	await service.insertUserIngredient(req.session.user.id, ingredientId, putDate, expireDate);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.put('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['ingredientId']);
+	const ingredientId = req.body.ingredientId;
+	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
+	const expireDate = util.isEmpty(req.body.expireDate) ? null : req.body.expireDate;
+	await service.updateUserIngredient(req.session.user.id, ingredientId, putDate, expireDate);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.delete('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['ingredientId']);
+	const ingredientId = req.body.ingredientId;
+	await service.deleteUserIngredient(req.session.user.id, ingredientId);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
 module.exports = router;

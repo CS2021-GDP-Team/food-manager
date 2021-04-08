@@ -9,6 +9,7 @@ __pycache__/
 .idea/
 .cookies.txt
 .output.txt
+package-lock.json
 
 # Distribution / packaging
 .Python
