@@ -12,7 +12,11 @@ Util.validate = (object, items) => {
 };
 
 Util.isEmpty = (item) => {
-    return typeof (item) == 'undefined' || item == null || item == '';
+    if (typeof (item) == 'undefined') return true;
+	if (item == null) return true;
+	if (Array.isArray(item)) return !item.length;
+	if (item === '') return true;
+	return false;
 };
 
 Object.freeze(Util);

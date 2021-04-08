@@ -26,6 +26,7 @@ _logInTraffic = (req) => {
         } else {
             console.log(`from ${req.headers['x-real-ip']} ${req.method} ${req.originalUrl}`);
         }
+		console.log(req.body);
     } catch (e) {
         console.log(`Error occurred while logging: ` + e);
     }
