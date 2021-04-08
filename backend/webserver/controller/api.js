@@ -18,6 +18,11 @@ router.post('/logout', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
+router.post('picture', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const text = await service.readPicture(res.body)
+    return fctl.send(req, res, hsc.HTTP_OK, {'text': text});
+}));
+
 router.post('/recommend', fctl.nonLoginWrapper(async (req, res, next) => {
     data = await service.recommendRecipes(req.body.userIngredients);
     return fctl.send(req, res, hsc.HTTP_OK, data);

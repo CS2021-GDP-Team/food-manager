@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const app = express();
 
-port = process.argv[2] ? Number.parseInt(process.argv[2]) : 3001
+const port = process.argv[2] ? Number.parseInt(process.argv[2]) : 3001
 
 //express setting
 app.use(express.json());
