@@ -58,4 +58,32 @@ router.delete('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) =
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
+router.get('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const recipes = await service.getUserRecipes(req.session.user.id);
+	return fctl.send(req, res, hsc.HTTP_OK, recipes);
+}));
+
+router.post('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeId']);
+	const recipeId = req.body.recipeId;
+	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
+	await service.insertUserRecipe(req.session.user.id, recipeId, putDate);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.put('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeId']);
+	const recipeId = req.body.recipeId;
+	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
+	await service.updateUserRecipe(req.session.user.id, recipeId, putDate);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.delete('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeId']);
+	const recipeId = req.body.recipeId;
+	await service.deleteUserRecipe(req.session.user.id, recipeId);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
 module.exports = router;

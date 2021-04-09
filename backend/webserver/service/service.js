@@ -1,6 +1,7 @@
 const users = require('../dao/users.js');
 const recipes = require('../dao/recipes.js');
 const fridges = require('../dao/fridges.js');
+const diets = require('../dao/diets.js')
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 const fetch = require("node-fetch")
@@ -48,6 +49,22 @@ Service.updateUserIngredient = async (userId, ingredientId, putDate, expireDate)
 
 Service.deleteUserIngredient = async (userId, ingredientId) => {
 	await fridges.deleteIngredient(userId, ingredientId);
+}
+
+Service.getUserRecipes = async (userId) => {
+	return await diets.getRecipesByUserId(userId);
+}
+
+Service.insertUserRecipe = async (userId, recipeId, putDate) => {
+	await diets.insertRecipe(userId, recipeId, putDate);
+}
+
+Service.updateUserRecipe = async (userId, recipeId, putDate) => {
+	await diets.updateRecipe(userId, recipeId, putDate);
+}
+
+Service.deleteUserRecipe = async (userId, recipeId) => {
+	await diets.deleteRecipe(userId, recipeId);
 }
 
 Object.freeze(Service);

@@ -9,6 +9,17 @@ MariaDB [food_manager]> desc fridges;
 | expire_date   | datetime | YES  |     | NULL    |                |
 +---------------+----------+------+-----+---------+----------------+
 
+MariaDB [food_manager]> desc diets;
++-----------+----------+------+-----+---------+----------------+
+| Field     | Type     | Null | Key | Default | Extra          |
++-----------+----------+------+-----+---------+----------------+
+| id        | int(11)  | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11)  | NO   | MUL | NULL    |                |
+| recipe_id | int(11)  | NO   | MUL | NULL    |                |
+| put_date  | datetime | NO   |     | NULL    |                |
+| count     | int(11)  | YES  |     | 0       |                |
++-----------+----------+------+-----+---------+----------------+
+
 MariaDB [food_manager]> desc ingredients;
 +-------+-----------+------+-----+---------+----------------+
 | Field | Type      | Null | Key | Default | Extra          |
