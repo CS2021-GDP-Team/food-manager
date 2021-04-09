@@ -11,3 +11,4 @@ export { default as LogoutButton } from "./public/LogoutButton";
 export { default as PictureButton } from "./public/PictureButton";
 export { default as ProfilePicture } from "./public/ProfilePicture";
 export { default as RecipeItem } from "./public/RecipeItem";
+export { default as Modal } from "./public/Modal";
