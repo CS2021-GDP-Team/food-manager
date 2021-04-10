@@ -3,14 +3,14 @@ import requests
 import json
 import re
 from parse import parse
-import soft_app_db
+from dbaccessor DBAccessor
 
 def fetch_items_from_file(path):
 	with open(path, 'r') as f:
 		js = json.load(f)
 	return js
 
-db = soft_app_db.soft_app_db()
+db = DBAccessor()
 
 for item in fetch_items_from_file('result'):
 	recipe = db.get_recipe_by_name(item['name'])
