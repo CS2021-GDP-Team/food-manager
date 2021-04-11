@@ -59,12 +59,12 @@ Service.insertUserRecipe = async (userId, recipeId, putDate) => {
 	await diets.insertRecipe(userId, recipeId, putDate);
 }
 
-Service.updateUserRecipe = async (userId, recipeId, putDate) => {
-	await diets.updateRecipe(userId, recipeId, putDate);
+Service.updateUserRecipe = async (userId, dietId, putDate) => {
+	await diets.updateRecipe(userId, dietId, putDate);
 }
 
-Service.deleteUserRecipe = async (userId, recipeId) => {
-	await diets.deleteRecipe(userId, recipeId);
+Service.deleteUserRecipe = async (userId, dietId) => {
+	await diets.deleteRecipe(userId, dietId);
 }
 
 Object.freeze(Service);

@@ -17,7 +17,6 @@ MariaDB [food_manager]> desc diets;
 | user_id   | int(11)  | NO   | MUL | NULL    |                |
 | recipe_id | int(11)  | NO   | MUL | NULL    |                |
 | put_date  | datetime | NO   |     | NULL    |                |
-| count     | int(11)  | YES  |     | 0       |                |
 +-----------+----------+------+-----+---------+----------------+
 
 MariaDB [food_manager]> desc ingredients;

@@ -72,17 +72,17 @@ router.post('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
 }));
 
 router.put('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
-    util.validate(req.body, ['recipeId']);
-	const recipeId = req.body.recipeId;
-	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
-	await service.updateUserRecipe(req.session.user.id, recipeId, putDate);
+    util.validate(req.body, ['dietId', 'putDate']);
+	const dietId = req.body.dietId;
+	const putDate = req.body.putDate;
+	await service.updateUserRecipe(req.session.user.id, dietId, putDate);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
 router.delete('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
-    util.validate(req.body, ['recipeId']);
-	const recipeId = req.body.recipeId;
-	await service.deleteUserRecipe(req.session.user.id, recipeId);
+    util.validate(req.body, ['dietId']);
+	const dietId = req.body.dietId;
+	await service.deleteUserRecipe(req.session.user.id, dietId);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
