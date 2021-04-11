@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "@types/react-router-dom": "^5.1.7"
+  },
+  "devDependencies": {
+    "yarn": "^1.22.10"
   }
 }
