@@ -2,7 +2,7 @@ import pymysql
 import time
 import os
 
-class soft_app_db:
+class DBAccessor:
 	def __init__(self):
 		self.conn = pymysql.connect(
 			user	= os.environ['DBID'],

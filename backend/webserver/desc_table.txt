@@ -1,0 +1,52 @@
+MariaDB [food_manager]> desc fridges;
++---------------+----------+------+-----+---------+----------------+
+| Field         | Type     | Null | Key | Default | Extra          |
++---------------+----------+------+-----+---------+----------------+
+| id            | int(11)  | NO   | PRI | NULL    | auto_increment |
+| user_id       | int(11)  | NO   | MUL | NULL    |                |
+| ingredient_id | int(11)  | NO   | MUL | NULL    |                |
+| put_date      | datetime | NO   |     | NULL    |                |
+| expire_date   | datetime | YES  |     | NULL    |                |
++---------------+----------+------+-----+---------+----------------+
+
+MariaDB [food_manager]> desc ingredients;
++-------+-----------+------+-----+---------+----------------+
+| Field | Type      | Null | Key | Default | Extra          |
++-------+-----------+------+-----+---------+----------------+
+| id    | int(11)   | NO   | PRI | NULL    | auto_increment |
+| name  | char(255) | NO   |     | NULL    |                |
+| hours | int(11)   | YES  |     | NULL    |                |
++-------+-----------+------+-----+---------+----------------+
+
+MariaDB [food_manager]> desc users;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_id  | varchar(255) | NO   |     | NULL    |                |
+| password | varchar(255) | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+
+MariaDB [food_manager]> desc recipe_ingredients;
++---------------+---------+------+-----+---------+----------------+
+| Field         | Type    | Null | Key | Default | Extra          |
++---------------+---------+------+-----+---------+----------------+
+| id            | int(11) | NO   | PRI | NULL    | auto_increment |
+| recipe_id     | int(11) | NO   | MUL | NULL    |                |
+| ingredient_id | int(11) | NO   | MUL | NULL    |                |
+| grams         | int(11) | YES  |     | NULL    |                |
++---------------+---------+------+-----+---------+----------------+
+
+MariaDB [food_manager]> desc recipes;
++---------+-----------+------+-----+---------+----------------+
+| Field   | Type      | Null | Key | Default | Extra          |
++---------+-----------+------+-----+---------+----------------+
+| id      | int(11)   | NO   | PRI | NULL    | auto_increment |
+| name    | char(255) | NO   |     | NULL    |                |
+| source  | char(255) | YES  |     | NULL    |                |
+| kcal    | int(11)   | YES  |     | NULL    |                |
+| protein | int(11)   | YES  |     | NULL    |                |
+| carbo   | int(11)   | YES  |     | NULL    |                |
+| fat     | int(11)   | YES  |     | NULL    |                |
+| salt    | int(11)   | YES  |     | NULL    |                |
++---------+-----------+------+-----+---------+----------------+
