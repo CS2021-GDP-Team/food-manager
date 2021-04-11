@@ -23,8 +23,18 @@ router.post('picture', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, {'text': text});
 }));
 
-router.post('/recommend', fctl.nonLoginWrapper(async (req, res, next) => {
-    const data = await service.recommendRecipes(req.body.userIngredients);
+router.post('/recommend', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['ingredientIds']);
+	const ingredientIds = req.body.ingredientIds
+	const start = util.isEmpty(req.body.start) ? null : req.body.start;
+	const end = util.isEmpty(req.body.end) ? null : req.body.end;
+    const data = await service.recommendRecipes(ingredientIds, start, end);
+    return fctl.send(req, res, hsc.HTTP_OK, data);
+}));
+
+router.post('/recipe', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeIds']);
+    const data = await service.getRecipes(req.body.recipeIds);
     return fctl.send(req, res, hsc.HTTP_OK, data);
 }));
 
