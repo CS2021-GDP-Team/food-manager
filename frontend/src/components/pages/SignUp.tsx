@@ -30,13 +30,14 @@ const SignUp = () => {
         }
         try {
             const result = await axios.post("/food-manager/api/user", {
-                id: userId,
+                userId: userId,
                 password: userPw
             });
             console.log(result);
             history.push("/login");
             alert("회원가입을 축하드립니다. 다시 로그인 해주시기 바랍니다.");
-        } catch {
+        } catch (e) {
+            console.log(e);
             alert("일시적 오류가 발생했습니다. 잠시 후 다시 시도해 주세요");
         }
     };
