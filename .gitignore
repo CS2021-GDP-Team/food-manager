@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+.idea/
+.cookies.txt
+.output.txt
+package-lock.json
+yarn.lock
+
 # Distribution / packaging
 .Python
 build/

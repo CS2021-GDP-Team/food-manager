@@ -1,9 +1,25 @@
 # Node Web Server
 ## Installation
-``` bash
-npm install
-npm run start
 ```
+npm install
+```
+## Run a API server
+```
+npm run serve
+npm run serve -- PORT # if you need to run a sever with a specified port
+```
+
+## Run test codes
+```
+npm run test remote # run test codes by connecting remote server (https://jeto.ga/food-manager)
+npm run test local # run test codes by connecting local server (http://localhost:3001)
+```
+
+## A running example of testcodes
+![output4](https://user-images.githubusercontent.com/48780754/113515299-9618fc00-95ae-11eb-9c49-5949d66de63c.gif)
+
+## API Docs
+https://docs.google.com/document/d/120bpMU0gqLH4gJJ3wLSf5G6JBDbCtdX576tx7T8PQ6o/edit?usp=sharing
 
 ## Description
 - routes.js : defines app settings and routings
