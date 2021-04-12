@@ -11,7 +11,7 @@ const MenuList = ({ menu }: any) => {
     useEffect(() => {
         const getList = async () => {
             try {
-                const data = await axios.get("/api/ingredients");
+                const data = await axios.get("/food-manager/api/ingredients");
                 console.log(data);
             } catch {
                 history.push("/login");
