@@ -6,37 +6,73 @@ interface InputProps {
     hint?: string;
     type?: string;
     font_size?: string;
+    setValue?: any;
 }
-
-const InputField = ({ text, hint, type, font_size = "1.3rem" }: InputProps) => {
-    const CssTextField = withStyles({
-        root: {
-            "&:before": {
-                borderBottom: "1px solid white"
-            },
-            "&:after": {
-                borderBottom: "1px solid #00d6af"
-            },
-            marginBottom: "12px",
-            color: "white",
-            width: "60%",
-            fontSize: font_size,
-            "& input": {
-                textAlign: "center"
-            }
+const CssTextField = withStyles({
+    root: {
+        "&:before": {
+            borderBottom: "1px solid white"
+        },
+        "&:after": {
+            borderBottom: "1px solid #00d6af"
+        },
+        marginBottom: "12px",
+        color: "white",
+        width: "60%",
+        fontSize: "1.3rem",
+        "& input": {
+            textAlign: "center"
         }
-    })(Input);
-
+    }
+})(Input);
+const SmallCssTextField = withStyles({
+    root: {
+        "&:before": {
+            borderBottom: "1px solid white"
+        },
+        "&:after": {
+            borderBottom: "1px solid #00d6af"
+        },
+        marginBottom: "12px",
+        color: "white",
+        width: "60%",
+        fontSize: "1rem",
+        "& input": {
+            textAlign: "center"
+        }
+    }
+})(Input);
+const InputField = ({ text, hint, type, font_size, setValue }: InputProps) => {
     return (
-        <CssTextField
-            placeholder={hint}
-            startAdornment={
-                <InputAdornment position="start">
-                    <b>{text}</b>
-                </InputAdornment>
-            }
-            type={type}
-        />
+        <>
+            {font_size ? (
+                <SmallCssTextField
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setValue(e.target.value);
+                    }}
+                    placeholder={hint}
+                    startAdornment={
+                        <InputAdornment position="start">
+                            <b>{text}</b>
+                        </InputAdornment>
+                    }
+                    type={type}
+                />
+            ) : (
+                <CssTextField
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setValue(e.target.value);
+                    }}
+                    placeholder={hint}
+                    startAdornment={
+                        <InputAdornment position="start">
+                            <b>{text}</b>
+                        </InputAdornment>
+                    }
+                    type={type}
+                />
+            )}
+        </>
     );
 };
 

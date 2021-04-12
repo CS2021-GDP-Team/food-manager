@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Divider, Avatar, makeStyles, createStyles, Theme } from "@material-ui/core";
 import ItemBox from "@material-ui/core/ListItem";
 import { grey } from "@material-ui/core/colors";
+import { Modal } from "../index";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -16,9 +17,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ListItem = () => {
     const classes = useStyles();
+    const [open, setOpen] = useState<boolean>(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <>
-            <ItemBox button>
+            <ItemBox button onClick={() => setOpen(true)}>
                 <div className="listitem-container">
                     <Avatar
                         variant="square"
@@ -38,6 +43,7 @@ const ListItem = () => {
                 </div>
             </ItemBox>
             <Divider style={{ backgroundColor: grey[600] }} />
+            <Modal open={open} handleClose={handleClose} />
         </>
     );
 };
