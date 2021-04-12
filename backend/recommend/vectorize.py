@@ -48,18 +48,24 @@ class Vectorizer:
         # print(self.cv.vocabulary_)
         print("recipe X ingredients:\t",self.cv_ing.shape)
 
-    def recommend_recipes(self, ingredients, top=10): # form of ingredients: ['ing1,ing2,ing3']
+    def recommend_recipes(self, ingredients, start, end): # form of ingredients: ['ing1,ing2,ing3']
+        if (start is None) and (end is None):
+            # top 10
+            start = 0
+            end = 10
+        print(start,"~", end)
         cv_user = self.cv.transform(ingredients)
         print("user X ingredients:\t",cv_user.shape)
         sim_ing = cosine_similarity(cv_user, self.cv_ing).argsort()[:, ::-1]
         print("user X recipes: \t",sim_ing.shape)
         
-        sim_idx = sim_ing[:, :top].reshape(-1)
-        result = ""
+        if sim_ing.shape[1] < end:
+            sim_idx = sim_ing[:, start:].reshape(-1)
+        else:
+            sim_idx = sim_ing[:, start:end].reshape(-1)
+        result = []
         for i in sim_idx:
-            result = result + str(self.recipe_idx[i])
-            if i != sim_idx[-1]:
-                result = result + ","
+            result.append(self.recipe_idx[i])
         return result
 
     def print_recipe_names(self, recipe_idx):

@@ -33,21 +33,22 @@ class RecommendHandler(BaseHTTPRequestHandler):
             self._error("Content type error: use json to send data")
 
         content_length = int(self.headers['Content-Length'])
-        body = json.loads(self.rfile.read(content_length), encoding="utf-8")
-        if "userIngredients" in body:
+        body = json.loads(self.rfile.read(content_length))
+        if "ingredientIds" in body:
             print(body)
-            response = self.handleRequest(body["userIngredients"])
+            response = self.handleRequest(body["ingredientIds"], body["start"], body["end"])
             self._json(response)
         else:
-            self._error("'userIngredients' is missing")        
+            self._error("'ingredientIds' is missing")        
 
-    def handleRequest(self, userIngredients):
+    def handleRequest(self, ingredientIds, start, end):
+        ingredients = [','.join(str(x) for x in ingredientIds)]
         vec = vectorize.Vectorizer()
         vec.connect_database()
 
         vec.recipe_embedding()
-        result = vec.recommend_recipes([userIngredients])
-
+        result = vec.recommend_recipes(ingredients, start, end)
+        print(result)
         vec.disconnect_database()
         return result
 

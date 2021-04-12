@@ -23,8 +23,18 @@ router.post('picture', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, {'text': text});
 }));
 
-router.post('/recommend', fctl.nonLoginWrapper(async (req, res, next) => {
-    const data = await service.recommendRecipes(req.body.userIngredients);
+router.post('/recommend', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['ingredientIds']);
+	const ingredientIds = req.body.ingredientIds
+	const start = util.isEmpty(req.body.start) ? null : req.body.start;
+	const end = util.isEmpty(req.body.end) ? null : req.body.end;
+    const data = await service.recommendRecipes(ingredientIds, start, end);
+    return fctl.send(req, res, hsc.HTTP_OK, data);
+}));
+
+router.post('/recipe', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeIds']);
+    const data = await service.getRecipes(req.body.recipeIds);
     return fctl.send(req, res, hsc.HTTP_OK, data);
 }));
 
@@ -55,6 +65,34 @@ router.delete('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) =
     util.validate(req.body, ['ingredientId']);
 	const ingredientId = req.body.ingredientId;
 	await service.deleteUserIngredient(req.session.user.id, ingredientId);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.get('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const recipes = await service.getUserRecipes(req.session.user.id);
+	return fctl.send(req, res, hsc.HTTP_OK, recipes);
+}));
+
+router.post('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeId']);
+	const recipeId = req.body.recipeId;
+	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
+	await service.insertUserRecipe(req.session.user.id, recipeId, putDate);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.put('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['dietId', 'putDate']);
+	const dietId = req.body.dietId;
+	const putDate = req.body.putDate;
+	await service.updateUserRecipe(req.session.user.id, dietId, putDate);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.delete('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['dietId']);
+	const dietId = req.body.dietId;
+	await service.deleteUserRecipe(req.session.user.id, dietId);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
