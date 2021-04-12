@@ -1,5 +1,5 @@
 import { InputField } from "../index";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 import axios from "axios";
@@ -17,6 +17,7 @@ const useStyles = makeStyles({
 const Login = () => {
     const [userId, setUserId] = useState("");
     const [userPw, setUserPw] = useState("");
+    const history = useHistory();
     const handleLogin = async () => {
         if (!userId || !userPw) {
             alert("로그인 정보를 입력해 주세요.");
@@ -27,10 +28,11 @@ const Login = () => {
                 userId: userId,
                 password: userPw
             });
+            history.push("/info");
             console.log(result);
         } catch (e) {
             console.log(e);
-            alert("일시적 오류가 발생했습니다. 잠시 후 다시 시도해 주세요");
+            alert("아이디와 비밀번호를 다시 확인해주세요.");
         }
     };
     const classes = useStyles();
