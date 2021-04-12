@@ -23,7 +23,7 @@ const Login = () => {
             return;
         }
         try {
-            const result = await axios.post("https://jeto.ga/food-manager/api/user", {
+            const result = await axios.post("/api/user", {
                 id: userId,
                 password: userPw
             });
@@ -39,7 +39,7 @@ const Login = () => {
                 <img
                     className="login-icon"
                     alt="logo"
-                    src={process.env.PUBLIC_URL + "images/icon.png"}
+                    src={process.env.PUBLIC_URL + "/images/icon.png"}
                 ></img>
                 <b className="login-title">Food Manager</b>
             </div>
