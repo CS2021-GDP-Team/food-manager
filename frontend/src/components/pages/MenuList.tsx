@@ -8,17 +8,17 @@ import axios from "axios";
 
 const MenuList = ({ menu }: any) => {
     const history = useHistory();
-    // useEffect(() => {
-    //     const getList = async () => {
-    //         try {
-    //             const data = await axios.get("/api/ingredients");
-    //             console.log(data);
-    //         } catch {
-    //             history.push("/login");
-    //         }
-    //     };
-    //     getList();
-    // });
+    useEffect(() => {
+        const getList = async () => {
+            try {
+                const data = await axios.get("/api/ingredients");
+                console.log(data);
+            } catch {
+                history.push("/login");
+            }
+        };
+        getList();
+    });
     return (
         <div className="list-container">
             <div id="list-header">
