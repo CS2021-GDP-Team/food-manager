@@ -23,13 +23,13 @@ const Login = () => {
             return;
         }
         try {
-            const result = await axios.post("/api/user", {
+            const result = await axios.post("/food-manager/api/login", {
                 id: userId,
                 password: userPw
             });
             console.log(result);
         } catch {
-            alert("접속 오류가 발생했습니다. 잠시 후 다시 시도해 주세요");
+            alert("일시적 오류가 발생했습니다. 잠시 후 다시 시도해 주세요");
         }
     };
     const classes = useStyles();
