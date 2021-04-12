@@ -13,7 +13,8 @@ const MenuList = ({ menu }: any) => {
             try {
                 const data = await axios.get("/food-manager/api/ingredients");
                 console.log(data);
-            } catch {
+            } catch (e) {
+                console.log(e);
                 history.push("/login");
             }
         };

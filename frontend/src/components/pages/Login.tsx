@@ -24,11 +24,12 @@ const Login = () => {
         }
         try {
             const result = await axios.post("/food-manager/api/login", {
-                id: userId,
+                userId: userId,
                 password: userPw
             });
             console.log(result);
-        } catch {
+        } catch (e) {
+            console.log(e);
             alert("일시적 오류가 발생했습니다. 잠시 후 다시 시도해 주세요");
         }
     };
