@@ -28,7 +28,7 @@ const MenuList = () => {
             }
         };
         getList();
-    }, [data, history]);
+    });
     return (
         <div className="list-container">
             <div id="list-header">
