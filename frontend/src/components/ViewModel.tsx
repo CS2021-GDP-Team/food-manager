@@ -20,7 +20,7 @@ const ViewModel: React.FC = () => {
             <CssBaseline>
                 <Paper className="main-container" elevation={10}>
                     <div className="main-content">
-                        <Route exact path="/" render={() => <MenuList menu={menuList} />} />
+                        <Route exact path="/" render={() => <MenuList />} />
                         <Route path="/picture" render={() => <Picture />} />
                         <Route path="/info" render={() => <Info />} />
                         <Route path="/recipe" render={() => <RecipeList />} />
