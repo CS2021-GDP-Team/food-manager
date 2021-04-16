@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { IconButton, List } from "@material-ui/core";
 import { SwapVert, Search } from "@material-ui/icons";
@@ -6,12 +6,21 @@ import { grey } from "@material-ui/core/colors";
 import { ListItem } from "../index";
 import axios from "axios";
 
-const MenuList = ({ menu }: any) => {
+interface itemProps {
+    id: number;
+    user_id: number;
+    ingredient_id: number;
+    put_date: string;
+    expire_date: string;
+}
+
+const MenuList = () => {
     const history = useHistory();
+    const [data, setData] = useState<Array<itemProps> | null>(null);
     useEffect(() => {
         const getList = async () => {
             try {
-                const data = await axios.get("/food-manager/api/ingredients");
+                setData((await axios.get("/food-manager/api/user_fridge")).data);
                 console.log(data);
             } catch (e) {
                 console.log(e);
@@ -19,7 +28,7 @@ const MenuList = ({ menu }: any) => {
             }
         };
         getList();
-    });
+    }, [data, history]);
     return (
         <div className="list-container">
             <div id="list-header">
@@ -32,14 +41,16 @@ const MenuList = ({ menu }: any) => {
                 </IconButton>
             </div>
             <List id="list-items">
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
+                {data &&
+                    data.map((value) => (
+                        <ListItem
+                            id={value.id}
+                            user_id={value.user_id}
+                            ingredient_id={value.ingredient_id}
+                            put_date={value.put_date}
+                            expire_date={value.expire_date}
+                        />
+                    ))}
             </List>
         </div>
     );
