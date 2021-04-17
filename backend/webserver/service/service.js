@@ -2,11 +2,24 @@ const users = require('../dao/users.js');
 const recipes = require('../dao/recipes.js');
 const fridges = require('../dao/fridges.js');
 const diets = require('../dao/diets.js')
+const favorites = require('../dao/favorites.js')
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 const fetch = require("node-fetch")
 
 class Service {}
+
+Service.createUser = async (userId, password) => {
+	try{
+		await users.createUser(userId, password);
+	} catch (e){
+		throw new APIError(sc.HTTP_BAD_REQUEST, e.message);
+	}
+}
+
+Service.deleteUser = async (id) => {
+	await users.deleteUser(id);
+}
 
 Service.getUser = async (userId, password) => {
     const userFound = await users.getUser(userId, password);
@@ -71,5 +84,19 @@ Service.deleteUserRecipe = async (userId, dietId) => {
 	await diets.deleteRecipe(userId, dietId);
 }
 
+Service.getFavorites = async (userId) => {
+	return await favorites.getFavoritesByUserId(userId);
+}
+
+Service.insertFavorite = async (userId, recipeId, score) => {
+	await favorites.deleteFavorite(userId, recipeId);
+	if (score != 0) await favorites.insertFavorite(userId, recipeId, score);
+}
+
+Service.deleteFavorite = async (userId, recipeId) => {
+	await favorites.deleteFavorite(userId, recipeId);
+}
+
 Object.freeze(Service);
 module.exports = Service;
+

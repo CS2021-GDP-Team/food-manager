@@ -5,6 +5,18 @@ const hsc = require('../enums/httpstatuscode.js');
 
 const router = require('express').Router();
 
+router.post('/user', fctl.nonLoginWrapper(async (req, res, next) => {
+    util.validate(req.body, ['userId', 'password']);
+    await service.createUser(req.body.userId, req.body.password);
+    return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.delete('/user', fctl.loginRequiredWrapper(async (req, res, next) => {
+	await service.deleteUser(req.session.user.id);
+    req.session.destroy();
+    return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
 router.post('/login', fctl.nonLoginWrapper(async (req, res, next) => {
     util.validate(req.body, ['userId', 'password']);
     req.session.user = await service.getUser(req.body.userId, req.body.password);
@@ -93,6 +105,26 @@ router.delete('/user_diet', fctl.loginRequiredWrapper(async (req, res, next) => 
     util.validate(req.body, ['dietId']);
 	const dietId = req.body.dietId;
 	await service.deleteUserRecipe(req.session.user.id, dietId);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.get('/favorite', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const favorites = await service.getFavorites(req.session.user.id);
+	return fctl.send(req, res, hsc.HTTP_OK, favorites);
+}));
+
+router.post('/favorite', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeId', 'score']);
+	const recipeId = req.body.recipeId;
+	const score = req.body.score;
+	await service.insertFavorite(req.session.user.id, recipeId, score);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.delete('/favorite', fctl.loginRequiredWrapper(async (req, res, next) => {
+    util.validate(req.body, ['recipeId']);
+	const recipeId = req.body.recipeId;
+	await service.deleteFavorite(req.session.user.id, recipeId);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
