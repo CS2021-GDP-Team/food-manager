@@ -37,8 +37,6 @@ fi
 # 회원탈퇴
 result=$(curl -i \
 "$1/api/user" -X DELETE \
--d '{"userId":"jaeho","password":"jaeho12"}' \
--H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
 

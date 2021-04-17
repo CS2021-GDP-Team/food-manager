@@ -20,8 +20,10 @@ if [[ "$status_code" -ne 200 ]] ; then
 fi
 
 result=$(curl -i \
-"$1/api/info" -X GET \
---cookie-jar .cookies.txt --silent)
+"$1/api/recipe" -X POST \
+-H 'content-type: application/json' \
+-d '{"recipeIds":[1,25,100]}' \
+--cookie .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
 
 status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
