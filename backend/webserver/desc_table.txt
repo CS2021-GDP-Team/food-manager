@@ -8,6 +8,7 @@ MariaDB [food_manager]> desc fridges;
 | put_date      | datetime | NO   |     | NULL    |                |
 | expire_date   | datetime | YES  |     | NULL    |                |
 +---------------+----------+------+-----+---------+----------------+
+* user_id 와 recipe_id는 unique key.
 
 MariaDB [food_manager]> desc diets;
 +-----------+----------+------+-----+---------+----------------+
@@ -18,6 +19,7 @@ MariaDB [food_manager]> desc diets;
 | recipe_id | int(11)  | NO   | MUL | NULL    |                |
 | put_date  | datetime | NO   |     | NULL    |                |
 +-----------+----------+------+-----+---------+----------------+
+* user_id 와 recipe_id는 unique key.
 
 MariaDB [food_manager]> desc ingredients;
 +-------+-----------+------+-----+---------+----------------+
@@ -33,7 +35,7 @@ MariaDB [food_manager]> desc users;
 | Field    | Type         | Null | Key | Default | Extra          |
 +----------+--------------+------+-----+---------+----------------+
 | id       | int(11)      | NO   | PRI | NULL    | auto_increment |
-| user_id  | varchar(255) | NO   |     | NULL    |                |
+| user_id  | varchar(255) | NO   | UNI | NULL    |                |
 | password | varchar(255) | NO   |     | NULL    |                |
 +----------+--------------+------+-----+---------+----------------+
 
@@ -46,6 +48,7 @@ MariaDB [food_manager]> desc recipe_ingredients;
 | ingredient_id | int(11) | NO   | MUL | NULL    |                |
 | grams         | int(11) | YES  |     | NULL    |                |
 +---------------+---------+------+-----+---------+----------------+
+* recipe_id 와 ingredient_id 는 unique key.
 
 MariaDB [food_manager]> desc recipes;
 +---------+-----------+------+-----+---------+----------------+
@@ -60,3 +63,15 @@ MariaDB [food_manager]> desc recipes;
 | fat     | int(11)   | YES  |     | NULL    |                |
 | salt    | int(11)   | YES  |     | NULL    |                |
 +---------+-----------+------+-----+---------+----------------+
+
+MariaDB [food_manager]> desc favorites;
++-----------+---------+------+-----+---------+----------------+
+| Field     | Type    | Null | Key | Default | Extra          |
++-----------+---------+------+-----+---------+----------------+
+| id        | int(11) | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11) | NO   | MUL | NULL    |                |
+| recipe_id | int(11) | NO   | MUL | NULL    |                |
+| score     | int(11) | NO   |     | NULL    |                |
++-----------+---------+------+-----+---------+----------------+
+* user_id 와 recipe_id 는 unique key.
+
