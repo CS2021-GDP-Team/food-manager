@@ -1,11 +1,25 @@
 const users = require('../dao/users.js');
 const recipes = require('../dao/recipes.js');
 const fridges = require('../dao/fridges.js');
+const diets = require('../dao/diets.js')
+const favorites = require('../dao/favorites.js')
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 const fetch = require("node-fetch")
 
 class Service {}
+
+Service.createUser = async (userId, password) => {
+	try{
+		await users.createUser(userId, password);
+	} catch (e){
+		throw new APIError(sc.HTTP_BAD_REQUEST, e.message);
+	}
+}
+
+Service.deleteUser = async (id) => {
+	await users.deleteUser(id);
+}
 
 Service.getUser = async (userId, password) => {
     const userFound = await users.getUser(userId, password);
@@ -15,14 +29,14 @@ Service.getUser = async (userId, password) => {
     return userFound;
 }
 
-Service.recommendRecipes = async (userIngredients) => {
+Service.recommendRecipes = async (ingredientIds, start, end) => {
     // 파이썬 서버 연결 -> 레시피 아이디 반환
     const response = await fetch('http://localhost:8080', {
         method: 'POST',
         headers:{
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"userIngredients":userIngredients})
+        body: JSON.stringify({"ingredientIds":ingredientIds, "start":start, "end":end})
     })
 	const recipeIds = await response.json();
 
@@ -32,6 +46,10 @@ Service.recommendRecipes = async (userIngredients) => {
         throw new APIError(sc.HTTP_BAD_REQUEST, '레시피를 찾을 수 없습니다.')
     }
     return recipesFound;
+}
+
+Service.getRecipes = async (recipeIds) => {
+	return await recipes.getRecipes(recipeIds);
 }
 
 Service.getUserIngredients = async (userId) => {
@@ -50,5 +68,35 @@ Service.deleteUserIngredient = async (userId, ingredientId) => {
 	await fridges.deleteIngredient(userId, ingredientId);
 }
 
+Service.getUserRecipes = async (userId) => {
+	return await diets.getRecipesByUserId(userId);
+}
+
+Service.insertUserRecipe = async (userId, recipeId, putDate) => {
+	await diets.insertRecipe(userId, recipeId, putDate);
+}
+
+Service.updateUserRecipe = async (userId, dietId, putDate) => {
+	await diets.updateRecipe(userId, dietId, putDate);
+}
+
+Service.deleteUserRecipe = async (userId, dietId) => {
+	await diets.deleteRecipe(userId, dietId);
+}
+
+Service.getFavorites = async (userId) => {
+	return await favorites.getFavoritesByUserId(userId);
+}
+
+Service.insertFavorite = async (userId, recipeId, score) => {
+	await favorites.deleteFavorite(userId, recipeId);
+	if (score != 0) await favorites.insertFavorite(userId, recipeId, score);
+}
+
+Service.deleteFavorite = async (userId, recipeId) => {
+	await favorites.deleteFavorite(userId, recipeId);
+}
+
 Object.freeze(Service);
 module.exports = Service;
+
