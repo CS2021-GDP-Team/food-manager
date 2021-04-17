@@ -1,10 +1,16 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-
+import sys
+import traceback
 import vectorize
 
 host = "localhost"
 post = 8080
+
+# 서버 결과 출력을 위해 추가
+def flush():
+    sys.stdout.flush()
+    sys.stderr.flush()
 
 class RecommendHandler(BaseHTTPRequestHandler):
     def _set_headers(self, status):
@@ -15,6 +21,7 @@ class RecommendHandler(BaseHTTPRequestHandler):
     def _json(self, data):
         self._set_headers(200)
         self.wfile.write(bytes(json.dumps(data), 'utf-8'))
+        flush()
 
     def _error(self, err_msg):
         self._set_headers(400)
@@ -22,6 +29,7 @@ class RecommendHandler(BaseHTTPRequestHandler):
             "message" : err_msg
         }
         self.wfile.write(bytes(json.dumps(response), 'utf-8'))
+        flush()
 
     def do_GET(self):
         data = "server test"
@@ -34,12 +42,18 @@ class RecommendHandler(BaseHTTPRequestHandler):
 
         content_length = int(self.headers['Content-Length'])
         body = json.loads(self.rfile.read(content_length))
-        if "ingredientIds" in body:
-            print(body)
-            response = self.handleRequest(body["ingredientIds"], body["start"], body["end"])
-            self._json(response)
-        else:
-            self._error("'ingredientIds' is missing")        
+        try:
+            if "ingredientIds" in body:
+                print(body)
+                response = self.handleRequest(body["ingredientIds"], body["start"], body["end"])
+                self._json(response)
+            else:
+                self._error("'ingredientIds' is missing")        
+        except:
+            print()
+            traceback.print_exc()
+            print()
+            flush()
 
     def handleRequest(self, ingredientIds, start, end):
         ingredients = [','.join(str(x) for x in ingredientIds)]
@@ -56,6 +70,7 @@ class RecommendHandler(BaseHTTPRequestHandler):
 if __name__ == "__main__":        
     httpd = HTTPServer((host, post), RecommendHandler)
     print("Server started on http://%s:%s" % (host, post))
+    flush()
 
     try:
         httpd.serve_forever()
