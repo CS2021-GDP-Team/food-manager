@@ -4,7 +4,6 @@ import Avatar from "@material-ui/core/Avatar";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 //TODO : Badge이벤트처리
-
 const StyledBadge = withStyles({
     badge: {
         background: "linear-gradient(45deg, #00d6af 30%, #00c3cf 90%)",
