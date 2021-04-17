@@ -12,3 +12,4 @@ export { default as PictureButton } from "./public/PictureButton";
 export { default as ProfilePicture } from "./public/ProfilePicture";
 export { default as RecipeItem } from "./public/RecipeItem";
 export { default as Modal } from "./public/Modal";
+export { default as DecodeBarcode } from "../functions/DecodeBarcode";
