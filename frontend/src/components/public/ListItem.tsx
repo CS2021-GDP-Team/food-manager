@@ -29,6 +29,17 @@ const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemPro
     const handleClose = () => {
         setOpen(false);
     };
+    // 유통기한 남은일 계산 함수
+    let remainDate: number = 0;
+    const handleRemainDate = (): Number => {
+        const [reg_y, reg_m, reg_d] = put_date.slice(0, 10).split("-");
+        const [exp_y, exp_m, exp_d] = expire_date.slice(0, 10).split("-");
+        let put = new Date(Number(reg_y), Number(reg_m), Number(reg_d));
+        let exp = new Date(Number(exp_y), Number(exp_m), Number(exp_d));
+        remainDate = (Number(exp) - Number(put)) / 86400000;
+        return remainDate;
+    };
+
     return (
         <>
             <ItemBox button onClick={() => setOpen(true)}>
@@ -44,8 +55,20 @@ const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemPro
                         <p className="listitem-name">유기농 방울 토마토</p>
                         <p className="listitem-type">방울토마토</p>
                         <div className="remain-dates">
-                            <b className="expire-date">2021.3.24</b>
-                            <b className="remain-date">4일 남음</b>
+                            <b className="expire-date">
+                                {expire_date ? expire_date.slice(0, 10) : "enter exp date"}
+                            </b>
+                            {expire_date ? (
+                                <>
+                                    {handleRemainDate() > 5 ? (
+                                        <b className="remain-date">{remainDate}일 남음</b>
+                                    ) : (
+                                        <b className="remain-date-warn">{remainDate}일 남음</b>
+                                    )}
+                                </>
+                            ) : (
+                                <b className="remain-date-warn">no date</b>
+                            )}
                         </div>
                     </div>
                 </div>
