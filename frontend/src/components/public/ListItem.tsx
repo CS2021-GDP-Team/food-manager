@@ -32,9 +32,9 @@ const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemPro
     // 유통기한 남은일 계산 함수
     let remainDate: number = 0;
     const handleRemainDate = (): Number => {
-        const [reg_y, reg_m, reg_d] = put_date.slice(0, 10).split("-");
+        const today = new Date(); // 오늘 날짜
         const [exp_y, exp_m, exp_d] = expire_date.slice(0, 10).split("-");
-        let put = new Date(Number(reg_y), Number(reg_m), Number(reg_d));
+        let put = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
         let exp = new Date(Number(exp_y), Number(exp_m), Number(exp_d));
         remainDate = (Number(exp) - Number(put)) / 86400000;
         return remainDate;
@@ -74,7 +74,13 @@ const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemPro
                 </div>
             </ItemBox>
             <Divider style={{ backgroundColor: grey[600] }} />
-            <Modal open={open} handleClose={handleClose} />
+            <Modal
+                open={open}
+                ingId={ingredient_id}
+                handleClose={handleClose}
+                regDate={put_date.slice(0, 10)}
+                expDate={expire_date.slice(0, 10)}
+            />
         </>
     );
 };
