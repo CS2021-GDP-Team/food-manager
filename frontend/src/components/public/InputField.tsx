@@ -7,6 +7,8 @@ interface InputProps {
     type?: string;
     font_size?: string;
     setValue?: any;
+    defaultValue?: any;
+    fullWidth?: boolean;
 }
 const CssTextField = withStyles({
     root: {
@@ -42,11 +44,36 @@ const SmallCssTextField = withStyles({
         }
     }
 })(Input);
-const InputField = ({ text, hint, type, font_size, setValue }: InputProps) => {
+const FullCssTextField = withStyles({
+    root: {
+        "&:before": {
+            borderBottom: "1px solid white"
+        },
+        "&:after": {
+            borderBottom: "1px solid #00d6af"
+        },
+        marginBottom: "12px",
+        color: "white",
+        width: "100%",
+        fontSize: "1rem",
+        "& input": {
+            textAlign: "center"
+        }
+    }
+})(Input);
+const InputField = ({
+    text,
+    hint,
+    type,
+    font_size,
+    setValue,
+    defaultValue,
+    fullWidth = false
+}: InputProps) => {
     return (
         <>
-            {font_size ? (
-                <SmallCssTextField
+            {fullWidth ? (
+                <FullCssTextField
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setValue(e.target.value);
                     }}
@@ -57,20 +84,40 @@ const InputField = ({ text, hint, type, font_size, setValue }: InputProps) => {
                         </InputAdornment>
                     }
                     type={type}
+                    defaultValue={defaultValue}
                 />
             ) : (
-                <CssTextField
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setValue(e.target.value);
-                    }}
-                    placeholder={hint}
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <b>{text}</b>
-                        </InputAdornment>
-                    }
-                    type={type}
-                />
+                <>
+                    {font_size ? (
+                        <SmallCssTextField
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                setValue(e.target.value);
+                            }}
+                            placeholder={hint}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <b>{text}</b>
+                                </InputAdornment>
+                            }
+                            type={type}
+                            defaultValue={defaultValue}
+                        />
+                    ) : (
+                        <CssTextField
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                setValue(e.target.value);
+                            }}
+                            placeholder={hint}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <b>{text}</b>
+                                </InputAdornment>
+                            }
+                            type={type}
+                            defaultValue={defaultValue}
+                        />
+                    )}
+                </>
             )}
         </>
     );

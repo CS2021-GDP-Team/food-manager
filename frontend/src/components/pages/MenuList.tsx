@@ -51,6 +51,13 @@ const MenuList = () => {
                             expire_date={value.expire_date}
                         />
                     ))}
+                {/* <ListItem
+                    id={1}
+                    user_id={2}
+                    ingredient_id={1}
+                    put_date={"2021-04-19"}
+                    expire_date={"2021-04-22"}
+                /> */}
             </List>
         </div>
     );
