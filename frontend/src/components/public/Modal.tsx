@@ -56,8 +56,8 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
         await axios
             .put("/food-manager/api/user_fridge", {
                 ingredientId: ingId,
-                putDate: new Date(_regDate).getTime(),
-                expireDate: new Date(_expDate).getTime()
+                putDate: new Date(_regDate).getTime() / 1000,
+                expireDate: new Date(_expDate).getTime() / 1000
             })
             .then(() => {
                 handleClose();
