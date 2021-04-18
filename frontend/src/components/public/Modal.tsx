@@ -40,8 +40,8 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
     // 삭제 api 요청
     const handleDelete = async () => {
         await axios
-            .post("/food-manager/api/user_fridge", {
-                ingredientId: ingId
+            .delete("/food-manager/api/user_fridge", {
+                data: { ingredientId: ingId }
             })
             .then(() => {
                 handleClose();
@@ -55,6 +55,7 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
     const handleDate = async () => {
         await axios
             .put("/food-manager/api/user_fridge", {
+                ingredientId: ingId,
                 putDate: new Date(_regDate).getTime(),
                 expireDate: new Date(_expDate).getTime()
             })
