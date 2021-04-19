@@ -1,14 +1,17 @@
 import React, { useState, createContext, useContext, Dispatch } from "react";
 
-const MenuListContext = createContext<string[] | null>(null);
-const MenuListDispatchContext = createContext<Dispatch<string[]> | null>(null);
-const UserIdContext = createContext<string>("");
-const UserIdDispatchContext = createContext<Dispatch<string>>(String);
-const UserPwContext = createContext<string>("");
-const UserPwDispatchContext = createContext<Dispatch<string>>(String);
 // =========  menuList
+interface itemProps {
+    id: number;
+    user_id: number;
+    ingredient_id: number;
+    put_date: string;
+    expire_date: string;
+}
+const MenuListContext = createContext<itemProps[]>([]);
+const MenuListDispatchContext = createContext<Dispatch<itemProps[]>>(Array);
 export const MenuListContextProvider = ({ children }: any) => {
-    const [menuList, setMenuList] = useState(["안녕하세요"]);
+    const [menuList, setMenuList] = useState<itemProps[]>([]);
 
     return (
         <MenuListContext.Provider value={menuList}>
@@ -30,6 +33,9 @@ export const useMenuListDispatchContext = () => {
 };
 // =========  menuList
 // =========  ID
+
+const UserIdContext = createContext<string>("");
+const UserIdDispatchContext = createContext<Dispatch<string>>(String);
 export const UserIDContextProvider = ({ children }: any) => {
     const [userId, setUserId] = useState("");
 
@@ -53,6 +59,8 @@ export const useUserIdDispatchContext = () => {
 };
 // =========  ID
 // =========  PW
+const UserPwContext = createContext<string>("");
+const UserPwDispatchContext = createContext<Dispatch<string>>(String);
 export const UserPwContextProvider = ({ children }: any) => {
     const [userPw, setUserPw] = useState("");
 
