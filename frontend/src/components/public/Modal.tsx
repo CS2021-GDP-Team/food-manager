@@ -5,6 +5,7 @@ import { red, grey } from "@material-ui/core/colors";
 import { InputField } from "../index";
 import { Delete, Close, Create } from "@material-ui/icons";
 import axios from "axios";
+import { useMenuListContext, useMenuListDispatchContext } from "../Model";
 
 interface modalProps {
     open: boolean;
@@ -37,6 +38,7 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
     const classes = useStyles();
     const [_regDate, setRegDate] = useState<string>(regDate);
     const [_expDate, setExpDate] = useState<string>(expDate);
+    const [menuList, setMenuList] = [useMenuListContext(), useMenuListDispatchContext()];
     // 삭제 api 요청
     const handleDelete = async () => {
         await axios
@@ -44,6 +46,7 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
                 data: { ingredientId: ingId }
             })
             .then(() => {
+                setMenuList(menuList.filter((menu) => menu.ingredient_id !== ingId));
                 handleClose();
             })
             .catch((e) => {
@@ -59,7 +62,8 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
                 putDate: new Date(_regDate).getTime() / 1000,
                 expireDate: new Date(_expDate).getTime() / 1000
             })
-            .then(() => {
+            .then(async () => {
+                setMenuList((await axios.get("/food-manager/api/user_fridge")).data);
                 handleClose();
             })
             .catch((e) => {

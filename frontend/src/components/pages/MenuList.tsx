@@ -5,23 +5,15 @@ import { SwapVert, Search } from "@material-ui/icons";
 import { grey } from "@material-ui/core/colors";
 import { ListItem } from "../index";
 import axios from "axios";
-
-interface itemProps {
-    id: number;
-    user_id: number;
-    ingredient_id: number;
-    put_date: string;
-    expire_date: string;
-}
+import { useMenuListContext, useMenuListDispatchContext } from "../Model";
 
 const MenuList = () => {
     const history = useHistory();
-    const [data, setData] = useState<Array<itemProps> | null>(null);
+    const [menuList, setMenuList] = [useMenuListContext(), useMenuListDispatchContext()];
     useEffect(() => {
         const getList = async () => {
             try {
-                setData((await axios.get("/food-manager/api/user_fridge")).data);
-                console.log(data);
+                setMenuList((await axios.get("/food-manager/api/user_fridge")).data);
             } catch (e) {
                 console.log(e);
                 history.push("/login");
@@ -41,16 +33,15 @@ const MenuList = () => {
                 </IconButton>
             </div>
             <List id="list-items">
-                {data &&
-                    data.map((value) => (
-                        <ListItem
-                            id={value.id}
-                            user_id={value.user_id}
-                            ingredient_id={value.ingredient_id}
-                            put_date={value.put_date}
-                            expire_date={value.expire_date}
-                        />
-                    ))}
+                {menuList.map((value) => (
+                    <ListItem
+                        id={value.id}
+                        user_id={value.user_id}
+                        ingredient_id={value.ingredient_id}
+                        put_date={value.put_date}
+                        expire_date={value.expire_date}
+                    />
+                ))}
                 {/* <ListItem
                     id={1}
                     user_id={2}
