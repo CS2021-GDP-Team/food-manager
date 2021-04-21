@@ -22,8 +22,8 @@ fi
 result=$(curl -i \
 "$1/api/recommend" -X POST \
 -H 'content-type: application/json' \
--d '{"userIngredients":[0,1,2,3,4,7]}' \
---cookie-jar .cookies.txt --silent)
+-d '{"ingredientIds":[0,1,2,3,4,7]}' \
+--cookie .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
 
 status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
