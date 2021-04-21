@@ -49,11 +49,10 @@ class RecommendHandler(BaseHTTPRequestHandler):
                 self._json(response)
             else:
                 self._error("'ingredientIds' is missing")        
-        except:
+        except Exception as e:
             print()
             traceback.print_exc()
-            print()
-            flush()
+            self._error(f"An exception occured! e : {e}")        
 
     def handleRequest(self, ingredientIds, start, end):
         ingredients = [','.join(str(x) for x in ingredientIds)]
