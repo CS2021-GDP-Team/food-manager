@@ -26,12 +26,12 @@ const MenuList = () => {
         order
             ? setMenuList(
                   menuList.sort((a, b): number => {
-                      return Number(a.expire_date) - Number(b.expire_date);
+                      return +new Date(a.expire_date) - +new Date(b.expire_date);
                   })
               )
             : setMenuList(
                   menuList.sort((a, b): number => {
-                      return Number(b.expire_date) - Number(a.expire_date);
+                      return +new Date(b.expire_date) - +new Date(a.expire_date);
                   })
               );
         order = !order;
