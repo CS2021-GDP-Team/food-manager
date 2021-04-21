@@ -21,6 +21,21 @@ const MenuList = () => {
         };
         getList();
     }, []);
+    let order: boolean = true;
+    const sortByExp = () => {
+        order
+            ? setMenuList(
+                  menuList.sort((a, b): number => {
+                      return Number(a.expire_date) - Number(b.expire_date);
+                  })
+              )
+            : setMenuList(
+                  menuList.sort((a, b): number => {
+                      return Number(b.expire_date) - Number(a.expire_date);
+                  })
+              );
+        order = !order;
+    };
     return (
         <div className="list-container">
             <div id="list-header">
@@ -28,7 +43,7 @@ const MenuList = () => {
                     <input></input>
                     <Search id="list-icon" />
                 </div>
-                <IconButton aria-label="sort">
+                <IconButton aria-label="sort" onClick={sortByExp}>
                     <SwapVert style={{ color: grey[50], fontSize: 30 }} />
                 </IconButton>
             </div>
