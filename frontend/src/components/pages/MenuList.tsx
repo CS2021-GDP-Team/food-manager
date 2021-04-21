@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { memo, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { IconButton, List } from "@material-ui/core";
 import { SwapVert, Search } from "@material-ui/icons";
@@ -21,7 +21,7 @@ const MenuList = () => {
         };
         getList();
     }, []);
-    let order: boolean = true;
+    const [order, setOrder] = useState<boolean>(true);
     const sortByExp = () => {
         order
             ? setMenuList(
@@ -34,7 +34,7 @@ const MenuList = () => {
                       return +new Date(b.expire_date) - +new Date(a.expire_date);
                   })
               );
-        order = !order;
+        setOrder(!order);
     };
     return (
         <div className="list-container">
@@ -69,4 +69,4 @@ const MenuList = () => {
     );
 };
 
-export default MenuList;
+export default memo(MenuList);
