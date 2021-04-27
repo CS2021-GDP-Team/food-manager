@@ -10,7 +10,7 @@ class Vectorizer:
         self.config = {
             'user': os.environ["DBID"],
             'password': os.environ["DBPW"],
-            'host': '127.0.0.1',
+            'host': os.environ["DBHOST"],
             'database': 'food_manager',
         }
         self.view_name = "ri_view"
