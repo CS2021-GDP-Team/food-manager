@@ -3,8 +3,6 @@ import { PictureButton, InputField } from "../index";
 import { Button, makeStyles } from "@material-ui/core";
 import axios from "axios";
 
-// TODO : category 대신 현재 시간으로 바꾸기, 식자재명 -> 식자재 ID 변환 API 필요
-
 const useStyles = makeStyles({
     root: {
         width: "80%",
@@ -15,20 +13,35 @@ const useStyles = makeStyles({
     }
 });
 
+function getCurrentDate() {
+    var time = new Date(),
+        month = "" + (time.getMonth() + 1),
+        day = "" + time.getDate(),
+        year = time.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+}
+
 const Picture = () => {
     const [ingredient, setIngredient] = useState("");
-    const [date, setDate] = useState(null);
-    const [category, setCategory] = useState("");
+    const [expDate, setExpDate] = useState(getCurrentDate());
+    const [putDate, setPutDate] = useState(getCurrentDate());
     const handleAddIngredient = async () => {
         if (!ingredient) {
             alert("식자재 이름을 입력하세요!");
             return;
         }
+        console.log(ingredient);
+        console.log(expDate);
+        console.log(putDate);
         await axios
             .post("/food-manager/api/user_fridge", {
-                ingredient: ingredient,
-                expireDate: date,
-                category: category
+                ingredientId: 99,
+                expireDate: new Date(expDate).getTime() / 1000,
+                putDate: new Date(putDate).getTime() / 1000
             })
             .then((res) => alert("식자재가 등록 되었습니다."))
             .catch((err) => alert("식자재 등록에 실패했습니다."));
@@ -52,13 +65,16 @@ const Picture = () => {
                     text="Exp Date"
                     type="date"
                     hint="Expiration Date"
-                    setValue={setDate}
+                    defaultValue={expDate}
+                    setValue={setExpDate}
                 />
                 <InputField
                     font_size="1rem"
-                    text="Category"
-                    hint="Ingredient Category"
-                    setValue={setCategory}
+                    text="Pur Date"
+                    type="date"
+                    hint="Purchase Date"
+                    defaultValue={putDate}
+                    setValue={setPutDate}
                 />
             </div>
             <div className="picture-submit">
@@ -66,7 +82,7 @@ const Picture = () => {
                     variant="contained"
                     color="primary"
                     className={classes.root}
-                    onChange={handleAddIngredient}
+                    onClick={handleAddIngredient}
                 >
                     Save
                 </Button>
