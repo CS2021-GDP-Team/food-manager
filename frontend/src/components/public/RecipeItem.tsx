@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Divider, Avatar, makeStyles, createStyles, Theme, IconButton } from "@material-ui/core";
 import ItemBox from "@material-ui/core/ListItem";
 import { grey } from "@material-ui/core/colors";
-import { ThumbUpAltOutlined, ThumbUp } from "@material-ui/icons";
+import { ThumbUpAltOutlined, ThumbUp, ThumbDown, ThumbDownAltOutlined } from "@material-ui/icons";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         large: {
@@ -16,7 +16,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const RecipeItem = () => {
     const classes = useStyles();
-    const [like, setLike] = useState(false);
+    const [like, setLike] = useState<number>(0);
+    const handleLike = (type: boolean) => {
+        // true = click like, false= click unlike
+        if (type) {
+            like === 1 ? setLike(0) : setLike(1);
+        } else {
+            like === -1 ? setLike(0) : setLike(-1);
+        }
+    };
+
     return (
         <>
             <ItemBox>
@@ -30,14 +39,26 @@ const RecipeItem = () => {
                     <div className="recipeitem-info">
                         <p className="recipe-title">상큼한 방울토마토 마리네이드</p>
                         <p className="recipe-ingredients">방울토마토, 양파</p>
-
-                        <IconButton style={{ marginLeft: "auto" }} onClick={() => setLike(!like)}>
-                            {like ? (
-                                <ThumbUp style={{ color: grey[50], fontSize: "2rem" }} />
-                            ) : (
-                                <ThumbUpAltOutlined style={{ color: grey[50], fontSize: "2rem" }} />
-                            )}
-                        </IconButton>
+                        <div style={{ marginLeft: "auto" }}>
+                            <IconButton onClick={() => handleLike(true)}>
+                                {like === 1 ? (
+                                    <ThumbUp style={{ color: grey[50], fontSize: "2rem" }} />
+                                ) : (
+                                    <ThumbUpAltOutlined
+                                        style={{ color: grey[50], fontSize: "2rem" }}
+                                    />
+                                )}
+                            </IconButton>
+                            <IconButton onClick={() => handleLike(false)}>
+                                {like === -1 ? (
+                                    <ThumbDown style={{ color: grey[50], fontSize: "2rem" }} />
+                                ) : (
+                                    <ThumbDownAltOutlined
+                                        style={{ color: grey[50], fontSize: "2rem" }}
+                                    />
+                                )}
+                            </IconButton>
+                        </div>
                     </div>
                 </div>
             </ItemBox>
