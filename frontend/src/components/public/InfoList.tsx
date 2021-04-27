@@ -121,49 +121,42 @@ export default function SimpleList() {
                 <Collapse in={likedOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <ListItem>
-                            <ListItemText primary="2021.3.20" />
                             <ListItemText primary="대패삼겹살을 넣은 두부김치" />
                             <IconButton>
                                 <Close className={classes.deleteIcon} />
                             </IconButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemText primary="2021.3.18" />
                             <ListItemText primary="콘꼬노미야키 만들기" />
                             <IconButton>
                                 <Close className={classes.deleteIcon} />
                             </IconButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemText primary="2021.3.11" />
                             <ListItemText primary="밥도둑 반찬 고추장 달걀조림" />
                             <IconButton>
                                 <Close className={classes.deleteIcon} />
                             </IconButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemText primary="2021.3.10" />
                             <ListItemText primary="얼큰한 순두부찌개" />
                             <IconButton>
                                 <Close className={classes.deleteIcon} />
                             </IconButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemText primary="2021.3.8" />
                             <ListItemText primary="리코타치즈 샐러드" />
                             <IconButton>
                                 <Close className={classes.deleteIcon} />
                             </IconButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemText primary="2021.3.7" />
                             <ListItemText primary="야식으로 먹기 좋은 불막창" />
                             <IconButton>
                                 <Close className={classes.deleteIcon} />
                             </IconButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemText primary="2021.3.5" />
                             <ListItemText primary="간단하게 만드는 규동" />
                             <IconButton>
                                 <Close className={classes.deleteIcon} />
