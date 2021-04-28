@@ -46,7 +46,7 @@ class Vectorizer:
         self.cv = CountVectorizer(ngram_range=(1,1))
         self.cv_ing = self.cv.fit_transform(df[self.ingredient_column])
         # print(self.cv.vocabulary_)
-        print("recipe X ingredients:\t",self.cv_ing.shape)
+        # print("recipe X ingredients:\t",self.cv_ing.shape)
 
     def recommend_recipes(self, ingredients, start, end): # form of ingredients: ['ing1,ing2,ing3']
         if (start is None) and (end is None):
@@ -55,9 +55,9 @@ class Vectorizer:
             end = 10
         print(start,"~", end)
         cv_user = self.cv.transform(ingredients)
-        print("user X ingredients:\t",cv_user.shape)
+        # print("user X ingredients:\t",cv_user.shape)
         sim_ing = cosine_similarity(cv_user, self.cv_ing).argsort()[:, ::-1]
-        print("user X recipes: \t",sim_ing.shape)
+        # print("user X recipes: \t",sim_ing.shape)
         
         if sim_ing.shape[1] < end:
             sim_idx = sim_ing[:, start:].reshape(-1)

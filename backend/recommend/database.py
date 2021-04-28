@@ -8,7 +8,7 @@ class DBConnector:
     def __init__(self, host, user, password, database):
         self.database = database
         try:
-            self.cnx = mysql.connector.connect(user=user,password=password,host=host,database=database)
+            self.cnx = mysql.connector.connect(user=user,password=password,host=host,database=database,port=3306,charset='utf8')
         except mysql.connector.Error as err:
             print(err)
         self.curs = self.cnx.cursor()
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     config = {
     'user': os.environ["DBID"],
     'password': os.environ["DBPW"],
-    'host': '127.0.0.1',
+    'host': os.environ["DBHOST"],
     'database': 'food_manager',
     }
     view_name = "ri_view"

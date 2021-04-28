@@ -2,12 +2,12 @@
 
 ## Installation
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Run a API server
 ```
-python server.py
+python3 server.py
 ```
 
 ## Run test codes

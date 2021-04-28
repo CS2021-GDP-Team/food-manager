@@ -1,10 +1,10 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-import sys
+import sys,os
 import traceback
 import vectorize
 
-host = "localhost"
+host = os.environ["DBHOST"]
 post = 8080
 
 # 서버 결과 출력을 위해 추가
