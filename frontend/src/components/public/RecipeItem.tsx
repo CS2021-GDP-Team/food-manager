@@ -3,6 +3,17 @@ import { Divider, Avatar, makeStyles, createStyles, Theme, IconButton } from "@m
 import ItemBox from "@material-ui/core/ListItem";
 import { grey } from "@material-ui/core/colors";
 import { ThumbUpAltOutlined, ThumbUp, ThumbDown, ThumbDownAltOutlined } from "@material-ui/icons";
+
+interface recipeProps {
+    id: number;
+    name: string;
+    source: string | null;
+    kcal: string | null;
+    protein: string | null;
+    carbo: string | null;
+    fat: string | null;
+    salt: string | null;
+}
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         large: {
@@ -14,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const RecipeItem = () => {
+const RecipeItem = ({ id, name, source, kcal, protein, carbo, fat, salt }: recipeProps) => {
     const classes = useStyles();
     const [like, setLike] = useState<number>(0);
     const handleLike = (type: boolean) => {
@@ -37,7 +48,7 @@ const RecipeItem = () => {
                         className={classes.large}
                     />
                     <div className="recipeitem-info">
-                        <p className="recipe-title">상큼한 방울토마토 마리네이드</p>
+                        <p className="recipe-title">{name}</p>
                         <p className="recipe-ingredients">방울토마토, 양파</p>
                         <div style={{ marginLeft: "auto" }}>
                             <IconButton onClick={() => handleLike(true)}>
