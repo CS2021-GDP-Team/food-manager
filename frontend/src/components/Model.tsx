@@ -32,54 +32,37 @@ export const useMenuListDispatchContext = () => {
     return context;
 };
 // =========  menuList
-// =========  ID
-
-const UserIdContext = createContext<string>("");
-const UserIdDispatchContext = createContext<Dispatch<string>>(String);
-export const UserIDContextProvider = ({ children }: any) => {
-    const [userId, setUserId] = useState("");
+// =========  menuList
+interface recipeProps {
+    id: number;
+    name: string;
+    source: string | null;
+    kcal: string | null;
+    protein: string | null;
+    carbo: string | null;
+    fat: string | null;
+    salt: string | null;
+}
+const RecipeListContext = createContext<recipeProps[]>([]);
+const RecipeListDispatchContext = createContext<Dispatch<recipeProps[]>>(Array);
+export const RecipeListContextProvider = ({ children }: any) => {
+    const [recipeList, setRecipeList] = useState<recipeProps[]>([]);
 
     return (
-        <UserIdContext.Provider value={userId}>
-            <UserIdDispatchContext.Provider value={setUserId}>
+        <RecipeListContext.Provider value={recipeList}>
+            <RecipeListDispatchContext.Provider value={setRecipeList}>
                 {children}
-            </UserIdDispatchContext.Provider>
-        </UserIdContext.Provider>
+            </RecipeListDispatchContext.Provider>
+        </RecipeListContext.Provider>
     );
 };
 
-export const useUserIdContext = () => {
-    const context = useContext(UserIdContext);
+export const useRecipeListContext = () => {
+    const context = useContext(RecipeListContext);
     return context;
 };
 
-export const useUserIdDispatchContext = () => {
-    const context = useContext(UserIdDispatchContext);
+export const useRecipeListDispatchContext = () => {
+    const context = useContext(RecipeListDispatchContext);
     return context;
 };
-// =========  ID
-// =========  PW
-const UserPwContext = createContext<string>("");
-const UserPwDispatchContext = createContext<Dispatch<string>>(String);
-export const UserPwContextProvider = ({ children }: any) => {
-    const [userPw, setUserPw] = useState("");
-
-    return (
-        <UserPwContext.Provider value={userPw}>
-            <UserPwDispatchContext.Provider value={setUserPw}>
-                {children}
-            </UserPwDispatchContext.Provider>
-        </UserPwContext.Provider>
-    );
-};
-
-export const useUserPwContext = () => {
-    const context = useContext(UserPwContext);
-    return context;
-};
-
-export const useUserPwDispatchContext = () => {
-    const context = useContext(UserPwDispatchContext);
-    return context;
-};
-// =========  PW

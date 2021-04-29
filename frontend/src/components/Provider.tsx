@@ -1,14 +1,11 @@
-import React from "react";
 import ViewModel from "./ViewModel";
-import { MenuListContextProvider, UserIDContextProvider, UserPwContextProvider } from "./Model";
+import { MenuListContextProvider, RecipeListContextProvider } from "./Model";
 const Provider = () => (
-    <UserIDContextProvider>
-        <UserPwContextProvider>
-            <MenuListContextProvider>
-                <ViewModel />
-            </MenuListContextProvider>
-        </UserPwContextProvider>
-    </UserIDContextProvider>
+    <RecipeListContextProvider>
+        <MenuListContextProvider>
+            <ViewModel />
+        </MenuListContextProvider>
+    </RecipeListContextProvider>
 );
 
 export default Provider;
