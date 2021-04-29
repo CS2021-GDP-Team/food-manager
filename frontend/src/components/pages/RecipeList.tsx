@@ -4,19 +4,35 @@ import { SwapVert } from "@material-ui/icons";
 import { useEffect } from "react";
 import { grey } from "@material-ui/core/colors";
 import { RecipeItem } from "../index";
-import { useRecipeListContext, useRecipeListDispatchContext, useMenuListContext } from "../Model";
+import {
+    useRecipeListContext,
+    useRecipeListDispatchContext,
+    useMenuListContext,
+    useMenuListDispatchContext
+} from "../Model";
 import axios from "axios";
 
 const Recipe = () => {
     const recipeList = useRecipeListContext();
     const setRecipeList = useRecipeListDispatchContext();
+    const setMenuList = useMenuListDispatchContext();
     const ingredientIds: number[] = useMenuListContext().map(({ ingredient_id }) => ingredient_id);
     const history = useHistory();
     useEffect(() => {
         const getList = async () => {
             try {
                 console.log("ingIds", ingredientIds);
-
+                if (ingredientIds.length === 0) {
+                    const getList = async () => {
+                        try {
+                            setMenuList((await axios.get("/food-manager/api/user_fridge")).data);
+                        } catch (e) {
+                            console.log(e);
+                            history.push("/login");
+                        }
+                    };
+                    getList();
+                }
                 setRecipeList(
                     (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
                 );

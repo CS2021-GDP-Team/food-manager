@@ -28,7 +28,7 @@ const Login = () => {
                 userId: userId,
                 password: userPw
             });
-            history.push("/info");
+            history.push("/");
             console.log(result);
         } catch (e) {
             console.log(e);
