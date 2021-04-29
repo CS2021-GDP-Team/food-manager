@@ -14,7 +14,7 @@ const Recipe = () => {
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
     const menuList = useMenuListContext();
     const history = useHistory();
-    const favoriteList: { [index: number]: any } = {};
+    const favoriteList: { [index: number]: number } = {};
     useEffect(() => {
         const getList = async () => {
             try {
@@ -71,7 +71,7 @@ const Recipe = () => {
                             carbo={carbo}
                             fat={fat}
                             salt={salt}
-                            score={favoriteList[id]}
+                            score={favoriteList[id] ? favoriteList[id] : 0}
                         />
                     ))}
                 </List>
