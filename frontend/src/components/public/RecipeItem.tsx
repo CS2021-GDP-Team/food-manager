@@ -3,6 +3,7 @@ import { Divider, Avatar, makeStyles, createStyles, Theme, IconButton } from "@m
 import ItemBox from "@material-ui/core/ListItem";
 import { grey } from "@material-ui/core/colors";
 import { ThumbUpAltOutlined, ThumbUp, ThumbDown, ThumbDownAltOutlined } from "@material-ui/icons";
+import axios from "axios";
 
 interface recipeProps {
     id: number;
@@ -13,6 +14,7 @@ interface recipeProps {
     carbo: string | null;
     fat: string | null;
     salt: string | null;
+    score?: number;
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,9 +27,19 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const RecipeItem = ({ id, name, source, kcal, protein, carbo, fat, salt }: recipeProps) => {
+const RecipeItem = ({
+    id,
+    name,
+    source,
+    kcal,
+    protein,
+    carbo,
+    fat,
+    salt,
+    score = 0
+}: recipeProps) => {
     const classes = useStyles();
-    const [like, setLike] = useState<number>(0);
+    const [like, setLike] = useState<number>(score);
     const handleLike = (type: boolean) => {
         // true = click like, false= click unlike
         if (type) {
@@ -35,6 +47,10 @@ const RecipeItem = ({ id, name, source, kcal, protein, carbo, fat, salt }: recip
         } else {
             like === -1 ? setLike(0) : setLike(-1);
         }
+        axios.post("/api/favorite", { recipeId: id, score: like }).catch((e) => {
+            console.log(e);
+            alert("서버에 오류가 발생했습니다.");
+        });
     };
 
     return (
