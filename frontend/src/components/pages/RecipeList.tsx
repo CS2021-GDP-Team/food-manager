@@ -19,7 +19,6 @@ const Recipe = () => {
         const getList = async () => {
             try {
                 const ingredientIds: number[] = menuList.map(({ ingredient_id }) => ingredient_id);
-                console.log("ingIds", ingredientIds);
                 (await axios.get("/food-manager/api/favorite")).data.map(
                     ({ recipe_id, score }: favoriteProps) => {
                         favoriteList[recipe_id] = score;
@@ -30,7 +29,9 @@ const Recipe = () => {
                 setRecipeList(
                     (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
                 );
-                console.log("recipe_list", recipeList);
+                recipeList.map(({ id }) => {
+                    console.log(id, favoriteList[id]);
+                });
             } catch (e) {
                 console.log(e);
                 alert("레시피를 가져오는중 오류가 발생했습니다.");
