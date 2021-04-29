@@ -42,14 +42,16 @@ const RecipeItem = ({
 
     const classes = useStyles();
     const [like, setLike] = useState<number>(score);
-    const handleLike = (type: boolean) => {
+    const handleLike = async (type: boolean) => {
         // true = click like, false= click unlike
         if (type) {
             like === 1 ? setLike(0) : setLike(1);
         } else {
             like === -1 ? setLike(0) : setLike(-1);
         }
-        axios.post("/food-manager/api/favorite", { recipeId: id, score: like }).catch((e) => {
+        console.log("like", like);
+
+        await axios.post("/food-manager/api/favorite", { recipeId: id, score: like }).catch((e) => {
             console.log(e);
             alert("서버에 오류가 발생했습니다.");
         });
