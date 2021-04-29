@@ -24,7 +24,7 @@ const Recipe = () => {
                         favoriteList[recipe_id] = score;
                     }
                 );
-                console.log(favoriteList);
+                console.log("전", favoriteList);
 
                 setRecipeList(
                     (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
@@ -37,6 +37,7 @@ const Recipe = () => {
         };
         getList();
     }, []);
+    console.log("후", favoriteList);
     return (
         <div className="recipe-container">
             <div id="recipe-header">
@@ -69,7 +70,7 @@ const Recipe = () => {
                             carbo={carbo}
                             fat={fat}
                             salt={salt}
-                            score={favoriteList[id] ? favoriteList[id] : 1}
+                            score={favoriteList[id] ? favoriteList[id] : 0}
                         />
                     ))}
                 </List>
