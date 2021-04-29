@@ -29,9 +29,6 @@ const Recipe = () => {
                 setRecipeList(
                     (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
                 );
-                recipeList.map(({ id }) => {
-                    console.log(id, favoriteList[id]);
-                });
             } catch (e) {
                 console.log(e);
                 alert("레시피를 가져오는중 오류가 발생했습니다.");
@@ -72,7 +69,7 @@ const Recipe = () => {
                             carbo={carbo}
                             fat={fat}
                             salt={salt}
-                            score={favoriteList[id] ? favoriteList[id] : 0}
+                            score={favoriteList[id] ? favoriteList[id] : 1}
                         />
                     ))}
                 </List>
