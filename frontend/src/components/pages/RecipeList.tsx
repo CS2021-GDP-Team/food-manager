@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { List, IconButton, CircularProgress } from "@material-ui/core";
 import { SwapVert } from "@material-ui/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { grey } from "@material-ui/core/colors";
 import { RecipeItem } from "../index";
 import { useRecipeListContext, useRecipeListDispatchContext, useMenuListContext } from "../Model";
@@ -14,17 +14,19 @@ const Recipe = () => {
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
     const menuList = useMenuListContext();
     const history = useHistory();
-    const favoriteList: { [index: number]: number } = {};
+    const [favorites, setFavorites] = useState<{ [index: number]: number }>({});
     useEffect(() => {
         const getList = async () => {
             try {
                 const ingredientIds: number[] = menuList.map(({ ingredient_id }) => ingredient_id);
+                const favoriteList: { [index: number]: number } = {};
                 (await axios.get("/food-manager/api/favorite")).data.map(
                     ({ recipe_id, score }: favoriteProps) => {
                         favoriteList[recipe_id] = score;
                     }
                 );
-                console.log("전", favoriteList);
+                setFavorites(favoriteList);
+                console.log("전", favorites);
 
                 setRecipeList(
                     (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
@@ -37,7 +39,7 @@ const Recipe = () => {
         };
         getList();
     }, []);
-    console.log("후", favoriteList);
+    console.log("후", favorites);
     return (
         <div className="recipe-container">
             <div id="recipe-header">
@@ -70,7 +72,7 @@ const Recipe = () => {
                             carbo={carbo}
                             fat={fat}
                             salt={salt}
-                            score={favoriteList[id] ? favoriteList[id] : 0}
+                            score={favorites[id]}
                         />
                     ))}
                 </List>
