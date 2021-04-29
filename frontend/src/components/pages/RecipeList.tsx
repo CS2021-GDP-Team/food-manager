@@ -11,18 +11,19 @@ import {
     useMenuListDispatchContext
 } from "../Model";
 import axios from "axios";
-
+interface favoriteProps {
+    recipe_id: number;
+    score: number;
+}
 const Recipe = () => {
-    const recipeList = useRecipeListContext();
-    const setRecipeList = useRecipeListDispatchContext();
-    const setMenuList = useMenuListDispatchContext();
-    const ingredientIds: number[] = useMenuListContext().map(({ ingredient_id }) => ingredient_id);
+    const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
+    const [menuList, setMenuList] = [useMenuListContext(), useMenuListDispatchContext()];
     const history = useHistory();
+    const favoriteList: { [index: number]: any } = {};
     useEffect(() => {
         const getList = async () => {
             try {
-                console.log("ingIds", ingredientIds);
-                if (ingredientIds.length === 0) {
+                if (menuList.length === 0) {
                     const getList = async () => {
                         try {
                             setMenuList((await axios.get("/food-manager/api/user_fridge")).data);
@@ -33,6 +34,13 @@ const Recipe = () => {
                     };
                     getList();
                 }
+                const ingredientIds: number[] = menuList.map(({ ingredient_id }) => ingredient_id);
+                console.log("ingIds", ingredientIds);
+                (await axios.get("/food-manager/api/favorite")).data.map(
+                    ({ recipe_id, score }: favoriteProps) => {
+                        favoriteList[recipe_id] = score;
+                    }
+                );
                 setRecipeList(
                     (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
                 );
@@ -77,6 +85,7 @@ const Recipe = () => {
                             carbo={carbo}
                             fat={fat}
                             salt={salt}
+                            score={favoriteList[id]}
                         />
                     ))}
                 </List>
