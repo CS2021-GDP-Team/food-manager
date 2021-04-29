@@ -38,6 +38,8 @@ const RecipeItem = ({
     salt,
     score = 0
 }: recipeProps) => {
+    console.log(score);
+
     const classes = useStyles();
     const [like, setLike] = useState<number>(score);
     const handleLike = (type: boolean) => {
