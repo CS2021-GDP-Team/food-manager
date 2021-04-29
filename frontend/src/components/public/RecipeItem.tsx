@@ -14,7 +14,7 @@ interface recipeProps {
     carbo: string | null;
     fat: string | null;
     salt: string | null;
-    score: number;
+    score?: number;
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,7 +27,17 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const RecipeItem = ({ id, name, source, kcal, protein, carbo, fat, salt, score }: recipeProps) => {
+const RecipeItem = ({
+    id,
+    name,
+    source,
+    kcal,
+    protein,
+    carbo,
+    fat,
+    salt,
+    score = 0
+}: recipeProps) => {
     console.log(score);
 
     const classes = useStyles();
