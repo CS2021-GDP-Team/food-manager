@@ -47,7 +47,7 @@ const RecipeItem = ({
         } else {
             like === -1 ? setLike(0) : setLike(-1);
         }
-        axios.post("/api/favorite", { recipeId: id, score: like }).catch((e) => {
+        axios.post("/food-manager/api/favorite", { recipeId: id, score: like }).catch((e) => {
             console.log(e);
             alert("서버에 오류가 발생했습니다.");
         });

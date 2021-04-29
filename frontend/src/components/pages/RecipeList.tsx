@@ -4,12 +4,7 @@ import { SwapVert } from "@material-ui/icons";
 import { useEffect } from "react";
 import { grey } from "@material-ui/core/colors";
 import { RecipeItem } from "../index";
-import {
-    useRecipeListContext,
-    useRecipeListDispatchContext,
-    useMenuListContext,
-    useMenuListDispatchContext
-} from "../Model";
+import { useRecipeListContext, useRecipeListDispatchContext, useMenuListContext } from "../Model";
 import axios from "axios";
 interface favoriteProps {
     recipe_id: number;
@@ -17,23 +12,12 @@ interface favoriteProps {
 }
 const Recipe = () => {
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
-    const [menuList, setMenuList] = [useMenuListContext(), useMenuListDispatchContext()];
+    const menuList = useMenuListContext();
     const history = useHistory();
     const favoriteList: { [index: number]: any } = {};
     useEffect(() => {
         const getList = async () => {
             try {
-                if (menuList.length === 0) {
-                    const getList = async () => {
-                        try {
-                            setMenuList((await axios.get("/food-manager/api/user_fridge")).data);
-                        } catch (e) {
-                            console.log(e);
-                            history.push("/login");
-                        }
-                    };
-                    getList();
-                }
                 const ingredientIds: number[] = menuList.map(({ ingredient_id }) => ingredient_id);
                 console.log("ingIds", ingredientIds);
                 (await axios.get("/food-manager/api/favorite")).data.map(
