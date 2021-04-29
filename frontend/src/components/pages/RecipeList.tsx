@@ -25,6 +25,8 @@ const Recipe = () => {
                         favoriteList[recipe_id] = score;
                     }
                 );
+                console.log(favoriteList);
+
                 setRecipeList(
                     (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
                 );
