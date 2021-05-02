@@ -66,3 +66,62 @@ export const useRecipeListDispatchContext = () => {
     const context = useContext(RecipeListDispatchContext);
     return context;
 };
+// =========  Diet Record
+interface recordProps {
+    date: string;
+    name: string;
+}
+const DietRecordContext = createContext<recordProps[]>([]);
+const DietRecordDispatchContext = createContext<Dispatch<recordProps[]>>(Array);
+
+export const DietRecordContextProvider = ({ children }: any) => {
+    const [dietRecords, setDietRecords] = useState<recordProps[]>([]);
+
+    return (
+        <DietRecordContext.Provider value={dietRecords}>
+            <DietRecordDispatchContext.Provider value={setDietRecords}>
+                {children}
+            </DietRecordDispatchContext.Provider>
+        </DietRecordContext.Provider>
+    );
+};
+
+export const useDietRecordContext = () => {
+    const context = useContext(DietRecordContext);
+    return context;
+};
+
+export const useDietRecordDispatchContext = () => {
+    const context = useContext(DietRecordDispatchContext);
+    return context;
+};
+// =========  Diet Record
+// =========  Liked Recipe
+interface likedProps {
+    name: string;
+}
+const LikedRecipeContext = createContext<likedProps[]>([]);
+const LikedRecipeDispatchContext = createContext<Dispatch<likedProps[]>>(Array);
+
+export const LikedRecipeContextProvider = ({ children }: any) => {
+    const [likedRecipes, setLikedRecipes] = useState<likedProps[]>([]);
+
+    return (
+        <LikedRecipeContext.Provider value={likedRecipes}>
+            <LikedRecipeDispatchContext.Provider value={setLikedRecipes}>
+                {children}
+            </LikedRecipeDispatchContext.Provider>
+        </LikedRecipeContext.Provider>
+    );
+};
+
+export const useLikedRecipeContext = () => {
+    const context = useContext(LikedRecipeContext);
+    return context;
+};
+
+export const useLikedRecipeDispatchContext = () => {
+    const context = useContext(LikedRecipeDispatchContext);
+    return context;
+};
+// =========  Liked Recipe

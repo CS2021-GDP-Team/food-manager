@@ -3,8 +3,6 @@ import { PictureButton, InputField } from "../index";
 import { Button, makeStyles } from "@material-ui/core";
 import axios from "axios";
 
-//TODO : 백에서 API 완료되면 재료사진 관련 구현
-
 const useStyles = makeStyles({
     root: {
         width: "80%",
