@@ -8,7 +8,7 @@ import {
     IconButton,
     makeStyles
 } from "@material-ui/core";
-import { ExpandLess, ExpandMore, Close } from "@material-ui/icons";
+import { ExpandLess, ExpandMore, Close, Edit } from "@material-ui/icons";
 
 const useStyles = makeStyles({
     root: {
@@ -24,6 +24,10 @@ const useStyles = makeStyles({
     },
     content: {
         textAlign: "right"
+    },
+    editIcon: {
+        fontSize: "15px",
+        color: "white"
     },
     deleteIcon: {
         fontSize: "20px",
@@ -49,11 +53,17 @@ export default function SimpleList() {
                 <ListItem>
                     <ListItemText className={classes.title} primary="My body info" />
                     <ListItemText className={classes.content} primary="190cm / 90kg" />
+                    <IconButton>
+                        <Edit className={classes.editIcon} />
+                    </IconButton>
                 </ListItem>
                 <Divider className={classes.border} />
                 <ListItem>
                     <ListItemText className={classes.title} primary="Exp date notify" />
                     <ListItemText className={classes.content} primary="Once a day / 12:00PM" />
+                    <IconButton>
+                        <Edit className={classes.editIcon} />
+                    </IconButton>
                 </ListItem>
                 <Divider className={classes.border} />
                 <ListItem button onClick={logHandleClick}>
