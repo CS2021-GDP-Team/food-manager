@@ -29,14 +29,17 @@ Service.getUser = async (userId, password) => {
     return userFound;
 }
 
-Service.recommendRecipes = async (ingredientIds, start, end) => {
-    // 파이썬 서버 연결 -> 레시피 아이디 반환
+Service.recommendRecipes = async (userId, start, end) => {
+	// 유저의 재료 정보 검색
+	const ingredientInfo = await fridges.getIngredientsByUserId(userId);
+
+	// 파이썬 서버 연결 -> 레시피 아이디 반환
     const response = await fetch('http://localhost:8080', {
         method: 'POST',
         headers:{
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"ingredientIds":ingredientIds, "start":start, "end":end})
+        body: JSON.stringify({"ingredientInfo":ingredientInfo, "start":start, "end":end})
     })
 	const recipeIds = await response.json();
 

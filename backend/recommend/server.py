@@ -43,21 +43,22 @@ class RecommendHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         body = json.loads(self.rfile.read(content_length))
         try:
-            if "ingredientIds" in body:
+            if "ingredientInfo" in body:
                 print(body)
-                start = body["start"] if "start" in body else None
-                end = body["end"] if "end" in body else None
-                response = self.handleRequest(body["ingredientIds"], start, end)
+                start = int(body["start"]) if "start" in body else None
+                end = int(body["end"]) if "end" in body else None
+                response = self.handleRequest(body["ingredientInfo"], start, end)
                 self._json(response)
             else:
-                self._error("'ingredientIds' is missing")        
+                self._error("'ingredientInfo' is missing")        
         except Exception as e:
             print()
             traceback.print_exc()
             self._error(f"An exception occured! e : {e}")        
 
-    def handleRequest(self, ingredientIds, start, end):
-        ingredients = [','.join(str(x) for x in ingredientIds)]
+    def handleRequest(self, ingredientInfo, start, end):
+        ingredients = self.preprocess(ingredientInfo)
+        print(ingredients)
         vec = vectorize.Vectorizer()
         vec.connect_database()
 
@@ -66,6 +67,12 @@ class RecommendHandler(BaseHTTPRequestHandler):
         print(result)
         vec.disconnect_database()
         return result
+
+    def preprocess(self, ingredientInfo):
+        ingredientIds = []
+        for ing in ingredientInfo:
+            ingredientIds.append(ing["ingredient_id"])
+        return [','.join(str(x) for x in ingredientIds)]
 
 
 if __name__ == "__main__":        
