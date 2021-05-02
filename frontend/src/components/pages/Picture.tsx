@@ -72,9 +72,9 @@ const Picture = () => {
                 />
                 <InputField
                     font_size="1rem"
-                    text="Pur Date"
+                    text="Put Date"
                     type="date"
-                    hint="Purchase Date"
+                    hint="Put Date"
                     defaultValue={putDate}
                     setValue={setPutDate}
                 />
