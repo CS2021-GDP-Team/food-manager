@@ -48,7 +48,7 @@ class Vectorizer:
         # print(self.cv.vocabulary_)
         # print("recipe X ingredients:\t",self.cv_ing.shape)
 
-    def recommend_recipes(self, ingredients, start, end): # form of ingredients: ['ing1,ing2,ing3']
+    def recommend_recipes(self, ingredients, start=None, end=None): # form of ingredients: ['ing1,ing2,ing3']
         if (start is None) and (end is None):
             # top 10
             start = 0

@@ -45,9 +45,7 @@ class RecommendHandler(BaseHTTPRequestHandler):
         try:
             if "ingredientInfo" in body:
                 print(body)
-                start = int(body["start"]) if "start" in body else None
-                end = int(body["end"]) if "end" in body else None
-                response = self.handleRequest(body["ingredientInfo"], start, end)
+                response = self.handleRequest(body["ingredientInfo"], body["start"], body["end"])
                 self._json(response)
             else:
                 self._error("'ingredientInfo' is missing")        

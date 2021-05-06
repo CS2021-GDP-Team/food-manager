@@ -36,8 +36,8 @@ router.post('picture', fctl.loginRequiredWrapper(async (req, res, next) => {
 }));
 
 router.get('/recommend', fctl.loginRequiredWrapper(async (req, res, next) => {
-	const start = util.isEmpty(req.query.start) ? null : req.query.start;
-	const end = util.isEmpty(req.query.end) ? null : req.query.end;
+	const start = util.isEmpty(req.query.start) ? null : parseInt(req.query.start);
+	const end = util.isEmpty(req.query.end) ? null : parseInt(req.query.end);
     const data = await service.recommendRecipes(req.session.user.id, start, end);
     return fctl.send(req, res, hsc.HTTP_OK, data);
 }));
