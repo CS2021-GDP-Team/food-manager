@@ -54,27 +54,27 @@ router.get('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
 }));
 
 router.post('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
-    util.validate(req.body, ['ingredientId']);
-	const ingredientId = req.body.ingredientId;
+    util.validate(req.body, ['ingredientName']);
+	const ingredientName = req.body.ingredientName;
 	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
 	const expireDate = util.isEmpty(req.body.expireDate) ? null : req.body.expireDate;
-	await service.insertUserIngredient(req.session.user.id, ingredientId, putDate, expireDate);
+	await service.insertUserIngredient(req.session.user.id, ingredientName, putDate, expireDate);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
 router.put('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
-    util.validate(req.body, ['ingredientId']);
-	const ingredientId = req.body.ingredientId;
+    util.validate(req.body, ['id']);
+	const id = req.body.id;
 	const putDate = util.isEmpty(req.body.putDate) ? null : req.body.putDate;
 	const expireDate = util.isEmpty(req.body.expireDate) ? null : req.body.expireDate;
-	await service.updateUserIngredient(req.session.user.id, ingredientId, putDate, expireDate);
+	await service.updateUserIngredient(id, putDate, expireDate);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
 router.delete('/user_fridge', fctl.loginRequiredWrapper(async (req, res, next) => {
-    util.validate(req.body, ['ingredientId']);
-	const ingredientId = req.body.ingredientId;
-	await service.deleteUserIngredient(req.session.user.id, ingredientId);
+    util.validate(req.body, ['id']);
+	const id = req.body.id;
+	await service.deleteUserIngredient(id);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 

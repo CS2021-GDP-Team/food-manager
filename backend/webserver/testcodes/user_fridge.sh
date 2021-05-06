@@ -25,13 +25,26 @@ result=$(curl \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
 
-ingredientIds=(""$(echo "$result" | jq -r ".[].ingredient_id")"")
+ids=(""$(echo "$result" | jq -r ".[].id")"")
 
-for i in ${ingredientIds[@]}
+for i in ${ids[@]}
 do
 	result=$(curl -i \
+	"$1/api/user_fridge" -X PUT \
+	-d "{\"id\":$i, \"expireDate\":0}" \
+	-H 'content-type: application/json' \
+	--cookie .cookies.txt --cookie-jar .cookies.txt --silent)
+	printf "%s\n" "$result" >> .output.txt
+
+	status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
+
+	if [[ "$status_code" -ne 200 ]] ; then
+		exit 1
+	fi
+
+	result=$(curl -i \
 	"$1/api/user_fridge" -X DELETE \
-	-d "{\"ingredientId\":$i}" \
+	-d "{\"id\":$i}" \
 	-H 'content-type: application/json' \
 	--cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 	printf "%s\n" "$result" >> .output.txt
@@ -44,8 +57,19 @@ do
 done
 
 result=$(curl -i \
+"$1/api/user_fridge" -X GET \
+--cookie .cookies.txt --cookie-jar .cookies.txt --silent)
+printf "%s\n" "$result" >> .output.txt
+
+status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
+
+if [[ "$status_code" -ne 200 ]] ; then
+	exit 1
+fi
+
+result=$(curl -i \
 "$1/api/user_fridge" -X POST \
--d '{"ingredientId":116}' \
+-d '{"ingredientName":"풋사과"}' \
 -H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
@@ -66,28 +90,3 @@ status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
 if [[ "$status_code" -ne 200 ]] ; then
 	exit 1
 fi
-
-result=$(curl -i \
-"$1/api/user_fridge" -X PUT \
--d '{"ingredientId":116, "expireDate":0}' \
--H 'content-type: application/json' \
---cookie .cookies.txt --cookie-jar .cookies.txt --silent)
-printf "%s\n" "$result" >> .output.txt
-
-status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
-
-if [[ "$status_code" -ne 200 ]] ; then
-	exit 1
-fi
-
-result=$(curl -i \
-"$1/api/user_fridge" -X GET \
---cookie .cookies.txt --cookie-jar .cookies.txt --silent)
-printf "%s\n" "$result" >> .output.txt
-
-status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
-
-if [[ "$status_code" -ne 200 ]] ; then
-	exit 1
-fi
-

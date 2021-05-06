@@ -1,14 +1,16 @@
 MariaDB [food_manager]> desc fridges;
-+---------------+----------+------+-----+---------+----------------+
-| Field         | Type     | Null | Key | Default | Extra          |
-+---------------+----------+------+-----+---------+----------------+
-| id            | int(11)  | NO   | PRI | NULL    | auto_increment |
-| user_id       | int(11)  | NO   | MUL | NULL    |                |
-| ingredient_id | int(11)  | NO   | MUL | NULL    |                |
-| put_date      | datetime | NO   |     | NULL    |                |
-| expire_date   | datetime | YES  |     | NULL    |                |
-+---------------+----------+------+-----+---------+----------------+
++-------------------+--------------+------+-----+---------+----------------+
+| Field             | Type         | Null | Key | Default | Extra          |
++-------------------+--------------+------+-----+---------+----------------+
+| id                | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_id           | int(11)      | NO   | MUL | NULL    |                |
+| ingredient_id     | int(11)      | NO   | MUL | NULL    |                |
+| put_date          | datetime     | NO   |     | NULL    |                |
+| expire_date       | datetime     | YES  |     | NULL    |                |
+| custom_ingredient | varchar(255) | YES  |     | NULL    |                |
++-------------------+--------------+------+-----+---------+----------------+
 * user_id 와 recipe_id는 unique key.
+* custom_ingredient 는 유저가 입력한 재료명.
 
 MariaDB [food_manager]> desc diets;
 +-----------+----------+------+-----+---------+----------------+

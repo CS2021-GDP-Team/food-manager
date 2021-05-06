@@ -59,16 +59,20 @@ Service.getUserIngredients = async (userId) => {
 	return await fridges.getIngredientsByUserId(userId);
 }
 
-Service.insertUserIngredient = async (userId, ingredientId, putDate, expireDate) => {
-	await fridges.insertIngredient(userId, ingredientId, putDate, expireDate);
+Service.insertUserIngredient = async (userId, ingredientName, putDate, expireDate) => {
+	// 파이썬 서버 연결 -> 재료 아이디 반환
+	// 현재 랜덤 재료 id 로 저장
+	var ingredientId = Math.floor(Math.random() * 1900) + 116;
+	console.log("random ingredient id: ", ingredientId);
+	await fridges.insertIngredient(userId, ingredientId, ingredientName, putDate, expireDate);
 }
 
-Service.updateUserIngredient = async (userId, ingredientId, putDate, expireDate) => {
-	await fridges.updateIngredient(userId, ingredientId, putDate, expireDate);
+Service.updateUserIngredient = async (id, putDate, expireDate) => {
+	await fridges.updateIngredient(id, putDate, expireDate);
 }
 
-Service.deleteUserIngredient = async (userId, ingredientId) => {
-	await fridges.deleteIngredient(userId, ingredientId);
+Service.deleteUserIngredient = async (id) => {
+	await fridges.deleteIngredient(id);
 }
 
 Service.getUserRecipes = async (userId) => {

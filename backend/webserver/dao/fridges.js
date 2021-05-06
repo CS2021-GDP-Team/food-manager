@@ -7,30 +7,30 @@ Fridges.getIngredientsByUserId = async (userId) => {
 	return row;
 }
 
-Fridges.getIngredient = async (userId, ingredientId) => {
-    const [row, fields] = await Fridges.db.execute("SELECT * FROM fridges WHERE user_id=? AND ingredient_id=?", [userId, ingredientId]);
+Fridges.getIngredientsByName = async (ingredientName) => {
+    const [row, fields] = await Fridges.db.execute("SELECT * FROM fridges WHERE custom_ingredient=?", [ingredientName]);
 	return row;
 }
 
-Fridges.insertIngredient = async (userId, ingredientId, putDate, expireDate) => {
-	const found = await Fridges.getIngredient(userId, ingredientId)
-	if (found.length > 0) throw `insertIngredient : userId(${userId}) already has ingredientId(${ingredientId})`
+Fridges.insertIngredient = async (userId, ingredientId, ingredientName, putDate, expireDate) => {
+	const found = await Fridges.getIngredientsByName(ingredientName)
+	if (found.length > 0) throw `insertIngredient : userId(${userId}) already has ingredientName(${ingredientName})`
 	putDate = putDate == null ? Math.floor(Date.now()/1000) : putDate;
-    await Fridges.db.execute("INSERT INTO fridges(user_id, ingredient_id, put_date, expire_date) VALUES(?,?,from_unixtime(?),from_unixtime(?))", [userId, ingredientId, putDate, expireDate]);
+    await Fridges.db.execute("INSERT INTO fridges(user_id, ingredient_id, put_date, expire_date, custom_ingredient) VALUES(?,?,from_unixtime(?),from_unixtime(?), ?)", [userId, ingredientId, putDate, expireDate, ingredientName]);
 }
 
-Fridges.updateIngredient = async (userId, ingredientId, putDate, expireDate) => {
+Fridges.updateIngredient = async (id, putDate, expireDate) => {
 	let row, field;
 	if (putDate == null){
-		[row, field] = await Fridges.db.execute("UPDATE fridges SET expire_date=from_unixtime(?) WHERE user_id=? AND ingredient_id=? LIMIT 1", [expireDate, userId, ingredientId]);
+		[row, field] = await Fridges.db.execute("UPDATE fridges SET expire_date=from_unixtime(?) WHERE id=? LIMIT 1", [expireDate, id]);
 	}
 	else{
-		[row, field] = await Fridges.db.execute("UPDATE fridges SET put_date=from_unixtime(?), expire_date=from_unixtime(?) WHERE user_id=? AND ingredient_id=? LIMIT 1", [putDate, expireDate, userId, ingredientId]);
+		[row, field] = await Fridges.db.execute("UPDATE fridges SET put_date=from_unixtime(?), expire_date=from_unixtime(?) WHERE id=? LIMIT 1", [putDate, expireDate, id]);
 	}
 }
 
-Fridges.deleteIngredient = async (userId, ingredientId) => {
-	const [row, field] = await Fridges.db.execute("DELETE FROM fridges WHERE user_id=? AND ingredient_id=?", [userId, ingredientId]);
+Fridges.deleteIngredient = async (id) => {
+	const [row, field] = await Fridges.db.execute("DELETE FROM fridges WHERE id=?", [id]);
 }
 
 module.exports = Fridges;
