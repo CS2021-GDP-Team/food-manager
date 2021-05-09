@@ -1,5 +1,6 @@
 const users = require('../dao/users.js');
 const recipes = require('../dao/recipes.js');
+const recipeIngredients = require('../dao/recipeIngredients.js');
 const fridges = require('../dao/fridges.js');
 const diets = require('../dao/diets.js')
 const favorites = require('../dao/favorites.js')
@@ -51,6 +52,42 @@ Service.recommendRecipes = async (userId, start, end) => {
     return recipesFound;
 }
 
+
+Service.ratios = {};
+Service.recommendRecipes2 = async (userId, start, end) => {
+	if (recipeIngredients.dirty) {
+		const rows = await recipeIngredients.get();
+		for (var i = 0; i<rows.length; i++) {
+			if (!(rows[i]['recipe_id'] in Service.ratios)) {
+				Service.ratios[rows[i]['recipe_id']] = {}
+			}
+			Service.ratios[rows[i]['recipe_id']][rows[i]['ingredient_id']] = rows[i]['ratio']
+		}
+		recipeIngredients.dirty = false;
+	}
+
+	ingredients = await Service.getUserIngredients(userId);
+	scores = []
+	user_ingredients = []
+	for (var i = 0; i<ingredients.length; i++) {
+		user_ingredients.push(ingredients[i]['ingredient_id'])
+	}
+	for (var recipe_id in Service.ratios) {
+		var score = 0;
+		for (var i = 0; i<user_ingredients.length; i++){
+			if (user_ingredients[i] in Service.ratios[recipe_id]) {
+				score += Service.ratios[recipe_id][user_ingredients[i]]
+			}
+		}
+		if (score == 0) {
+			continue;
+		}
+		scores.push({'recipe_id':recipe_id, 'score':score});
+	}
+	scores.sort((a, b) => {return b['score'] - a['score'];})
+	return scores;
+}
+
 Service.getRecipes = async (recipeIds) => {
 	return await recipes.getRecipes(recipeIds);
 }
@@ -62,7 +99,7 @@ Service.getUserIngredients = async (userId) => {
 Service.insertUserIngredient = async (userId, ingredientName, putDate, expireDate) => {
 	// 파이썬 서버 연결 -> 재료 아이디 반환
 	// 현재 랜덤 재료 id 로 저장
-	var ingredientId = Math.floor(Math.random() * 1900) + 116;
+	var ingredientId = Math.floor(Math.random() * 1569) + 1;
 	console.log("random ingredient id: ", ingredientId);
 	await fridges.insertIngredient(userId, ingredientId, ingredientName, putDate, expireDate);
 }
