@@ -49,6 +49,7 @@ MariaDB [food_manager]> desc recipe_ingredients;
 | recipe_id     | int(11) | NO   | MUL | NULL    |                |
 | ingredient_id | int(11) | NO   | MUL | NULL    |                |
 | grams         | int(11) | YES  |     | NULL    |                |
+| ratio         | double  | NO   |     | 0       |                |
 +---------------+---------+------+-----+---------+----------------+
 * recipe_id 와 ingredient_id 는 unique key.
 
@@ -64,6 +65,7 @@ MariaDB [food_manager]> desc recipes;
 | carbo   | int(11)   | YES  |     | NULL    |                |
 | fat     | int(11)   | YES  |     | NULL    |                |
 | salt    | int(11)   | YES  |     | NULL    |                |
+| url     | char(255) | YES  |     | NULL    |                |
 +---------+-----------+------+-----+---------+----------------+
 
 MariaDB [food_manager]> desc favorites;
