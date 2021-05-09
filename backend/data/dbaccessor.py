@@ -33,8 +33,8 @@ class DBAccessor:
 		self.db.execute("insert into recipes(name) values(%s)", name)
 		return self.db.lastrowid
 
-	def insert_recipe_ingredient(self, recipe_id, ing_id, amount):
-		self.db.execute("insert into recipe_ingredients(recipe_id, ingredient_id, grams) values(%s, %s, %s)", (recipe_id, ing_id, amount))
+	def insert_recipe_ingredient(self, recipe_id, ing_id, amount, url):
+		self.db.execute("insert into recipe_ingredients(recipe_id, ingredient_id, grams, url) values(%s, %s, %s, %s)", (recipe_id, ing_id, amountu, url))
 		return self.db.lastrowid
 
 	def commit(self):

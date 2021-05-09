@@ -1,4 +1,4 @@
-import json, re
+import json, re, sys
 from parse import parse
 
 def find(number, items):
@@ -18,6 +18,7 @@ def subs(regstr, target, data):
 def parse_and_split(row):
 	names = []
 	amounts = []
+	not_found = []
 	ing_amts = row['재료정보'].split(',')
 	count = 0
 #	print(ing_amts)
@@ -40,14 +41,15 @@ def parse_and_split(row):
 		names.append(ing)
 		amounts.append(amt)
 	if count:
-		print(f'{row["일련번호"]}: {count} items in {ing_amts} are not found')
+		print(f'{row["일련번호"]}({row["메뉴명"]}): {count} items in {ing_amts} are not found')
 	return {'names':names, 'amounts':amounts, 'error_count':count}
 
-with open('data', 'r') as f:
+with open(sys.argv[1], 'r') as f:
 	data = json.load(f)
 
 with open('data_headers', 'r') as f:
 	headers = json.load(f)
+
 
 subs('\(([^(|^)]*술)\)', '', data)
 subs('\(([^(|^)]*컵)\)', '', data)
@@ -92,8 +94,8 @@ errors = 0
 result_list = []
 for item in data:
 	result = parse_and_split(item)
-	result_list.append({'name':item['메뉴명'], 'recipe_ingredients':result})
 	if result['error_count'] == 0:
+		result_list.append({'name':item['메뉴명'], 'recipe_ingredients':result, 'url':item['이미지경로(소)'], 'url2':item['이미지경로(대)']})
 		normal += 1
 	else:
 		errors += 1
