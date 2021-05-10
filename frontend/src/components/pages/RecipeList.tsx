@@ -30,7 +30,6 @@ const Recipe = () => {
             } catch (e) {
                 console.log(e);
                 alert("레시피를 가져오는중 오류가 발생했습니다.");
-                history.push("/login");
             }
         };
         getList();
