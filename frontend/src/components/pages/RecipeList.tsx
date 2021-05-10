@@ -4,7 +4,7 @@ import { SwapVert } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { grey } from "@material-ui/core/colors";
 import { RecipeItem } from "../index";
-import { useRecipeListContext, useRecipeListDispatchContext, useMenuListContext } from "../Model";
+import { useRecipeListContext, useRecipeListDispatchContext } from "../Model";
 import axios from "axios";
 interface favoriteProps {
     recipe_id: number;
@@ -12,15 +12,13 @@ interface favoriteProps {
 }
 const Recipe = () => {
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
-    const menuList = useMenuListContext();
     const history = useHistory();
     const [favorites, setFavorites] = useState<{ [index: number]: number }>({});
     useEffect(() => {
         const getList = async () => {
             try {
-                const ingredientIds: number[] = menuList.map(({ ingredient_id }) => ingredient_id);
                 const favoriteList: { [index: number]: number } = {};
-                (await axios.get("/food-manager/api/favorite")).data.map(
+                (await axios.get("/food-manager/api/favorite")).data.foreach(
                     ({ recipe_id, score }: favoriteProps) => {
                         favoriteList[recipe_id] = score;
                     }
@@ -28,9 +26,7 @@ const Recipe = () => {
                 setFavorites(favoriteList);
                 console.log("전", favorites);
 
-                setRecipeList(
-                    (await axios.post("/food-manager/api/recommend", { ingredientIds })).data
-                );
+                setRecipeList((await axios.get("/food-manager/api/recommend")).data);
             } catch (e) {
                 console.log(e);
                 alert("레시피를 가져오는중 오류가 발생했습니다.");
@@ -62,19 +58,22 @@ const Recipe = () => {
                 <CircularProgress style={{ margin: "0 auto" }} />
             ) : (
                 <List id="recipe-items">
-                    {recipeList.map(({ id, name, source, kcal, protein, carbo, fat, salt }) => (
-                        <RecipeItem
-                            id={id}
-                            name={name}
-                            source={source}
-                            kcal={kcal}
-                            protein={protein}
-                            carbo={carbo}
-                            fat={fat}
-                            salt={salt}
-                            score={favorites[id]}
-                        />
-                    ))}
+                    {recipeList.map(
+                        ({ id, name, source, kcal, protein, carbo, fat, salt, url }) => (
+                            <RecipeItem
+                                id={id}
+                                name={name}
+                                source={source}
+                                kcal={kcal}
+                                protein={protein}
+                                carbo={carbo}
+                                fat={fat}
+                                salt={salt}
+                                score={favorites[id]}
+                                url={url}
+                            />
+                        )
+                    )}
                 </List>
             )}
         </div>

@@ -15,6 +15,7 @@ interface recipeProps {
     fat: string | null;
     salt: string | null;
     score?: number;
+    url: string;
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -36,7 +37,8 @@ const RecipeItem = ({
     carbo,
     fat,
     salt,
-    score = 0
+    score = 0,
+    url
 }: recipeProps) => {
     console.log(score);
 
@@ -61,12 +63,7 @@ const RecipeItem = ({
         <>
             <ItemBox>
                 <div className="listitem-container">
-                    <Avatar
-                        variant="square"
-                        alt="food"
-                        src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/fruit-salad-horizontal-jpg-1522181219.jpg"
-                        className={classes.large}
-                    />
+                    <Avatar variant="square" alt="food" src={url} className={classes.large} />
                     <div className="recipeitem-info">
                         <p className="recipe-title">{name}</p>
                         <p className="recipe-ingredients">방울토마토, 양파</p>

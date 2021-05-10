@@ -42,6 +42,7 @@ interface recipeProps {
     carbo: string | null;
     fat: string | null;
     salt: string | null;
+    url: string;
 }
 const RecipeListContext = createContext<recipeProps[]>([]);
 const RecipeListDispatchContext = createContext<Dispatch<recipeProps[]>>(Array);
