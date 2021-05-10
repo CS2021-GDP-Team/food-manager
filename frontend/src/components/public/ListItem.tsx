@@ -79,7 +79,7 @@ const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemPro
                 ingId={ingredient_id}
                 handleClose={handleClose}
                 regDate={put_date.slice(0, 10)}
-                expDate={expire_date.slice(0, 10)}
+                expDate={expire_date ? expire_date.slice(0, 10) : "2021-12-12"}
             />
         </>
     );
