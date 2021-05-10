@@ -84,7 +84,7 @@ const ListItem = ({
             <Divider style={{ backgroundColor: grey[600] }} />
             <Modal
                 open={open}
-                ingId={ingredient_id}
+                id={id}
                 handleClose={handleClose}
                 regDate={put_date.slice(0, 10)}
                 expDate={expire_date ? expire_date.slice(0, 10) : undefined}
