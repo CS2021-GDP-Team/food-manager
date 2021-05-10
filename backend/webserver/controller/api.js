@@ -42,6 +42,13 @@ router.get('/recommend', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, data);
 }));
 
+router.get('/recommend2', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const start = util.isEmpty(req.query.start) ? null : parseInt(req.query.start);
+	const end = util.isEmpty(req.query.end) ? null : parseInt(req.query.end);
+    const data = await service.recommendRecipes2(req.session.user.id, start, end);
+    return fctl.send(req, res, hsc.HTTP_OK, data);
+}));
+
 router.post('/recipe', fctl.loginRequiredWrapper(async (req, res, next) => {
     util.validate(req.body, ['recipeIds']);
     const data = await service.getRecipes(req.body.recipeIds);
