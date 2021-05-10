@@ -3,7 +3,7 @@ class Fridges {}
 require('../utils/dbconnector')(Fridges);
 
 Fridges.getIngredientsByUserId = async (userId) => {
-    const [row, fields] = await Fridges.db.execute("SELECT * FROM fridges WHERE user_id=?", [userId]);
+    const [row, fields] = await Fridges.db.execute("select F.id, F.user_id, F.ingredient_id, F.put_date, F.expire_date, F.custom_ingredient, I.name, I.hours from fridges F LEFT JOIN ingredients I on I.id = F.ingredient_id WHERE user_id=?", [userId]);
 	return row;
 }
 
