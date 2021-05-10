@@ -56,6 +56,7 @@ const MenuList = () => {
                         put_date={value.put_date}
                         expire_date={value.expire_date}
                         custom_ingredient={value.custom_ingredient}
+                        name={value.name}
                     />
                 ))}
                 {/* <ListItem
