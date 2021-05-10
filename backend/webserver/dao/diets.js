@@ -3,7 +3,7 @@ class Diets {}
 require('../utils/dbconnector')(Diets);
 
 Diets.getRecipesByUserId = async (userId) => {
-    const [row, fields] = await Diets.db.execute("SELECT id, name, put_date, diet_id FROM recipes r JOIN ( SELECT id as diet_id, recipe_id, put_date FROM diets WHERE user_id=? ORDER BY put_date DESC) d ON r.id = d.recipe_id", [userId]);
+    const [row, fields] = await Diets.db.execute("SELECT * FROM diets d NATURAL JOIN (SELECT id as recipe_id, name as recipe_name FROM recipes) r WHERE user_id = ?", [userId]);
 	return row;
 }
 
