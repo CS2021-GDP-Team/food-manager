@@ -10,6 +10,7 @@ interface itemProps {
     ingredient_id: number;
     put_date: string;
     expire_date: string;
+    custom_ingredient: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,7 +24,14 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemProps) => {
+const ListItem = ({
+    id,
+    user_id,
+    ingredient_id,
+    put_date,
+    expire_date,
+    custom_ingredient
+}: itemProps) => {
     const classes = useStyles();
     const [open, setOpen] = useState<boolean>(false);
     const handleClose = () => {
@@ -52,8 +60,8 @@ const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemPro
                     />
                     <div className="listitem-info">
                         <p className="register-date">{put_date.slice(0, 10)}</p>
-                        <p className="listitem-name">유기농 방울 토마토</p>
-                        <p className="listitem-type">방울토마토</p>
+                        <p className="listitem-name">{custom_ingredient}</p>
+                        <p className="listitem-type">{custom_ingredient}</p>
                         <div className="remain-dates">
                             <b className="expire-date">
                                 {expire_date ? expire_date.slice(0, 10) : "enter exp date"}
@@ -79,7 +87,7 @@ const ListItem = ({ id, user_id, ingredient_id, put_date, expire_date }: itemPro
                 ingId={ingredient_id}
                 handleClose={handleClose}
                 regDate={put_date.slice(0, 10)}
-                expDate={expire_date ? expire_date.slice(0, 10) : "2021-12-12"}
+                expDate={expire_date ? expire_date.slice(0, 10) : undefined}
             />
         </>
     );

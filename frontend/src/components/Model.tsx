@@ -7,6 +7,7 @@ interface itemProps {
     ingredient_id: number;
     put_date: string;
     expire_date: string;
+    custom_ingredient: string;
 }
 const MenuListContext = createContext<itemProps[]>([]);
 const MenuListDispatchContext = createContext<Dispatch<itemProps[]>>(Array);
