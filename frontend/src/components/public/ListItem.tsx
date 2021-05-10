@@ -11,7 +11,8 @@ interface itemProps {
     put_date: string;
     expire_date: string;
     custom_ingredient: string;
-    name: string;
+    ingredient_name: string;
+    url?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,7 +33,8 @@ const ListItem = ({
     put_date,
     expire_date,
     custom_ingredient,
-    name
+    ingredient_name,
+    url = process.env.PUBLIC_URL + "/images/noimage.png"
 }: itemProps) => {
     const classes = useStyles();
     const [open, setOpen] = useState<boolean>(false);
@@ -54,16 +56,11 @@ const ListItem = ({
         <>
             <ItemBox button onClick={() => setOpen(true)}>
                 <div className="listitem-container">
-                    <Avatar
-                        variant="square"
-                        alt="food"
-                        src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/fruit-salad-horizontal-jpg-1522181219.jpg"
-                        className={classes.large}
-                    />
+                    <Avatar variant="square" alt="food" src={url} className={classes.large} />
                     <div className="listitem-info">
                         <p className="register-date">{put_date.slice(0, 10)}</p>
                         <p className="listitem-name">{custom_ingredient}</p>
-                        <p className="listitem-type">{name}</p>
+                        <p className="listitem-type">{ingredient_name}</p>
                         <div className="remain-dates">
                             <b className="expire-date">
                                 {expire_date ? expire_date.slice(0, 10) : "enter exp date"}
