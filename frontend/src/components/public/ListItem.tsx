@@ -11,6 +11,7 @@ interface itemProps {
     put_date: string;
     expire_date: string;
     custom_ingredient: string;
+    name: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,7 +31,8 @@ const ListItem = ({
     ingredient_id,
     put_date,
     expire_date,
-    custom_ingredient
+    custom_ingredient,
+    name
 }: itemProps) => {
     const classes = useStyles();
     const [open, setOpen] = useState<boolean>(false);
@@ -61,7 +63,7 @@ const ListItem = ({
                     <div className="listitem-info">
                         <p className="register-date">{put_date.slice(0, 10)}</p>
                         <p className="listitem-name">{custom_ingredient}</p>
-                        <p className="listitem-type">{custom_ingredient}</p>
+                        <p className="listitem-type">{name}</p>
                         <div className="remain-dates">
                             <b className="expire-date">
                                 {expire_date ? expire_date.slice(0, 10) : "enter exp date"}
