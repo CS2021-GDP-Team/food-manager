@@ -18,7 +18,7 @@ const Recipe = () => {
         const getList = async () => {
             try {
                 const favoriteList: { [index: number]: number } = {};
-                (await axios.get("/food-manager/api/favorite")).data.foreach(
+                (await axios.get("/food-manager/api/favorite")).data.forEach(
                     ({ recipe_id, score }: favoriteProps) => {
                         favoriteList[recipe_id] = score;
                     }
