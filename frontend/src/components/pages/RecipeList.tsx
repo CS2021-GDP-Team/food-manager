@@ -55,7 +55,10 @@ const Recipe = () => {
                 </div>
             </div>
             {recipeList.length === 0 ? (
-                <CircularProgress style={{ margin: "0 auto" }} />
+                <div id="recipe-progress">
+                    <CircularProgress style={{ color: grey[50] }} />
+                    <p>Getting recipe information ...</p>
+                </div>
             ) : (
                 <List id="recipe-items">
                     {recipeList.map(
