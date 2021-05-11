@@ -3,7 +3,7 @@ import ProfilePicture from "../public/ProfilePicture";
 import LogoutButton from "../public/LogoutButton";
 import InfoList from "../public/InfoList";
 import axios from "axios";
-import { useDietRecordDispatchContext, useLikedRecipeDispatchContext } from "../Model";
+import { useDietRecordDispatchContext } from "../Model";
 
 //TODO : 프로필사진 변경 구현, 유저아이디 띄우기 구현, 유저정보 띄우기 구현, 웹푸시 알림 구현
 //좋아요 기록 리스트와 식단 기록 리스트 DELETE API 연결
@@ -14,17 +14,6 @@ const Info = () => {
         const getList = async () => {
             try {
                 setDietRecords((await axios.get("/food-manager/api/user_diet")).data);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        getList();
-    }, []);
-    const setLikedRecipes = useLikedRecipeDispatchContext();
-    useEffect(() => {
-        const getList = async () => {
-            try {
-                setLikedRecipes((await axios.get("/food-manager/api/favorite")).data);
             } catch (e) {
                 console.log(e);
             }
