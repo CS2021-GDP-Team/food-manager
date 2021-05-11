@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 import {
     List,
     ListItem,
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function SimpleList() {
+function InfoList() {
     const classes = useStyles();
     const dietRecords = useDietRecordContext();
     const [likedOpen, setLikedOpen] = useState(false);
@@ -142,3 +142,5 @@ export default function SimpleList() {
         </div>
     );
 }
+
+export default memo(InfoList);
