@@ -35,7 +35,7 @@ Service.recommendRecipes = async (userId, start, end) => {
 	const ingredientInfo = await fridges.getIngredientsByUserId(userId);
 
 	// 파이썬 서버 연결 -> 레시피 아이디 반환
-    const response = await fetch('http://localhost:8080', {
+    const response = await fetch('http://localhost:8080/recommend', {
         method: 'POST',
         headers:{
             'Content-Type': 'application/json',
@@ -98,10 +98,16 @@ Service.getUserIngredients = async (userId) => {
 
 Service.insertUserIngredient = async (userId, ingredientName, putDate, expireDate) => {
 	// 파이썬 서버 연결 -> 재료 아이디 반환
-	// 현재 랜덤 재료 id 로 저장
-	var ingredientId = Math.floor(Math.random() * 1569) + 1;
-	console.log("random ingredient id: ", ingredientId);
-	await fridges.insertIngredient(userId, ingredientId, ingredientName, putDate, expireDate);
+    const response = await fetch('http://localhost:8080/ingredient', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"ingredientName":ingredientName})
+    })
+	const ingredientId = await response.json();
+
+	await fridges.insertIngredient(userId, ingredientId["matchedId"], ingredientName, putDate, expireDate);
 }
 
 Service.updateUserIngredient = async (id, putDate, expireDate) => {
