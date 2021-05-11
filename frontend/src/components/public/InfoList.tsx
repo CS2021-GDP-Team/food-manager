@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     List,
     ListItem,
@@ -11,7 +11,12 @@ import {
 import { ExpandLess, ExpandMore, Edit } from "@material-ui/icons";
 import LikedListItem from "./LikedListItem";
 import DietRecordListItem from "./DietRecordListItem";
-import { useDietRecordContext, useLikedRecipeContext } from "../Model";
+import axios from "axios";
+import {
+    useDietRecordContext,
+    useLikedRecipeContext,
+    useLikedRecipeDispatchContext
+} from "../Model";
 
 const useStyles = makeStyles({
     root: {
@@ -41,7 +46,6 @@ const useStyles = makeStyles({
 export default function SimpleList() {
     const classes = useStyles();
     const dietRecords = useDietRecordContext();
-    const likedRecipes = useLikedRecipeContext();
     const [likedOpen, setLikedOpen] = useState(false);
     const [logOpen, setLogOpen] = useState(false);
 
@@ -51,6 +55,21 @@ export default function SimpleList() {
     const logHandleClick = () => {
         setLogOpen(!logOpen);
     };
+
+    const [likedRecipes, setLikedRecipes] = [
+        useLikedRecipeContext(),
+        useLikedRecipeDispatchContext()
+    ];
+    useEffect(() => {
+        const getList = async () => {
+            try {
+                setLikedRecipes((await axios.get("/food-manager/api/favorite")).data);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        getList();
+    }, []);
 
     return (
         <div className={classes.root}>
