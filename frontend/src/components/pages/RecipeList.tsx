@@ -61,7 +61,18 @@ const Recipe = () => {
             ) : (
                 <List id="recipe-items">
                     {recipeList.map(
-                        ({ id, name, source, kcal, protein, carbo, fat, salt, url }) => (
+                        ({
+                            id,
+                            name,
+                            source,
+                            kcal,
+                            protein,
+                            carbo,
+                            fat,
+                            salt,
+                            url,
+                            ingredients
+                        }) => (
                             <RecipeItem
                                 id={id}
                                 name={name}
@@ -73,6 +84,7 @@ const Recipe = () => {
                                 salt={salt}
                                 score={favorites[id]}
                                 url={url}
+                                ingredients={ingredients}
                             />
                         )
                     )}
