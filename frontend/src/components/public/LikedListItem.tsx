@@ -3,6 +3,10 @@ import { ListItem, ListItemText, IconButton, makeStyles } from "@material-ui/cor
 import { Close } from "@material-ui/icons";
 
 interface InputProps {
+    recipe_id: number;
+    id: number;
+    user_id: number;
+    score: number;
     recipe_name: string;
 }
 
@@ -13,7 +17,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function LikedListItem({ recipe_name }: InputProps) {
+export default function LikedListItem({ recipe_id, id, user_id, score, recipe_name }: InputProps) {
     const classes = useStyles();
 
     return (

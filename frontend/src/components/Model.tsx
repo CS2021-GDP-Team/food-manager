@@ -98,8 +98,11 @@ export const useDietRecordDispatchContext = () => {
 // =========  Diet Record
 // =========  Liked Recipe
 interface likedProps {
-    recipe_name: string;
+    recipe_id: number;
+    id: number;
+    user_id: number;
     score: number;
+    recipe_name: string;
 }
 const LikedRecipeContext = createContext<likedProps[]>([]);
 const LikedRecipeDispatchContext = createContext<Dispatch<likedProps[]>>(Array);
