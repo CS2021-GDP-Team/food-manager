@@ -117,7 +117,9 @@ export default function SimpleList() {
                 </ListItem>
                 <Collapse in={likedOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {likedRecipes.map((value) => (
+                        {likedRecipes.map((value) =>
+                            console.log(value.recipe_name)
+                            /*
                             <LikedListItem
                                 recipe_id={value.recipe_id}
                                 id={value.id}
@@ -125,7 +127,8 @@ export default function SimpleList() {
                                 score={value.score}
                                 recipe_name={value.recipe_name}
                             />
-                        ))}
+                            */
+                        )}
                         {/*
                             <LikedListItem name="대패삼겹살을 넣은 두부김치" />
                             <LikedListItem name="콘꼬노미야키 만들기" />
