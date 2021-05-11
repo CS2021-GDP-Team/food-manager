@@ -3,6 +3,7 @@ import json
 import sys,os
 import traceback
 import vectorize
+import match
 
 host = os.environ["DBHOST"]
 post = 8080
@@ -62,7 +63,12 @@ class RecommendHandler(BaseHTTPRequestHandler):
         return self._json(result)
 
     def handleIngredient(self):
-        return self._json({"matchedId":116, "matchedName":"고구마"})
+        mat = match.Matcher()
+        mat.connect_database()
+        result = mat.get_matched_id(self.body["ingredientName"])
+        print(result)
+        mat.disconnect_database()
+        return self._json(result)
 
     def checkParameter(self, param):
         try:
