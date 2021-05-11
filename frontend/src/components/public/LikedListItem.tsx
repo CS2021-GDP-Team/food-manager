@@ -3,7 +3,7 @@ import { ListItem, ListItemText, IconButton, makeStyles } from "@material-ui/cor
 import { Close } from "@material-ui/icons";
 
 interface InputProps {
-    name: string;
+    recipe_name: string;
 }
 
 const useStyles = makeStyles({
@@ -13,12 +13,12 @@ const useStyles = makeStyles({
     }
 });
 
-export default function LikedListItem({ name }: InputProps) {
+export default function LikedListItem({ recipe_name }: InputProps) {
     const classes = useStyles();
 
     return (
         <ListItem>
-            <ListItemText primary={name} />
+            <ListItemText primary={recipe_name} />
             <IconButton>
                 <Close className={classes.deleteIcon} />
             </IconButton>

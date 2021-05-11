@@ -34,9 +34,6 @@ const Picture = () => {
             alert("식자재 이름을 입력하세요!");
             return;
         }
-        console.log(ingredient);
-        console.log(expDate);
-        console.log(putDate);
         await axios
             .post("/food-manager/api/user_fridge", {
                 ingredientName: ingredient,
@@ -44,7 +41,10 @@ const Picture = () => {
                 putDate: new Date(putDate).getTime() / 1000
             })
             .then((res) => alert("식자재가 등록 되었습니다."))
-            .catch((err) => alert("식자재 등록에 실패했습니다."));
+            .catch((err) => {
+                console.log(err);
+                alert("식자재 등록에 실패했습니다.");
+            });
     };
     const classes = useStyles();
     return (
