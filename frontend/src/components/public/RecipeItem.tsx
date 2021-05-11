@@ -62,7 +62,7 @@ const RecipeItem = ({
 
     return (
         <>
-            <ItemBox button>
+            <ItemBox>
                 <div className="listitem-container">
                     <Avatar variant="square" alt="food" src={url} className={classes.large} />
                     <div className="recipeitem-info">
