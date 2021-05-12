@@ -44,10 +44,10 @@ const Picture = () => {
     };
     //handleBarcode 동기처리를 위한 useEffect
     useEffect(() => {
-        console.log(ingredient);
-        console.log(expDate);
         if (flag) {
             handleAddIngredient();
+            setFlag(false);
+            console.log("do useEffect");
         }
     }, [flag]);
     const handleAddIngredient = async () => {
