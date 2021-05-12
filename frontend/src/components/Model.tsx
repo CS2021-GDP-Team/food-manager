@@ -72,8 +72,11 @@ export const useRecipeListDispatchContext = () => {
 };
 // =========  Diet Record
 interface recordProps {
-    date: string;
-    name: string;
+    id: number;
+    user_id: number;
+    put_date: string;
+    recipe_id: number;
+    recipe_name: string;
 }
 const DietRecordContext = createContext<recordProps[]>([]);
 const DietRecordDispatchContext = createContext<Dispatch<recordProps[]>>(Array);

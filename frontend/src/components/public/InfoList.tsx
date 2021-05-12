@@ -11,12 +11,7 @@ import {
 import { ExpandLess, ExpandMore, Edit } from "@material-ui/icons";
 import LikedListItem from "./LikedListItem";
 import DietRecordListItem from "./DietRecordListItem";
-import axios from "axios";
-import {
-    useDietRecordContext,
-    useLikedRecipeContext,
-    useLikedRecipeDispatchContext
-} from "../Model";
+import { useDietRecordContext, useLikedRecipeContext } from "../Model";
 
 const useStyles = makeStyles({
     root: {
@@ -45,7 +40,6 @@ const useStyles = makeStyles({
 
 function InfoList() {
     const classes = useStyles();
-    const dietRecords = useDietRecordContext();
     const [likedOpen, setLikedOpen] = useState(false);
     const [logOpen, setLogOpen] = useState(false);
 
@@ -55,22 +49,6 @@ function InfoList() {
     const logHandleClick = () => {
         setLogOpen(!logOpen);
     };
-
-    const [likedRecipes, setLikedRecipes] = [
-        useLikedRecipeContext(),
-        useLikedRecipeDispatchContext()
-    ];
-    useEffect(() => {
-        const getList = async () => {
-            try {
-                setLikedRecipes((await axios.get("/food-manager/api/favorite")).data);
-                console.log(likedRecipes);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        getList();
-    }, []);
 
     return (
         <div className={classes.root}>
@@ -97,8 +75,13 @@ function InfoList() {
                 </ListItem>
                 <Collapse in={logOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {dietRecords.map((value: any) => (
-                            <DietRecordListItem date={value.put_date} name={value.recipe_name} />
+                        {useDietRecordContext().map((value) => (
+                            <DietRecordListItem
+                                id={value.id}
+                                recipe_id={value.recipe_id}
+                                put_date={value.put_date}
+                                recipe_name={value.recipe_name}
+                            />
                         ))}
                         {/*
                             <DietRecordListItem date="2021.3.20" name="대패삼겹살을 넣은 두부김치" />
@@ -118,7 +101,7 @@ function InfoList() {
                 </ListItem>
                 <Collapse in={likedOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {likedRecipes.map((value) => (
+                        {useLikedRecipeContext().map((value) => (
                             <LikedListItem
                                 recipe_id={value.recipe_id}
                                 id={value.id}
