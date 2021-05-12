@@ -39,6 +39,9 @@ const Picture = () => {
         const date = new Date(expDate);
         date.setHours(date.getHours() + Number(data.hours));
         setExpDate(getCurrentDate(date));
+        console.log(ingredient);
+        console.log(expDate);
+        handleAddIngredient();
     };
     const handleAddIngredient = async () => {
         if (!ingredient) {
