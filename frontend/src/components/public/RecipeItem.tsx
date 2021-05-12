@@ -79,7 +79,9 @@ const RecipeItem = ({
         await axios.post("/food-manager/api/user_diet", { recipeId: id }).catch((e) => {
             console.log(e);
             alert("식단 추가에 오류가 발생했습니다.");
+            return;
         });
+        alert("식단을 성공적으로 추가했습니다.");
     };
 
     return (
