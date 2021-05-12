@@ -35,7 +35,7 @@ export default function DietRecordListItem({ id, put_date, recipe_id, recipe_nam
 
     return (
         <ListItem>
-            <ListItemText primary={put_date} />
+            <ListItemText primary={put_date.slice(0, 10)} />
             <ListItemText primary={recipe_name} />
             <IconButton onClick={handleDelete}>
                 <Close className={classes.deleteIcon} />
