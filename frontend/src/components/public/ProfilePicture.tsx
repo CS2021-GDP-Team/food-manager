@@ -41,9 +41,9 @@ const ProfilePicture = () => {
                 badgeContent={"+"}
             >
                 <Avatar
-                    alt="Elon"
+                    alt="donghoon"
                     className={classes.avatar}
-                    src={process.env.PUBLIC_URL + "/images/elon.jpg"}
+                    src={process.env.PUBLIC_URL + "/images/chichiyasu.jpeg"}
                 />
             </StyledBadge>
         </div>

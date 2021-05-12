@@ -32,7 +32,7 @@ const Info = () => {
             </div>
             <div className="info-picture">
                 <ProfilePicture />
-                <h4 className="info-label">Elon Musk</h4>
+                <h4 className="info-label">donghoon</h4>
             </div>
             <div className="info-profile">
                 <InfoList />

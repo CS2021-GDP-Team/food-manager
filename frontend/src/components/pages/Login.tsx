@@ -61,7 +61,8 @@ const Login = () => {
                 </Button>
                 {/* <div>Forgot ID / PW ?</div> */}
                 <div className="login-register">
-                    Don't have account?&nbsp;
+                    Don't have account?
+                    <br />
                     <Link to="/signup" className="login-link">
                         REGISTER
                     </Link>
