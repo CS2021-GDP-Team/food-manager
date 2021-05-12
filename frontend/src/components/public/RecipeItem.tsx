@@ -1,8 +1,22 @@
 import React, { useState } from "react";
-import { Divider, Avatar, makeStyles, createStyles, Theme, IconButton } from "@material-ui/core";
+import {
+    Divider,
+    Avatar,
+    makeStyles,
+    createStyles,
+    Theme,
+    IconButton,
+    Button
+} from "@material-ui/core";
 import ItemBox from "@material-ui/core/ListItem";
 import { grey } from "@material-ui/core/colors";
-import { ThumbUpAltOutlined, ThumbUp, ThumbDown, ThumbDownAltOutlined } from "@material-ui/icons";
+import {
+    ThumbUpAltOutlined,
+    ThumbUp,
+    ThumbDown,
+    ThumbDownAltOutlined,
+    PlaylistAdd
+} from "@material-ui/icons";
 import axios from "axios";
 
 interface recipeProps {
@@ -61,6 +75,12 @@ const RecipeItem = ({
         });
         setLike(score);
     };
+    const handleDiet = async () => {
+        await axios.post("/food-manager/api/user_diet", { recipeId: id }).catch((e) => {
+            console.log(e);
+            alert("식단 추가에 오류가 발생했습니다.");
+        });
+    };
 
     return (
         <>
@@ -71,7 +91,10 @@ const RecipeItem = ({
                         <p className="recipe-title">{name}</p>
                         <p className="recipe-ingredients">{ingredients}</p>
                         <div style={{ marginLeft: "auto" }}>
-                            <IconButton onClick={() => handleLike(true)}>
+                            <IconButton title="add diet" onClick={handleDiet}>
+                                <PlaylistAdd style={{ color: grey[50], fontSize: "2rem" }} />
+                            </IconButton>
+                            <IconButton title="like" onClick={() => handleLike(true)}>
                                 {like === 1 ? (
                                     <ThumbUp style={{ color: grey[50], fontSize: "2rem" }} />
                                 ) : (
@@ -80,7 +103,7 @@ const RecipeItem = ({
                                     />
                                 )}
                             </IconButton>
-                            <IconButton onClick={() => handleLike(false)}>
+                            <IconButton title="unlike" onClick={() => handleLike(false)}>
                                 {like === -1 ? (
                                     <ThumbDown style={{ color: grey[50], fontSize: "2rem" }} />
                                 ) : (
