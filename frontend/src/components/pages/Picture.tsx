@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PictureButton, InputField } from "../index";
 import { Button, makeStyles } from "@material-ui/core";
 import axios from "axios";
@@ -30,19 +30,26 @@ function getCurrentDate(date?: Date) {
 }
 
 const Picture = () => {
-    const [ingredient, setIngredient] = useState("");
-    const [expDate, setExpDate] = useState(getCurrentDate());
-    const [putDate, setPutDate] = useState(getCurrentDate());
+    const [ingredient, setIngredient] = useState<string>("");
+    const [expDate, setExpDate] = useState<string>(getCurrentDate());
+    const [putDate, setPutDate] = useState<string>(getCurrentDate());
+    const [flag, setFlag] = useState<boolean>(false);
     const handleBarcode = (data: barcodeProps) => {
         console.log(data);
         setIngredient(() => data.name);
         const date = new Date(expDate);
         date.setHours(date.getHours() + Number(data.hours));
         setExpDate(() => getCurrentDate(date));
+        setFlag(true);
+    };
+    //handleBarcode 동기처리를 위한 useEffect
+    useEffect(() => {
         console.log(ingredient);
         console.log(expDate);
-        handleAddIngredient();
-    };
+        if (flag) {
+            handleAddIngredient();
+        }
+    }, [flag]);
     const handleAddIngredient = async () => {
         if (!ingredient) {
             alert("식자재 이름을 입력하세요!");
