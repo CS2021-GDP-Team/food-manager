@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     }
 });
 
-function InfoList() {
+const InfoList = () => {
     const classes = useStyles();
     const [likedOpen, setLikedOpen] = useState(false);
     const [logOpen, setLogOpen] = useState(false);
@@ -83,15 +83,6 @@ function InfoList() {
                                 recipe_name={value.recipe_name}
                             />
                         ))}
-                        {/*
-                            <DietRecordListItem date="2021.3.20" name="대패삼겹살을 넣은 두부김치" />
-                            <DietRecordListItem date="2021.3.18" name="콘꼬노미야키 만들기" />
-                            <DietRecordListItem date="2021.3.11" name="밥도둑 반찬 고추장 달걀조림" />
-                            <DietRecordListItem date="2021.3.10" name="얼큰한 순두부찌개" />
-                            <DietRecordListItem date="2021.3.8" name="리코타치즈 샐러드" />
-                            <DietRecordListItem date="2021.3.7" name="야식으로 먹기 좋은 불막창" />
-                            <DietRecordListItem date="2021.3.5" name="간단하게 만드는 규동" />
-                        */}
                     </List>
                 </Collapse>
                 <Divider className={classes.border} />
@@ -101,29 +92,23 @@ function InfoList() {
                 </ListItem>
                 <Collapse in={likedOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {useLikedRecipeContext().map((value) => (
-                            <LikedListItem
-                                recipe_id={value.recipe_id}
-                                id={value.id}
-                                user_id={value.user_id}
-                                score={value.score}
-                                recipe_name={value.recipe_name}
-                            />
-                        ))}
-                        {/*
-                            <LikedListItem name="대패삼겹살을 넣은 두부김치" />
-                            <LikedListItem name="콘꼬노미야키 만들기" />
-                            <LikedListItem name="밥도둑 반찬 고추장 달걀조림" />
-                            <LikedListItem name="얼큰한 순두부찌개" />
-                            <LikedListItem name="리코타치즈 샐러드" />
-                            <LikedListItem name="야식으로 먹기 좋은 불막창" />
-                            <LikedListItem name="간단하게 만드는 규동" />
-                        */}
+                        {useLikedRecipeContext().map(
+                            (value) =>
+                                value.score > 0 && (
+                                    <LikedListItem
+                                        recipe_id={value.recipe_id}
+                                        id={value.id}
+                                        user_id={value.user_id}
+                                        score={value.score}
+                                        recipe_name={value.recipe_name}
+                                    />
+                                )
+                        )}
                     </List>
                 </Collapse>
             </List>
         </div>
     );
-}
+};
 
 export default memo(InfoList);
