@@ -43,10 +43,10 @@ const useStyles = makeStyles({
     }
 });
 
-function InfoList() {
+const InfoList = () => {
     const classes = useStyles();
     const dietRecords = useDietRecordContext();
-    const [likedOpen, setLikedOpen] = useState(false);
+    const [likedOpen, setLikedOpen] = useState(true);
     const [logOpen, setLogOpen] = useState(false);
 
     const likedHandleClick = () => {
@@ -141,6 +141,6 @@ function InfoList() {
             </List>
         </div>
     );
-}
+};
 
 export default memo(InfoList);
