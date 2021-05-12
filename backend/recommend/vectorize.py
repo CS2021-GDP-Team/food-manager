@@ -69,6 +69,7 @@ class Vectorizer:
         return result
 
     def print_recipe_names(self, recipe_idx):
+        recipe_idx = ','.join(list(map(str, recipe_idx)))
         self.db.execute("SELECT * FROM "+self.view_name+" WHERE FIND_IN_SET(id, '{}')",recipe_idx)
         for r in self.db.fetchall():
             print(r)
@@ -80,10 +81,17 @@ if __name__ == '__main__':
     vec.connect_database()
 
     vec.recipe_embedding()
-    result = vec.recommend_recipes(['고구마,설탕,호두,은행'])
-    print("recommended recipe idx:",result)
-
+    result = vec.recommend_recipes(['고구마,설탕,우유,사과,풋사과'])
+    print(result)
     vec.print_recipe_names(result)
-
+    print()
+    result = vec.recommend_recipes(['두부,마늘,양파,고추,김치'])
+    print(result)
+    vec.print_recipe_names(result)
+    print()
+    result = vec.recommend_recipes(['돼지고기,마늘,양파,고추,김치'])
+    print(result)
+    vec.print_recipe_names(result)
+    print()
     vec.disconnect_database()
     

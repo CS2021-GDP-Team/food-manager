@@ -83,7 +83,7 @@ class RecommendHandler(BaseHTTPRequestHandler):
     def preprocessUserFridge(self, ingredientInfo):
         ingredientIds = []
         for ing in ingredientInfo:
-            ingredientIds.append(ing["ingredient_id"])
+            ingredientIds.append(ing["ingredient_name"])
         return [','.join(str(x) for x in ingredientIds)]
 
 
