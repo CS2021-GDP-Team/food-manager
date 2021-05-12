@@ -1,8 +1,22 @@
 import React, { useState } from "react";
-import { Divider, Avatar, makeStyles, createStyles, Theme, IconButton } from "@material-ui/core";
+import {
+    Divider,
+    Avatar,
+    makeStyles,
+    createStyles,
+    Theme,
+    IconButton,
+    Button
+} from "@material-ui/core";
 import ItemBox from "@material-ui/core/ListItem";
 import { grey } from "@material-ui/core/colors";
-import { ThumbUpAltOutlined, ThumbUp, ThumbDown, ThumbDownAltOutlined } from "@material-ui/icons";
+import {
+    ThumbUpAltOutlined,
+    ThumbUp,
+    ThumbDown,
+    ThumbDownAltOutlined,
+    PlaylistAdd
+} from "@material-ui/icons";
 import axios from "axios";
 
 interface recipeProps {
@@ -53,13 +67,22 @@ const RecipeItem = ({
         } else {
             like === -1 ? (score = 0) : (score = -1);
         }
-        console.log("score", score);
-
-        await axios.post("/food-manager/api/favorite", { recipeId: id, score }).catch((e) => {
+        try {
+            await axios.post("/food-manager/api/favorite", { recipeId: id, score });
+            setLike(score);
+        } catch (e) {
             console.log(e);
-            alert("서버에 오류가 발생했습니다.");
-        });
-        setLike(score);
+            alert("잠시후 다시 시도해주시기 바랍니다.");
+        }
+    };
+    const handleDiet = async () => {
+        try {
+            await axios.post("/food-manager/api/user_diet", { recipeId: id });
+            alert("식단을 성공적으로 추가했습니다.");
+        } catch (e) {
+            console.log(e);
+            alert("식단 추가에 오류가 발생했습니다.");
+        }
     };
 
     return (
@@ -71,7 +94,10 @@ const RecipeItem = ({
                         <p className="recipe-title">{name}</p>
                         <p className="recipe-ingredients">{ingredients}</p>
                         <div style={{ marginLeft: "auto" }}>
-                            <IconButton onClick={() => handleLike(true)}>
+                            <IconButton title="add diet" onClick={handleDiet}>
+                                <PlaylistAdd style={{ color: grey[50], fontSize: "2rem" }} />
+                            </IconButton>
+                            <IconButton title="like" onClick={() => handleLike(true)}>
                                 {like === 1 ? (
                                     <ThumbUp style={{ color: grey[50], fontSize: "2rem" }} />
                                 ) : (
@@ -80,7 +106,7 @@ const RecipeItem = ({
                                     />
                                 )}
                             </IconButton>
-                            <IconButton onClick={() => handleLike(false)}>
+                            <IconButton title="unlike" onClick={() => handleLike(false)}>
                                 {like === -1 ? (
                                     <ThumbDown style={{ color: grey[50], fontSize: "2rem" }} />
                                 ) : (
