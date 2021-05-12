@@ -67,21 +67,22 @@ const RecipeItem = ({
         } else {
             like === -1 ? (score = 0) : (score = -1);
         }
-        console.log("score", score);
-
-        await axios.post("/food-manager/api/favorite", { recipeId: id, score }).catch((e) => {
+        try {
+            await axios.post("/food-manager/api/favorite", { recipeId: id, score });
+            setLike(score);
+        } catch (e) {
             console.log(e);
-            alert("서버에 오류가 발생했습니다.");
-        });
-        setLike(score);
+            alert("잠시후 다시 시도해주시기 바랍니다.");
+        }
     };
     const handleDiet = async () => {
-        await axios.post("/food-manager/api/user_diet", { recipeId: id }).catch((e) => {
+        try {
+            await axios.post("/food-manager/api/user_diet", { recipeId: id });
+            alert("식단을 성공적으로 추가했습니다.");
+        } catch (e) {
             console.log(e);
             alert("식단 추가에 오류가 발생했습니다.");
-            return;
-        });
-        alert("식단을 성공적으로 추가했습니다.");
+        }
     };
 
     return (
