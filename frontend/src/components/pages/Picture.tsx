@@ -35,10 +35,10 @@ const Picture = () => {
     const [putDate, setPutDate] = useState(getCurrentDate());
     const handleBarcode = (data: barcodeProps) => {
         console.log(data);
-        setIngredient(data.name);
+        setIngredient(() => data.name);
         const date = new Date(expDate);
         date.setHours(date.getHours() + Number(data.hours));
-        setExpDate(getCurrentDate(date));
+        setExpDate(() => getCurrentDate(date));
         console.log(ingredient);
         console.log(expDate);
         handleAddIngredient();
