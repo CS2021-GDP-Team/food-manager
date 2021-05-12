@@ -11,8 +11,8 @@ interface modalProps {
     open: boolean;
     handleClose: () => void;
     regDate: string; // 등록일
-    expDate: string; // 만료일
-    ingId: number; // 재료 번호
+    expDate?: string; // 만료일
+    id: number; // 재료 번호
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,7 +34,13 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalProps) => {
+const TransitionsModal = ({
+    open,
+    handleClose,
+    regDate,
+    expDate = "2021-12-31",
+    id
+}: modalProps) => {
     const classes = useStyles();
     const [_regDate, setRegDate] = useState<string>(regDate);
     const [_expDate, setExpDate] = useState<string>(expDate);
@@ -43,10 +49,10 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
     const handleDelete = async () => {
         await axios
             .delete("/food-manager/api/user_fridge", {
-                data: { ingredientId: ingId }
+                data: { id }
             })
             .then(() => {
-                setMenuList(menuList.filter((menu) => menu.ingredient_id !== ingId));
+                setMenuList(menuList.filter((menu) => menu.id !== id));
                 handleClose();
             })
             .catch((e) => {
@@ -58,7 +64,7 @@ const TransitionsModal = ({ open, handleClose, regDate, expDate, ingId }: modalP
     const handleDate = async () => {
         await axios
             .put("/food-manager/api/user_fridge", {
-                ingredientId: ingId,
+                id,
                 putDate: new Date(_regDate).getTime() / 1000,
                 expireDate: new Date(_expDate).getTime() / 1000
             })

@@ -7,6 +7,8 @@ interface itemProps {
     ingredient_id: number;
     put_date: string;
     expire_date: string;
+    custom_ingredient: string;
+    ingredient_name: string;
 }
 const MenuListContext = createContext<itemProps[]>([]);
 const MenuListDispatchContext = createContext<Dispatch<itemProps[]>>(Array);
@@ -42,6 +44,8 @@ interface recipeProps {
     carbo: string | null;
     fat: string | null;
     salt: string | null;
+    url: string;
+    ingredients: string;
 }
 const RecipeListContext = createContext<recipeProps[]>([]);
 const RecipeListDispatchContext = createContext<Dispatch<recipeProps[]>>(Array);
@@ -68,8 +72,11 @@ export const useRecipeListDispatchContext = () => {
 };
 // =========  Diet Record
 interface recordProps {
-    date: string;
-    name: string;
+    id: number;
+    user_id: number;
+    put_date: string;
+    recipe_id: number;
+    recipe_name: string;
 }
 const DietRecordContext = createContext<recordProps[]>([]);
 const DietRecordDispatchContext = createContext<Dispatch<recordProps[]>>(Array);

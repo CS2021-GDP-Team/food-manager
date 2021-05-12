@@ -1,11 +1,20 @@
 import ViewModel from "./ViewModel";
-import { MenuListContextProvider, RecipeListContextProvider } from "./Model";
+import {
+    MenuListContextProvider,
+    RecipeListContextProvider,
+    LikedRecipeContextProvider,
+    DietRecordContextProvider
+} from "./Model";
 const Provider = () => (
-    <RecipeListContextProvider>
-        <MenuListContextProvider>
-            <ViewModel />
-        </MenuListContextProvider>
-    </RecipeListContextProvider>
+    <DietRecordContextProvider>
+        <LikedRecipeContextProvider>
+            <RecipeListContextProvider>
+                <MenuListContextProvider>
+                    <ViewModel />
+                </MenuListContextProvider>
+            </RecipeListContextProvider>
+        </LikedRecipeContextProvider>
+    </DietRecordContextProvider>
 );
 
 export default Provider;

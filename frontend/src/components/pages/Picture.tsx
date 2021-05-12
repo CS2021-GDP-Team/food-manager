@@ -36,7 +36,7 @@ const Picture = () => {
         }
         await axios
             .post("/food-manager/api/user_fridge", {
-                ingredientId: 137,
+                ingredientName: ingredient,
                 expireDate: new Date(expDate).getTime() / 1000,
                 putDate: new Date(putDate).getTime() / 1000
             })

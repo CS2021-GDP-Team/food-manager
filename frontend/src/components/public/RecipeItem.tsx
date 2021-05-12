@@ -15,6 +15,8 @@ interface recipeProps {
     fat: string | null;
     salt: string | null;
     score?: number;
+    url: string;
+    ingredients: string;
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -36,7 +38,9 @@ const RecipeItem = ({
     carbo,
     fat,
     salt,
-    score = 0
+    score = 0,
+    url,
+    ingredients
 }: recipeProps) => {
     console.log(score);
 
@@ -45,31 +49,27 @@ const RecipeItem = ({
     const handleLike = async (type: boolean) => {
         // true = click like, false= click unlike
         if (type) {
-            like === 1 ? setLike(0) : setLike(1);
+            like === 1 ? (score = 0) : (score = 1);
         } else {
-            like === -1 ? setLike(0) : setLike(-1);
+            like === -1 ? (score = 0) : (score = -1);
         }
-        console.log("like", like);
+        console.log("score", score);
 
-        await axios.post("/food-manager/api/favorite", { recipeId: id, score: like }).catch((e) => {
+        await axios.post("/food-manager/api/favorite", { recipeId: id, score }).catch((e) => {
             console.log(e);
             alert("서버에 오류가 발생했습니다.");
         });
+        setLike(score);
     };
 
     return (
         <>
             <ItemBox>
                 <div className="listitem-container">
-                    <Avatar
-                        variant="square"
-                        alt="food"
-                        src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/fruit-salad-horizontal-jpg-1522181219.jpg"
-                        className={classes.large}
-                    />
+                    <Avatar variant="square" alt="food" src={url} className={classes.large} />
                     <div className="recipeitem-info">
                         <p className="recipe-title">{name}</p>
-                        <p className="recipe-ingredients">방울토마토, 양파</p>
+                        <p className="recipe-ingredients">{ingredients}</p>
                         <div style={{ marginLeft: "auto" }}>
                             <IconButton onClick={() => handleLike(true)}>
                                 {like === 1 ? (
