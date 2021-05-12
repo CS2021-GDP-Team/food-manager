@@ -33,7 +33,7 @@ class Matcher:
         for ing in res:
             if user_ing.find(ing[1]) != -1:
                 return {"matchedId": ing[0], "matchedName":ing[1]}
-        return {"matchedId": res[0], "matchedName":res[1]}
+        return {"matchedId": res[0][0], "matchedName":res[0][1]}
 
     def ingredients_db(self):
         self.db.execute('select id, name from ' + self.ingredientDB)
@@ -70,6 +70,7 @@ if __name__ == '__main__':
     mat = Matcher()
     mat.connect_database()
     print(mat.get_matched_id("풋사과"), end="\n\n")
+    print(mat.get_matched_id("버섯"), end="\n\n")
     print(mat.get_matched_id("곰곰 돌돌말이 무연골 대패 삼겹살 (냉동), 1kg, 1개입"), end="\n\n")
     print(mat.get_matched_id("제스프리 썬골드 키위, XL, 1.5kg(12개입), 1개"), end="\n\n")
     print(mat.get_matched_id("충남세도 GAP 인증 대추방울토마토, 2kg, 1박스"), end="\n\n")
