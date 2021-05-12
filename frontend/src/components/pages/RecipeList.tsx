@@ -14,9 +14,11 @@ const Recipe = () => {
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
     const history = useHistory();
     const [favorites, setFavorites] = useState<{ [index: number]: number }>({});
+    const [isLoad, setIsLoad] = useState(true);
     useEffect(() => {
         const getList = async () => {
             try {
+                setIsLoad(true);
                 const favoriteList: { [index: number]: number } = {};
                 (await axios.get("/food-manager/api/favorite")).data.forEach(
                     ({ recipe_id, score }: favoriteProps) => {
@@ -27,6 +29,7 @@ const Recipe = () => {
                 console.log("전", favorites);
 
                 setRecipeList((await axios.get("/food-manager/api/recommend")).data);
+                setIsLoad(false);
             } catch (e) {
                 console.log(e);
                 alert("레시피를 가져오는중 오류가 발생했습니다.");
@@ -53,7 +56,7 @@ const Recipe = () => {
                     </IconButton>
                 </div>
             </div>
-            {recipeList.length === 0 ? (
+            {isLoad ? (
                 <div id="recipe-progress">
                     <CircularProgress style={{ color: grey[50] }} />
                     <p>Getting recipe information ...</p>
