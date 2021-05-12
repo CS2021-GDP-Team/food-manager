@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { PictureButton, InputField } from "../index";
 import { Button, makeStyles } from "@material-ui/core";
 import axios from "axios";
-
+interface barcodeProps {
+    name: string;
+    hours: string;
+    url: string;
+}
 const useStyles = makeStyles({
     root: {
         width: "80%",
@@ -13,9 +17,9 @@ const useStyles = makeStyles({
     }
 });
 
-function getCurrentDate() {
-    var time = new Date(),
-        month = "" + (time.getMonth() + 1),
+function getCurrentDate(date?: Date) {
+    var time = date ? new Date(date) : new Date();
+    var month = "" + (time.getMonth() + 1),
         day = "" + time.getDate(),
         year = time.getFullYear();
 
@@ -29,6 +33,13 @@ const Picture = () => {
     const [ingredient, setIngredient] = useState("");
     const [expDate, setExpDate] = useState(getCurrentDate());
     const [putDate, setPutDate] = useState(getCurrentDate());
+    const handleBarcode = (data: barcodeProps) => {
+        console.log(data);
+        setIngredient(data.name);
+        const date = new Date(expDate);
+        date.setHours(date.getHours() + Number(data.hours));
+        setExpDate(getCurrentDate(date));
+    };
     const handleAddIngredient = async () => {
         if (!ingredient) {
             alert("식자재 이름을 입력하세요!");
@@ -50,7 +61,7 @@ const Picture = () => {
     return (
         <div className="picture-container">
             <div className="picture-button">
-                <PictureButton setValue={setIngredient} />
+                <PictureButton setValue={setIngredient} handleBarcode={handleBarcode} />
                 <h3 className="picture-label">Add a barcode picture !</h3>
             </div>
             <div className="picture-form">
