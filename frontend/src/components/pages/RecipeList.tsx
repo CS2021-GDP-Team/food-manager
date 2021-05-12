@@ -18,17 +18,17 @@ const Recipe = () => {
     useEffect(() => {
         const getList = async () => {
             try {
-                // setIsLoad(true);
-                // const favoriteList: { [index: number]: number } = {};
-                // (await axios.get("/food-manager/api/favorite")).data.forEach(
-                //     ({ recipe_id, score }: favoriteProps) => {
-                //         favoriteList[recipe_id] = score;
-                //     }
-                // );
-                // setFavorites(favoriteList);
-                // console.log("전", favorites);
+                setIsLoad(true);
+                const favoriteList: { [index: number]: number } = {};
+                (await axios.get("/food-manager/api/favorite")).data.forEach(
+                    ({ recipe_id, score }: favoriteProps) => {
+                        favoriteList[recipe_id] = score;
+                    }
+                );
+                setFavorites(favoriteList);
+                console.log("전", favorites);
 
-                // setRecipeList((await axios.get("/food-manager/api/recommend")).data);
+                setRecipeList((await axios.get("/food-manager/api/recommend")).data);
                 setIsLoad(false);
             } catch (e) {
                 console.log(e);
@@ -63,20 +63,7 @@ const Recipe = () => {
                 </div>
             ) : (
                 <List id="recipe-items">
-                    <RecipeItem
-                        id={1}
-                        name={"21"}
-                        source={"22"}
-                        kcal={"22"}
-                        protein={"22"}
-                        carbo={"22"}
-                        fat={"22"}
-                        salt={"22"}
-                        score={1}
-                        url={""}
-                        ingredients={"32dwdwewㅇ자"}
-                    />
-                    {/* {recipeList.map(
+                    {recipeList.map(
                         ({
                             id,
                             name,
@@ -103,7 +90,7 @@ const Recipe = () => {
                                 ingredients={ingredients}
                             />
                         )
-                    )} */}
+                    )}
                 </List>
             )}
         </div>
