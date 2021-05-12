@@ -3,9 +3,6 @@ import { makeStyles, IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import axios from "axios";
 import quagga from "@ericblade/quagga2";
-interface InputProps {
-    setValue?: any;
-}
 
 const useStyles = makeStyles({
     root: {
@@ -22,30 +19,9 @@ const useStyles = makeStyles({
         fontSize: 72
     }
 });
-const Decode = (picture: string) => {
-    quagga.decodeSingle(
-        {
-            numOfWorkers: 0, // Needs to be 0 when used within node
-            inputStream: {
-                size: 800 // restrict input-size to be 800px in width (long-side)
-            },
-            decoder: {
-                readers: ["ean_reader"] // List of active readers
-            },
-            locate: false, // try to locate the barcode in the image
-            src: picture
-        },
-        function (result) {
-            if (result.codeResult) {
-                console.log("barcode:", result.codeResult.code);
-            } else {
-                console.log("not detected");
-            }
-        }
-    );
-};
-const PictureButton = ({ setValue }: InputProps) => {
-    // const [picture, setPicture] = useState("");
+
+const PictureButton = ({ handleBarcode }: any) => {
+    const classes = useStyles();
     const handlePicture = async (e: any) => {
         console.log(URL.createObjectURL(e.target.files[0]));
         const pictureUrl = URL.createObjectURL(e.target.files[0]);
@@ -54,21 +30,39 @@ const PictureButton = ({ setValue }: InputProps) => {
             return;
         }
         Decode(pictureUrl);
-        // await axios
-        //     .post("/food-manager/api/picture", {
-        //         picture: picture
-        //     })
-        //     .then((res) => {
-        //         alert("파일이 등록되었습니다.");
-        //         setValue(res.data.text); //수정 필요!!!!!!!
-        //         console.log(res);
-        //     })
-        //     .catch((err) => {
-        //         alert("파일 등록에 실패하였습니다.");
-        //         console.log(err);
-        //     });
     };
-    const classes = useStyles();
+    const Decode = (picture: string) => {
+        quagga.decodeSingle(
+            {
+                numOfWorkers: 0, // Needs to be 0 when used within node
+                inputStream: {
+                    size: 800 // restrict input-size to be 800px in width (long-side)
+                },
+                decoder: {
+                    readers: ["ean_reader"] // List of active readers
+                },
+                locate: false, // try to locate the barcode in the image
+                src: picture
+            },
+            async (result) => {
+                try {
+                    if (result.codeResult) {
+                        handleBarcode(
+                            (
+                                await axios.post("/food-manager/api/barcode", {
+                                    barcode_number: result.codeResult.code
+                                })
+                            ).data
+                        );
+                    } else {
+                        alert("바코드를 인식할수가 없습니다.");
+                    }
+                } catch (e) {
+                    alert("등록되지 않은 바코드 입니다. 직접 입력해주세요.");
+                }
+            }
+        );
+    };
     return (
         <>
             <input
