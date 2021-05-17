@@ -4,6 +4,7 @@ const recipeIngredients = require('../dao/recipeIngredients.js');
 const fridges = require('../dao/fridges.js');
 const diets = require('../dao/diets.js')
 const favorites = require('../dao/favorites.js')
+const barcodes = require('../dao/barcodes.js');
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 const fetch = require("node-fetch")
@@ -145,6 +146,22 @@ Service.insertFavorite = async (userId, recipeId, score) => {
 
 Service.deleteFavorite = async (userId, recipeId) => {
 	await favorites.deleteFavorite(userId, recipeId);
+}
+
+Service.getBarcode = async (barcode_number) => {
+	const data = await barcodes.getBarcode(barcode_number);
+    if (data.length == 0) {
+        throw new APIError(sc.HTTP_UNAUTHORIZED, '잘못된 barcode_number 이거나 존재하지않는 정보입니다');
+    }
+    return data;
+}
+
+Service.insertBarcode = async (barcode_number, name, hours, url) => {
+	await barcodes.insertBarcode(barcode_number, name, hours, url);
+}
+
+Service.deleteBarcode = async (barcode_number) => {
+	await barcodes.deleteBarcode(barcode_number);
 }
 
 Object.freeze(Service);

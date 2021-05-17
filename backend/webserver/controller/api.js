@@ -35,25 +35,28 @@ router.post('/picture', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, {'text': text});
 }));
 
-router.post('/barcode', fctl.loginRequiredWrapper(async (req, res, next) => {
-	const sampleData = {
-		8801007100838: {
-		   name: '[백설] 하얀설탕 (1kg)',
-		   hours: '3600',
-		   url: 'http://image.auction.co.kr/itemimage/1b/e6/d7/1be6d79246.jpg',
-		},
-		8801069173603: {
-		   name: '[남양] 맛있는 우유 GT 900ml',
-		   hours: '240',
-		   url: 'http://img.danawa.com/prod_img/500000/305/837/img/3837305_1.jpg?shrink=360:360&_v=20171117134546',
-		},
-	}
-	util.validate(req.body, ['barcode_number']);
+router.get('/barcode', fctl.loginRequiredWrapper(async (req, res, next) => {
+	util.validate(req.query, ['barcode_number']);
+	const barcode_number = req.query.barcode_number;
+	const data = await service.getBarcode(barcode_number);
+	return fctl.send(req, res, hsc.HTTP_OK, data);
+}));
+
+router.post('/barcode', fctl.nonLoginWrapper(async (req, res, next) => {
+	util.validate(req.body, ['barcode_number', 'name']);
 	const barcode_number = req.body.barcode_number;
-	if(!sampleData[barcode_number]){
-		return fctl.send(req,res, hsc.HTTP_BAD_REQUEST);
-	}
-	return fctl.send(req, res, hsc.HTTP_OK, sampleData[barcode_number]);
+	const name = req.body.name;
+	const hours = util.isEmpty(req.body.hour) ? null : req.body.hour;
+	const url = util.isEmpty(req.body.hour) ? null : req.body.url;
+	await service.insertBarcode(barcode_number, name, hours, url);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.delete('/barcode', fctl.nonLoginWrapper(async (req, res, next) => {
+    util.validate(req.body, ['barcode_number']);
+	const barcode_number = req.body.barcode_number;
+	await service.deleteBarcode(barcode_number);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
 router.get('/recommend', fctl.loginRequiredWrapper(async (req, res, next) => {
