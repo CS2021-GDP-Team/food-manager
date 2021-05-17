@@ -46,8 +46,8 @@ router.post('/barcode', fctl.nonLoginWrapper(async (req, res, next) => {
 	util.validate(req.body, ['barcode_number', 'name']);
 	const barcode_number = req.body.barcode_number;
 	const name = req.body.name;
-	const hours = util.isEmpty(req.body.hour) ? null : req.body.hour;
-	const url = util.isEmpty(req.body.hour) ? null : req.body.url;
+	const hours = util.isEmpty(req.body.hours) ? null : req.body.hours;
+	const url = util.isEmpty(req.body.url) ? null : req.body.url;
 	await service.insertBarcode(barcode_number, name, hours, url);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));

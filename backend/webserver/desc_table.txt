@@ -79,3 +79,14 @@ MariaDB [food_manager]> desc favorites;
 +-----------+---------+------+-----+---------+----------------+
 * user_id 와 recipe_id 는 unique key.
 
+MariaDB [food_manager]> desc barcodes;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| barcode | varchar(30)  | YES  |     | NULL    |                |
+| name    | varchar(255) | YES  |     | NULL    |                |
+| hours   | int(11)      | YES  |     | NULL    |                |
+| url     | varchar(255) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+
