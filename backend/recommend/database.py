@@ -27,7 +27,7 @@ class DBConnector:
         return self.curs.fetchall()
 
     def check_view(self):
-        self.execute("show full tables in food_manager where table_type like '%VIEW%'", (self.database))
+        self.execute("show full tables in {} where table_type like '%VIEW%'", (self.database))
         if not self.fetchall():
             return False
         return True
