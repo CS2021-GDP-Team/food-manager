@@ -15,17 +15,6 @@ interface itemProps {
     url?: string;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        large: {
-            width: theme.spacing(11),
-            height: theme.spacing(11),
-            marginLeft: "auto",
-            borderRadius: "30px"
-        }
-    })
-);
-
 const ListItem = ({
     id,
     user_id,
@@ -36,7 +25,6 @@ const ListItem = ({
     ingredient_name,
     url = process.env.PUBLIC_URL + "/images/noimage.png"
 }: itemProps) => {
-    const classes = useStyles();
     const [open, setOpen] = useState<boolean>(false);
     const handleClose = () => {
         setOpen(false);
@@ -56,7 +44,6 @@ const ListItem = ({
         <>
             <ItemBox button onClick={() => setOpen(true)}>
                 <div className="listitem-container">
-                    <Avatar variant="square" alt="food" src={url} className={classes.large} />
                     <div className="listitem-info">
                         <p className="register-date">{put_date.slice(0, 10)}</p>
                         <p className="listitem-name">{custom_ingredient}</p>
