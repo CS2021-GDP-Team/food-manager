@@ -85,7 +85,16 @@ Service.recommendRecipes2 = async (userId, start, end) => {
 		scores.push({'recipe_id':recipe_id, 'score':score});
 	}
 	scores.sort((a, b) => {return b['score'] - a['score'];})
-	return scores;
+
+	const recipesFound = await recipes.getRecipes(scores.map((item) => {return item['recipe_id']}));
+        if (recipesFound == null){
+        throw new APIError(sc.HTTP_BAD_REQUEST, '레시피를 찾을 수 없습니다.')
+        }
+
+        for (var i = 0; i<recipesFound.length; i++) {
+                recipesFound[i] = {...recipesFound[i], 'score':scores[i]['score']}
+        }
+        return recipesFound;
 }
 
 Service.getRecipes = async (recipeIds) => {
