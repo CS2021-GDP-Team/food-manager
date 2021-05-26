@@ -1,6 +1,7 @@
 import { Input, InputAdornment } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-
+import { useState, useRef } from "react";
+import { assemble } from "hangul-js";
 interface InputProps {
     text: string;
     hint?: string;
@@ -70,13 +71,18 @@ const InputField = ({
     defaultValue,
     fullWidth = false
 }: InputProps) => {
+    const ref = useRef<any>();
+    const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const text = assemble(e.target.value.split(""));
+        setValue(text);
+        ref.current.value = text;
+    };
     return (
         <>
             {fullWidth ? (
                 <FullCssTextField
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setValue(e.target.value);
-                    }}
+                    inputRef={ref}
+                    onChange={handleValue}
                     placeholder={hint}
                     startAdornment={
                         <InputAdornment position="start">
@@ -90,9 +96,8 @@ const InputField = ({
                 <>
                     {font_size ? (
                         <SmallCssTextField
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setValue(e.target.value);
-                            }}
+                            inputRef={ref}
+                            onChange={handleValue}
                             placeholder={hint}
                             startAdornment={
                                 <InputAdornment position="start">
@@ -104,9 +109,8 @@ const InputField = ({
                         />
                     ) : (
                         <CssTextField
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setValue(e.target.value);
-                            }}
+                            inputRef={ref}
+                            onChange={handleValue}
                             placeholder={hint}
                             startAdornment={
                                 <InputAdornment position="start">
