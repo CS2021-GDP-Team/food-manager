@@ -33,13 +33,18 @@ MariaDB [food_manager]> desc ingredients;
 +-------+-----------+------+-----+---------+----------------+
 
 MariaDB [food_manager]> desc users;
-+----------+--------------+------+-----+---------+----------------+
-| Field    | Type         | Null | Key | Default | Extra          |
-+----------+--------------+------+-----+---------+----------------+
-| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
-| user_id  | varchar(255) | NO   | UNI | NULL    |                |
-| password | varchar(255) | NO   |     | NULL    |                |
-+----------+--------------+------+-----+---------+----------------+
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int          | NO   | PRI | NULL    | auto_increment |
+| user_id     | varchar(255) | NO   | UNI | NULL    |                |
+| password    | varchar(255) | NO   |     | NULL    |                |
+| height      | int          | YES  |     | NULL    |                |
+| weight      | int          | YES  |     | NULL    |                |
+| is_notified | int          | YES  |     | 0       |                |
+| notify_time | varchar(10)  | YES  |     | 18:00   |                |
++-------------+--------------+------+-----+---------+----------------+
+
 
 MariaDB [food_manager]> desc recipe_ingredients;
 +---------------+---------+------+-----+---------+----------------+

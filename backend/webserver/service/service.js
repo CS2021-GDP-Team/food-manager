@@ -31,6 +31,30 @@ Service.getUser = async (userId, password) => {
     return userFound;
 }
 
+Service.getUserInfo = async (userId) => {
+    return await users.getUserInfo(userId);
+}
+
+Service.updateUserInfo = async (userId, height, weight, isNotified, notifyTime) => {
+	var query = ""
+	if(height && height != ""){
+		query += "height="+height.toString()+", ";
+	}
+	if(weight && weight != ""){
+		query += "weight="+weight.toString()+", ";
+	}
+	if(isNotified && isNotified != ""){
+		isNotified += "is_notified="+isNotified.toString()+", ";
+	}
+	if(notifyTime && notifyTime != ""){
+		notifyTime += "notify_time="+notifyTime.toString()+", ";
+	}
+	if(query == "") return;
+
+	query = query.slice(0,-2);
+	await users.updateUserInfo(userId, query);
+}
+
 Service.recommendRecipes = async (userId, start, end) => {
 	// 유저의 재료 정보 검색
 	const ingredientInfo = await fridges.getIngredientsByUserId(userId);
@@ -151,7 +175,7 @@ Service.deleteFavorite = async (userId, recipeId) => {
 Service.getBarcode = async (barcode_number) => {
 	const data = await barcodes.getBarcode(barcode_number);
     if (data.length == 0) {
-        throw new APIError(sc.HTTP_UNAUTHORIZED, '잘못된 barcode_number 이거나 존재하지않는 정보입니다');
+        throw new APIError(sc.HTTP_BAD_REQUEST, '잘못된 barcode_number 이거나 존재하지않는 정보입니다');
     }
     return data;
 }

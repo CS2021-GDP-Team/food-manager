@@ -11,7 +11,7 @@ class Vectorizer:
             'user': os.environ["DBID"],
             'password': os.environ["DBPW"],
             'host': os.environ["DBHOST"],
-            'database': 'food_manager_new',
+            'database': os.environ["DBNAME"],
         }
         self.view_name = "ri_view"
         self.ingredient_column = "ingredients"

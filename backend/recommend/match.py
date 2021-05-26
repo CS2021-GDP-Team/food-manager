@@ -7,7 +7,7 @@ class Matcher:
             'user': os.environ["DBID"],
             'password': os.environ["DBPW"],
             'host': os.environ["DBHOST"],
-            'database': 'food_manager_new',
+            'database': os.environ["DBNAME"],
         }
         self.ingredientDB = "ingredients"
         self.ings = []
