@@ -30,9 +30,47 @@ router.post('/logout', fctl.loginRequiredWrapper(async (req, res, next) => {
     return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
-router.post('picture', fctl.loginRequiredWrapper(async (req, res, next) => {
+router.get('/user_info', fctl.loginRequiredWrapper(async (req, res, next) => {
+	const data = await service.getUserInfo(req.session.user.id);
+	return fctl.send(req, res, hsc.HTTP_OK, data);
+}));
+
+router.put('/user_info', fctl.nonLoginWrapper(async (req, res, next) => {
+	const height = util.isEmpty(req.body.height) ? null : req.body.height;
+	const weight = util.isEmpty(req.body.weight) ? null : req.body.weight;
+	const isNotified = util.isEmpty(req.body.isNotified) ? null : req.body.isNotified;
+	const notifyTime = util.isEmpty(req.body.notifyTime) ? null : req.body.notifyTime;
+	await service.updateUserInfo(req.session.user.id, height, weight, isNotified, notifyTime);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.post('/picture', fctl.loginRequiredWrapper(async (req, res, next) => {
 	const text = await service.readPicture(res.body)
     return fctl.send(req, res, hsc.HTTP_OK, {'text': text});
+}));
+
+router.get('/barcode', fctl.loginRequiredWrapper(async (req, res, next) => {
+	util.validate(req.query, ['barcode_number']);
+	const barcode_number = req.query.barcode_number;
+	const data = await service.getBarcode(barcode_number);
+	return fctl.send(req, res, hsc.HTTP_OK, data);
+}));
+
+router.post('/barcode', fctl.nonLoginWrapper(async (req, res, next) => {
+	util.validate(req.body, ['barcode_number', 'name']);
+	const barcode_number = req.body.barcode_number;
+	const name = req.body.name;
+	const hours = util.isEmpty(req.body.hours) ? null : req.body.hours;
+	const url = util.isEmpty(req.body.url) ? null : req.body.url;
+	await service.insertBarcode(barcode_number, name, hours, url);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
+}));
+
+router.delete('/barcode', fctl.nonLoginWrapper(async (req, res, next) => {
+    util.validate(req.body, ['barcode_number']);
+	const barcode_number = req.body.barcode_number;
+	await service.deleteBarcode(barcode_number);
+	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 
 router.get('/recommend', fctl.loginRequiredWrapper(async (req, res, next) => {

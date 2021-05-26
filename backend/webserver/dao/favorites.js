@@ -4,7 +4,7 @@ require('../utils/dbconnector')(Favorites);
 
 Favorites.getFavoritesByUserId = async (userId) => {
     // score = 1 인 값(좋아요) 만 가져옴
-    const [row, fields] = await Favorites.db.execute("SELECT id, name, favorite_id, score FROM recipes r JOIN ( SELECT id as favorite_id, recipe_id,score FROM favorites WHERE user_id=? AND score=1) f ON r.id = f.recipe_id", [userId]);
+    const [row, fields] = await Favorites.db.execute("SELECT * FROM favorites f NATURAL JOIN (SELECT id as recipe_id, name as recipe_name FROM recipes) r WHERE user_id = ? AND score=1", [userId]);
 	return row;
 }
 

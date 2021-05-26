@@ -7,7 +7,7 @@ module.exports = async (proto) => {
         host: process.env['DBHOST'],
         user: process.env['DBID'],
         password: process.env['DBPW'],
-        database: 'food_manager'
+        database: process.env['DBNAME']
     });
     proto.db = await db__.promise();
     Object.freeze(proto);

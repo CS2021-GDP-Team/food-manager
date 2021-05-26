@@ -4,6 +4,7 @@ const recipeIngredients = require('../dao/recipeIngredients.js');
 const fridges = require('../dao/fridges.js');
 const diets = require('../dao/diets.js')
 const favorites = require('../dao/favorites.js')
+const barcodes = require('../dao/barcodes.js');
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 const fetch = require("node-fetch")
@@ -30,12 +31,36 @@ Service.getUser = async (userId, password) => {
     return userFound;
 }
 
+Service.getUserInfo = async (userId) => {
+    return await users.getUserInfo(userId);
+}
+
+Service.updateUserInfo = async (userId, height, weight, isNotified, notifyTime) => {
+	var query = ""
+	if(height && height != ""){
+		query += "height="+height.toString()+", ";
+	}
+	if(weight && weight != ""){
+		query += "weight="+weight.toString()+", ";
+	}
+	if(isNotified && isNotified != ""){
+		isNotified += "is_notified="+isNotified.toString()+", ";
+	}
+	if(notifyTime && notifyTime != ""){
+		notifyTime += "notify_time="+notifyTime.toString()+", ";
+	}
+	if(query == "") return;
+
+	query = query.slice(0,-2);
+	await users.updateUserInfo(userId, query);
+}
+
 Service.recommendRecipes = async (userId, start, end) => {
 	// 유저의 재료 정보 검색
 	const ingredientInfo = await fridges.getIngredientsByUserId(userId);
 
 	// 파이썬 서버 연결 -> 레시피 아이디 반환
-    const response = await fetch('http://localhost:8080', {
+    const response = await fetch('http://localhost:8080/recommend', {
         method: 'POST',
         headers:{
             'Content-Type': 'application/json',
@@ -107,10 +132,16 @@ Service.getUserIngredients = async (userId) => {
 
 Service.insertUserIngredient = async (userId, ingredientName, putDate, expireDate) => {
 	// 파이썬 서버 연결 -> 재료 아이디 반환
-	// 현재 랜덤 재료 id 로 저장
-	var ingredientId = Math.floor(Math.random() * 1569) + 1;
-	console.log("random ingredient id: ", ingredientId);
-	await fridges.insertIngredient(userId, ingredientId, ingredientName, putDate, expireDate);
+    const response = await fetch('http://localhost:8080/ingredient', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"ingredientName":ingredientName})
+    })
+	const ingredientId = await response.json();
+
+	await fridges.insertIngredient(userId, ingredientId["matchedId"], ingredientName, putDate, expireDate);
 }
 
 Service.updateUserIngredient = async (id, putDate, expireDate) => {
@@ -148,6 +179,22 @@ Service.insertFavorite = async (userId, recipeId, score) => {
 
 Service.deleteFavorite = async (userId, recipeId) => {
 	await favorites.deleteFavorite(userId, recipeId);
+}
+
+Service.getBarcode = async (barcode_number) => {
+	const data = await barcodes.getBarcode(barcode_number);
+    if (data.length == 0) {
+        throw new APIError(sc.HTTP_BAD_REQUEST, '잘못된 barcode_number 이거나 존재하지않는 정보입니다');
+    }
+    return data;
+}
+
+Service.insertBarcode = async (barcode_number, name, hours, url) => {
+	await barcodes.insertBarcode(barcode_number, name, hours, url);
+}
+
+Service.deleteBarcode = async (barcode_number) => {
+	await barcodes.deleteBarcode(barcode_number);
 }
 
 Object.freeze(Service);

@@ -3,6 +3,7 @@ import json
 import sys,os
 import traceback
 import vectorize
+import match
 
 host = os.environ["DBHOST"]
 post = 8080
@@ -41,35 +42,48 @@ class RecommendHandler(BaseHTTPRequestHandler):
             self._error("Content type error: use json to send data")
 
         content_length = int(self.headers['Content-Length'])
-        body = json.loads(self.rfile.read(content_length))
-        try:
-            if "ingredientInfo" in body:
-                print(body)
-                response = self.handleRequest(body["ingredientInfo"], body["start"], body["end"])
-                self._json(response)
-            else:
-                self._error("'ingredientInfo' is missing")        
-        except Exception as e:
-            print()
-            traceback.print_exc()
-            self._error(f"An exception occured! e : {e}")        
+        self.body = json.loads(self.rfile.read(content_length))
+        if self.path == "/recommend":
+            self.checkParameter("ingredientInfo")
+            self.handleRecommend()
+        elif self.path == "/ingredient":
+            self.checkParameter("ingredientName")
+            self.handleIngredient()
 
-    def handleRequest(self, ingredientInfo, start, end):
-        ingredients = self.preprocess(ingredientInfo)
+    def handleRecommend(self):
+        ingredients = self.preprocessUserFridge(self.body["ingredientInfo"])
         print(ingredients)
         vec = vectorize.Vectorizer()
         vec.connect_database()
 
         vec.recipe_embedding()
-        result = vec.recommend_recipes(ingredients, start, end)
+        result = vec.recommend_recipes(ingredients, self.body["start"], self.body["end"])
         print(result)
         vec.disconnect_database()
-        return result
+        return self._json(result)
 
-    def preprocess(self, ingredientInfo):
+    def handleIngredient(self):
+        mat = match.Matcher()
+        mat.connect_database()
+        result = mat.get_matched_id(self.body["ingredientName"])
+        print(result)
+        mat.disconnect_database()
+        return self._json(result)
+
+    def checkParameter(self, param):
+        try:
+            if param in self.body:
+                print(self.body)
+            else:
+                self._error(f"{param} is missing")        
+        except Exception as e:
+            traceback.print_exc()
+            self._error(f"An exception occured! e : {e}")
+
+    def preprocessUserFridge(self, ingredientInfo):
         ingredientIds = []
         for ing in ingredientInfo:
-            ingredientIds.append(ing["ingredient_id"])
+            ingredientIds.append(ing["ingredient_name"])
         return [','.join(str(x) for x in ingredientIds)]
 
 
