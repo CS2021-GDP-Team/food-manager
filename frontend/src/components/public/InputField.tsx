@@ -76,6 +76,7 @@ const InputField = ({
         const text = assemble(e.target.value.split(""));
         setValue(text);
         ref.current.value = text;
+        console.log(text);
     };
     return (
         <>
@@ -110,6 +111,7 @@ const InputField = ({
                     ) : (
                         <CssTextField
                             inputRef={ref}
+                            onInputCapture={handleValue}
                             onChange={handleValue}
                             placeholder={hint}
                             startAdornment={
