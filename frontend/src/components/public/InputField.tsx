@@ -71,19 +71,18 @@ const InputField = ({
     defaultValue,
     fullWidth = false
 }: InputProps) => {
-    const ref = useRef<any>();
-    const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const text = assemble(e.target.value.split(""));
-        setValue(text);
-        ref.current.value = text;
-        console.log(text);
-    };
+    // const ref = useRef<any>();
+    // const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const text = assemble(e.target.value.split(""));
+    //     setValue(text);
+    //     ref.current.value = text;
+    // };
     return (
         <>
             {fullWidth ? (
                 <FullCssTextField
-                    inputRef={ref}
-                    onChange={handleValue}
+                    // inputRef={ref}
+                    onChange={(e) => setValue(e.target.value)}
                     placeholder={hint}
                     startAdornment={
                         <InputAdornment position="start">
@@ -97,8 +96,8 @@ const InputField = ({
                 <>
                     {font_size ? (
                         <SmallCssTextField
-                            inputRef={ref}
-                            onChange={handleValue}
+                            // inputRef={ref}
+                            onChange={(e) => setValue(e.target.value)}
                             placeholder={hint}
                             startAdornment={
                                 <InputAdornment position="start">
@@ -110,9 +109,8 @@ const InputField = ({
                         />
                     ) : (
                         <CssTextField
-                            inputRef={ref}
-                            onInputCapture={handleValue}
-                            onChange={handleValue}
+                            // inputRef={ref}
+                            onChange={(e) => setValue(e.target.value)}
                             placeholder={hint}
                             startAdornment={
                                 <InputAdornment position="start">
