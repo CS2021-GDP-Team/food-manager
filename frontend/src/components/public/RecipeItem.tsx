@@ -87,7 +87,7 @@ const RecipeItem = ({
         }
     };
     const handleLink = () => {
-        window.open(`https://www.youtube.com/results?search_query=${isNamedTupleMember}`, "_blank");
+        window.open(`https://www.youtube.com/results?search_query=${name}`, "_blank");
     };
     return (
         <>
