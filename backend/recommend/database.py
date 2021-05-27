@@ -26,14 +26,16 @@ class DBConnector:
     def fetchall(self):
         return self.curs.fetchall()
 
-    def check_view(self):
+    def check_view(self, view_name):
         self.execute("show full tables in {} where table_type like '%VIEW%'", (self.database))
-        if not self.fetchall():
-            return False
-        return True
+        view_list = self.fetchall()
+        for (view, _) in view_list:
+            if view == view_name:
+                return True
+        return False
         
     def create_view(self, view_name):
-        if self.check_view():
+        if self.check_view(view_name):
             print("Views already exists")
             return
 
@@ -61,7 +63,7 @@ class DBConnector:
             '''
         , (view_name))
 
-        if self.check_view():
+        if self.check_view(view_name):
             print("Views are created")
             self.execute('show tables')
             print(self.fetchall())
