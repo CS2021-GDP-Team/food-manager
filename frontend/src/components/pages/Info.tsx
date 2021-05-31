@@ -10,7 +10,7 @@ import {
     useUserInfoDispatchContext
 } from "../Model";
 
-//TODO : 프로필사진 변경 구현, 유저아이디 띄우기 구현, 유저 신체정보 GET&UPDATE 연동
+//TODO : 프로필사진 변경 구현, 유저 신체정보 GET&UPDATE 연동
 
 const Info = () => {
     const setDietRecords = useDietRecordDispatchContext();
