@@ -71,17 +71,17 @@ const InputField = ({
     defaultValue,
     fullWidth = false
 }: InputProps) => {
-    // const ref = useRef<any>();
-    // const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const text = assemble(e.target.value.split(""));
-    //     setValue(text);
-    //     ref.current.value = text;
-    // };
+    const ref = useRef<any>();
+    const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const text = assemble(e.target.value.split(""));
+        setValue(text);
+        ref.current.value = text;
+    };
     return (
         <>
             {fullWidth ? (
                 <FullCssTextField
-                    // inputRef={ref}
+                    inputRef={ref}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder={hint}
                     startAdornment={
@@ -96,7 +96,7 @@ const InputField = ({
                 <>
                     {font_size ? (
                         <SmallCssTextField
-                            // inputRef={ref}
+                            inputRef={ref}
                             onChange={(e) => setValue(e.target.value)}
                             placeholder={hint}
                             startAdornment={
@@ -109,7 +109,7 @@ const InputField = ({
                         />
                     ) : (
                         <CssTextField
-                            // inputRef={ref}
+                            inputRef={ref}
                             onChange={(e) => setValue(e.target.value)}
                             placeholder={hint}
                             startAdornment={
