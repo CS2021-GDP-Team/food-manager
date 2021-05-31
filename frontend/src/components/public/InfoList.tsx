@@ -11,7 +11,12 @@ import {
 import { ExpandLess, ExpandMore, Edit } from "@material-ui/icons";
 import LikedListItem from "./LikedListItem";
 import DietRecordListItem from "./DietRecordListItem";
-import { useDietRecordContext, useLikedRecipeContext } from "../Model";
+import {
+    useDietRecordContext,
+    useLikedRecipeContext,
+    useUserInfoContext,
+    useUserInfoDispatchContext
+} from "../Model";
 
 const useStyles = makeStyles({
     root: {
@@ -42,8 +47,9 @@ const InfoList = () => {
     const classes = useStyles();
     const [likedOpen, setLikedOpen] = useState(false);
     const [logOpen, setLogOpen] = useState(false);
-    const userHeight = 190;
-    const userWeight = 90;
+    const userInfo = useUserInfoContext();
+    const userHeight = userInfo[0].height;
+    const userWeight = userInfo[0].weight;
 
     const bmiCal = (height: number, weight: number) => {
         return (weight / ((height / 100) * (height / 100))).toFixed(2);
