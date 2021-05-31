@@ -18,6 +18,7 @@ import {
     PlaylistAdd
 } from "@material-ui/icons";
 import axios from "axios";
+import { isNamedTupleMember } from "typescript";
 
 interface recipeProps {
     id: number;
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: theme.spacing(20),
             height: theme.spacing(20),
             marginLeft: "auto",
-            borderRadius: "40px"
+            borderRadius: "40px",
+            cursor: "pointer"
         }
     })
 );
@@ -84,15 +86,27 @@ const RecipeItem = ({
             alert("식단 추가에 오류가 발생했습니다.");
         }
     };
-
+    const handleLink = () => {
+        window.open(`https://www.youtube.com/results?search_query=${name}`, "_blank");
+    };
     return (
         <>
             <ItemBox>
                 <div className="listitem-container">
-                    <Avatar variant="square" alt="food" src={url} className={classes.large} />
+                    <Avatar
+                        variant="square"
+                        alt="food"
+                        src={url}
+                        className={classes.large}
+                        onClick={handleLink}
+                    />
                     <div className="recipeitem-info">
-                        <p className="recipe-title">{name}</p>
-                        <p className="recipe-ingredients">{ingredients}</p>
+                        <p className="recipe-title" onClick={handleLink}>
+                            {name}
+                        </p>
+                        <p className="recipe-ingredients" onClick={handleLink}>
+                            {ingredients}
+                        </p>
                         <div style={{ marginLeft: "auto" }}>
                             <IconButton title="add diet" onClick={handleDiet}>
                                 <PlaylistAdd style={{ color: grey[50], fontSize: "2rem" }} />
