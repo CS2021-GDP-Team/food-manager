@@ -3,14 +3,17 @@ import {
     MenuListContextProvider,
     RecipeListContextProvider,
     LikedRecipeContextProvider,
-    DietRecordContextProvider
+    DietRecordContextProvider,
+    UserInfoContextProvider
 } from "./Model";
 const Provider = () => (
     <DietRecordContextProvider>
         <LikedRecipeContextProvider>
             <RecipeListContextProvider>
                 <MenuListContextProvider>
-                    <ViewModel />
+                    <UserInfoContextProvider>
+                        <ViewModel />
+                    </UserInfoContextProvider>
                 </MenuListContextProvider>
             </RecipeListContextProvider>
         </LikedRecipeContextProvider>

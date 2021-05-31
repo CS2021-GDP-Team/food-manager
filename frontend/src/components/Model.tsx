@@ -136,3 +136,37 @@ export const useLikedRecipeDispatchContext = () => {
     return context;
 };
 // =========  Liked Recipe
+// =========  User Info
+interface userInfoProps {
+    id: number;
+    user_id: string;
+    height: number;
+    weight: number;
+    is_notified: number;
+    notify_time: string;
+}
+const UserInfoContext = createContext<userInfoProps[]>([]);
+const UserInfoDispatchContext = createContext<Dispatch<userInfoProps[]>>(Array);
+
+export const UserInfoContextProvider = ({ children }: any) => {
+    const [userInfo, setUserInfo] = useState<userInfoProps[]>([]);
+
+    return (
+        <UserInfoContext.Provider value={userInfo}>
+            <UserInfoDispatchContext.Provider value={setUserInfo}>
+                {children}
+            </UserInfoDispatchContext.Provider>
+        </UserInfoContext.Provider>
+    );
+};
+
+export const useUserInfoContext = () => {
+    const context = useContext(UserInfoContext);
+    return context;
+};
+
+export const useUserInfoDispatchContext = () => {
+    const context = useContext(UserInfoDispatchContext);
+    return context;
+};
+// =========  Liked Recipe
