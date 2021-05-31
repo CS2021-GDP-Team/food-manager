@@ -5,7 +5,7 @@ import InfoList from "../public/InfoList";
 import axios from "axios";
 import { useDietRecordDispatchContext, useLikedRecipeDispatchContext } from "../Model";
 
-//TODO : 프로필사진 변경 구현, 유저아이디 띄우기 구현, 유저정보 띄우기 구현
+//TODO : 프로필사진 변경 구현, 유저아이디 띄우기 구현, 유저 신체정보 GET&UPDATE 연동
 
 const Info = () => {
     const setDietRecords = useDietRecordDispatchContext();
