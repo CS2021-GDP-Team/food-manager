@@ -48,8 +48,6 @@ const InfoList = () => {
     const [likedOpen, setLikedOpen] = useState(false);
     const [logOpen, setLogOpen] = useState(false);
     const userInfo = useUserInfoContext();
-    const userHeight = userInfo[0].height;
-    const userWeight = userInfo[0].weight;
 
     const bmiCal = (height: number, weight: number) => {
         return (weight / ((height / 100) * (height / 100))).toFixed(2);
@@ -72,10 +70,19 @@ const InfoList = () => {
             <List component="nav" aria-label="total user info">
                 <ListItem>
                     <ListItemText className={classes.title} primary="My body info" />
-                    <ListItemText
-                        className={classes.content}
-                        primary={`${userHeight}cm / ${userWeight}kg`}
-                    />
+                    {userInfo.map((value) =>
+                        value.height ? (
+                            <ListItemText
+                                className={classes.content}
+                                primary={`${value.height}cm / ${value.weight}kg`}
+                            />
+                        ) : (
+                            <ListItemText
+                                className={classes.content}
+                                primary={"No body info exists."}
+                            />
+                        )
+                    )}
                     <IconButton>
                         <Edit className={classes.editIcon} />
                     </IconButton>
@@ -83,13 +90,22 @@ const InfoList = () => {
                 <Divider className={classes.border} />
                 <ListItem>
                     <ListItemText className={classes.title} primary="BMI" />
-                    <ListItemText
-                        className={classes.content}
-                        primary={`${bmiCal(userHeight, userWeight)} / ${bmiMessage(
-                            userHeight,
-                            userWeight
-                        )}`}
-                    />
+                    {userInfo.map((value) =>
+                        value.height ? (
+                            <ListItemText
+                                className={classes.content}
+                                primary={`${bmiCal(value.height, value.weight)} / ${bmiMessage(
+                                    value.height,
+                                    value.weight
+                                )}`}
+                            />
+                        ) : (
+                            <ListItemText
+                                className={classes.content}
+                                primary={"No body info exists."}
+                            />
+                        )
+                    )}
                 </ListItem>
                 <Divider className={classes.border} />
                 <ListItem button onClick={logHandleClick}>
