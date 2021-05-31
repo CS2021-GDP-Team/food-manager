@@ -174,7 +174,10 @@ Service.getFavorites = async (userId) => {
 
 Service.insertFavorite = async (userId, recipeId, score) => {
 	await favorites.deleteFavorite(userId, recipeId);
-	if (score != 0) await favorites.insertFavorite(userId, recipeId, score);
+	if (score != 0){
+		await favorites.insertFavorite(userId, recipeId, score);
+		await recipes.updateLikes(recipeId, score);
+	}
 }
 
 Service.deleteFavorite = async (userId, recipeId) => {

@@ -8,4 +8,8 @@ Recipes.getRecipes = async (recipeIds) => {
     return row;
 }
 
+Recipes.updateLikes = async (recipeId, score) => {
+    await Recipes.db.execute("UPDATE recipes SET likes=likes+? where id=?", [score, recipeId]);
+}
+
 module.exports = Recipes;
