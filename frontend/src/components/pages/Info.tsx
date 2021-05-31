@@ -1,20 +1,28 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import ProfilePicture from "../public/ProfilePicture";
 import LogoutButton from "../public/LogoutButton";
 import InfoList from "../public/InfoList";
 import axios from "axios";
-import { useDietRecordDispatchContext, useLikedRecipeDispatchContext } from "../Model";
+import {
+    useDietRecordDispatchContext,
+    useLikedRecipeDispatchContext,
+    useUserInfoContext,
+    useUserInfoDispatchContext
+} from "../Model";
 
-//TODO : 프로필사진 변경 구현, 유저아이디 띄우기 구현, 유저정보 띄우기 구현, 웹푸시 알림 구현
+//TODO : 프로필사진 변경 구현, 유저아이디 띄우기 구현, 유저 신체정보 GET&UPDATE 연동
 
 const Info = () => {
     const setDietRecords = useDietRecordDispatchContext();
     const setLikedRecipe = useLikedRecipeDispatchContext();
+    const [userInfo, setUserInfo] = [useUserInfoContext(), useUserInfoDispatchContext()];
+
     useEffect(() => {
         const getList = async () => {
             try {
                 setDietRecords((await axios.get("/food-manager/api/user_diet")).data);
                 setLikedRecipe((await axios.get("/food-manager/api/favorite")).data);
+                setUserInfo((await axios.get("/food-manager/api/user_info")).data);
             } catch (e) {
                 console.log(e);
                 alert("유저 정보를 가져오는데 오류가 발생했습니다.");
@@ -32,7 +40,9 @@ const Info = () => {
             </div>
             <div className="info-picture">
                 <ProfilePicture />
-                <h4 className="info-label">donghoon</h4>
+                {userInfo.map((value) => (
+                    <h4 className="info-label">{value.user_id}</h4>
+                ))}
             </div>
             <div className="info-profile">
                 <InfoList />
@@ -41,4 +51,4 @@ const Info = () => {
     );
 };
 
-export default Info;
+export default memo(Info);

@@ -42,7 +42,18 @@ const InfoList = () => {
     const classes = useStyles();
     const [likedOpen, setLikedOpen] = useState(false);
     const [logOpen, setLogOpen] = useState(false);
+    const userHeight = 190;
+    const userWeight = 90;
 
+    const bmiCal = (height: number, weight: number) => {
+        return (weight / ((height / 100) * (height / 100))).toFixed(2);
+    };
+    const bmiMessage = (height: number, weight: number) => {
+        const bmi = weight / ((height / 100) * (height / 100));
+        if (bmi < 18.5) return "Underweight";
+        else if (bmi > 25) return "Overweight";
+        else return "Normal weight";
+    };
     const likedHandleClick = () => {
         setLikedOpen(!likedOpen);
     };
@@ -55,18 +66,24 @@ const InfoList = () => {
             <List component="nav" aria-label="total user info">
                 <ListItem>
                     <ListItemText className={classes.title} primary="My body info" />
-                    <ListItemText className={classes.content} primary="190cm / 90kg" />
+                    <ListItemText
+                        className={classes.content}
+                        primary={`${userHeight}cm / ${userWeight}kg`}
+                    />
                     <IconButton>
                         <Edit className={classes.editIcon} />
                     </IconButton>
                 </ListItem>
                 <Divider className={classes.border} />
                 <ListItem>
-                    <ListItemText className={classes.title} primary="Exp date notify" />
-                    <ListItemText className={classes.content} primary="Once a day / 12:00PM" />
-                    <IconButton>
-                        <Edit className={classes.editIcon} />
-                    </IconButton>
+                    <ListItemText className={classes.title} primary="BMI" />
+                    <ListItemText
+                        className={classes.content}
+                        primary={`${bmiCal(userHeight, userWeight)} / ${bmiMessage(
+                            userHeight,
+                            userWeight
+                        )}`}
+                    />
                 </ListItem>
                 <Divider className={classes.border} />
                 <ListItem button onClick={logHandleClick}>
