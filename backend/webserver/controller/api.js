@@ -64,9 +64,7 @@ router.get('/user_info', fctl.loginRequiredWrapper(async (req, res, next) => {
 router.post('/user_info', uploadImage, fctl.loginRequiredWrapper(async (req, res, next) => {
 	var filepath = null;
 	if(req.file){
-		filepath = req.file.path;
-		path_list= filepath.split("\\").slice(-2);
-		filepath = path_list.join("\\");
+		filepath = "images/" + req.file.filename;
 		console.log("file recieved", filepath);
 	} else if(req.fileFilterMessage){
 		return fctl.send(req, res, hsc.HTTP_BAD_REQUEST, {"message":req.fileFilterMessage});

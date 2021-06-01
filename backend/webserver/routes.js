@@ -11,7 +11,7 @@ app.use(function (req, res, next) {
     res.setHeader("content-Type", "application/json");
     next();
 });
-app.use('/images', express.static('./images'));
+app.use('/images', express.static(__dirname + '/images'));
 
 //session setting
 app.use(session({
