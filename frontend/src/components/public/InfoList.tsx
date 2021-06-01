@@ -17,6 +17,7 @@ import {
     useUserInfoContext,
     useUserInfoDispatchContext
 } from "../Model";
+import { UserInfoModal } from "../index";
 
 const useStyles = makeStyles({
     root: {
@@ -45,6 +46,7 @@ const useStyles = makeStyles({
 
 const InfoList = () => {
     const classes = useStyles();
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [likedOpen, setLikedOpen] = useState(false);
     const [logOpen, setLogOpen] = useState(false);
     const userInfo = useUserInfoContext();
@@ -63,6 +65,9 @@ const InfoList = () => {
     };
     const logHandleClick = () => {
         setLogOpen(!logOpen);
+    };
+    const handleModalClose = () => {
+        setModalOpen(false);
     };
 
     return (
@@ -83,9 +88,17 @@ const InfoList = () => {
                             />
                         )
                     )}
-                    <IconButton>
+                    <IconButton onClick={() => setModalOpen(true)}>
                         <Edit className={classes.editIcon} />
                     </IconButton>
+                    {userInfo.map((value) => (
+                        <UserInfoModal
+                            open={modalOpen}
+                            handleClose={handleModalClose}
+                            userHeight={value.height}
+                            userWeight={value.weight}
+                        />
+                    ))}
                 </ListItem>
                 <Divider className={classes.border} />
                 <ListItem>
