@@ -1,4 +1,4 @@
-import ViewModel from "./ViewModel";
+import Main from "./Main";
 import {
     MenuListContextProvider,
     RecipeListContextProvider,
@@ -12,7 +12,7 @@ const Provider = () => (
             <RecipeListContextProvider>
                 <MenuListContextProvider>
                     <UserInfoContextProvider>
-                        <ViewModel />
+                        <Main />
                     </UserInfoContextProvider>
                 </MenuListContextProvider>
             </RecipeListContextProvider>
