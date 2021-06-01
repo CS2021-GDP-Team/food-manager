@@ -3,7 +3,7 @@ import { Route, useLocation } from "react-router-dom";
 import { Login, MenuList, SignUp, Picture, Info, RecipeList, BottomNavBar } from "./index";
 import { CssBaseline, Paper } from "@material-ui/core";
 
-const ViewModel: React.FC = () => {
+const Main: React.FC = () => {
     // 현재 페이지에 login 이나 signup text가 있으면 checkUrl 이 true
     const location = useLocation();
     const checkUrl =
@@ -29,4 +29,4 @@ const ViewModel: React.FC = () => {
     );
 };
 
-export default ViewModel;
+export default Main;
