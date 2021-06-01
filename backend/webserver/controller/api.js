@@ -3,10 +3,16 @@ const util = require('../utils/util.js');
 const service = require('../service/service.js');
 const hsc = require('../enums/httpstatuscode.js');
 const router = require('express').Router();
+const path = require('path');
+const fs = require('fs');
 const multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './images') 
+	const imagePath = path.join(__dirname, '..','images');
+	if(!fs.existsSync(imagePath)){
+		fs.mkdirSync(imagePath);
+	}
+    cb(null, imagePath)
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname) 
@@ -59,6 +65,8 @@ router.post('/user_info', uploadImage, fctl.loginRequiredWrapper(async (req, res
 	var filepath = null;
 	if(req.file){
 		filepath = req.file.path;
+		path_list= filepath.split("\\").slice(-2);
+		filepath = path_list.join("\\");
 		console.log("file recieved", filepath);
 	} else if(req.fileFilterMessage){
 		return fctl.send(req, res, hsc.HTTP_BAD_REQUEST, {"message":req.fileFilterMessage});

@@ -27,7 +27,6 @@ Users.getUserInfo = async (userId) => {
 Users.updateUserInfo = async (userId, query) => {
 	let row, field;
     query = "UPDATE users SET " + query +" WHERE id=? LIMIT 1";
-    console.log(query);
     [row, field] = await Users.db.execute(query, [userId]);
 }
 
