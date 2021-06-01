@@ -35,7 +35,7 @@ Service.getUserInfo = async (userId) => {
     return await users.getUserInfo(userId);
 }
 
-Service.updateUserInfo = async (userId, height, weight, isNotified, notifyTime) => {
+Service.updateUserInfo = async (userId, height, weight, isNotified, notifyTime, filepath) => {
 	var query = ""
 	if(height && height != ""){
 		query += "height="+height.toString()+", ";
@@ -44,10 +44,14 @@ Service.updateUserInfo = async (userId, height, weight, isNotified, notifyTime) 
 		query += "weight="+weight.toString()+", ";
 	}
 	if(isNotified && isNotified != ""){
-		isNotified += "is_notified="+isNotified.toString()+", ";
+		query += "is_notified="+isNotified.toString()+", ";
 	}
 	if(notifyTime && notifyTime != ""){
-		notifyTime += "notify_time="+notifyTime.toString()+", ";
+		query += "notify_time="+notifyTime.toString()+", ";
+	}
+	if(filepath && filepath != ""){
+		filepath = filepath.toString().replace('\\', '/');
+		query += "filepath=\""+filepath+"\", ";
 	}
 	if(query == "") return;
 

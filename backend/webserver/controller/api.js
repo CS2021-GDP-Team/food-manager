@@ -2,8 +2,28 @@ const fctl = require('../frontcontroller/frontcontroller.js');
 const util = require('../utils/util.js');
 const service = require('../service/service.js');
 const hsc = require('../enums/httpstatuscode.js');
-
 const router = require('express').Router();
+const multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images') 
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname) 
+  }
+});
+var fileFilter = function(req, file, cb){
+	let typeArray = file.mimetype.split('/');
+	let fileType = typeArray[1].toLowerCase();
+	if(fileType == 'jpg' || fileType == 'png' || fileType == 'jpeg' || fileType == 'gif')
+		cb(null, true);
+	else{
+		cb(null, false);
+		req.fileFilterMessage = "jpg, png, jpeg, gif  파일만 업로드 가능합니다.";
+	}
+}
+var uploadImage = multer({ storage: storage, fileFilter: fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }).single('image');
+
 
 router.post('/user', fctl.nonLoginWrapper(async (req, res, next) => {
     util.validate(req.body, ['userId', 'password']);
@@ -35,12 +55,19 @@ router.get('/user_info', fctl.loginRequiredWrapper(async (req, res, next) => {
 	return fctl.send(req, res, hsc.HTTP_OK, data);
 }));
 
-router.put('/user_info', fctl.nonLoginWrapper(async (req, res, next) => {
+router.post('/user_info', uploadImage, fctl.loginRequiredWrapper(async (req, res, next) => {
+	var filepath = null;
+	if(req.file){
+		filepath = req.file.path;
+		console.log("file recieved", filepath);
+	} else if(req.fileFilterMessage){
+		return fctl.send(req, res, hsc.HTTP_BAD_REQUEST, {"message":req.fileFilterMessage});
+	}
 	const height = util.isEmpty(req.body.height) ? null : req.body.height;
 	const weight = util.isEmpty(req.body.weight) ? null : req.body.weight;
 	const isNotified = util.isEmpty(req.body.isNotified) ? null : req.body.isNotified;
 	const notifyTime = util.isEmpty(req.body.notifyTime) ? null : req.body.notifyTime;
-	await service.updateUserInfo(req.session.user.id, height, weight, isNotified, notifyTime);
+	await service.updateUserInfo(req.session.user.id, height, weight, isNotified, notifyTime, filepath);
 	return fctl.send(req, res, hsc.HTTP_OK, null);
 }));
 

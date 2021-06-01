@@ -44,6 +44,7 @@ MariaDB [food_manager]> desc users;
 | weight      | int(11)      | YES  |     | NULL    |                |
 | is_notified | int(11)      | YES  |     | 0       |                |
 | notify_time | varchar(10)  | YES  |     | 18:00   |                |
+| filepath    | varchar(255) | YES  |     | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
 
 
@@ -75,6 +76,7 @@ MariaDB [food_manager]> desc recipes;
 | fat     | int(11)   | YES  |     | NULL    |                |
 | salt    | int(11)   | YES  |     | NULL    |                |
 | url     | char(255) | YES  |     | NULL    |                |
+| likes   | int(11)   | YES  |     | 0       |                |
 +---------+-----------+------+-----+---------+----------------+
 
 MariaDB [food_manager]> desc favorites;
