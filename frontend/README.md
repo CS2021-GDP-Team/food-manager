@@ -1,6 +1,6 @@
 # UOS Food Manager fronted
 
-![capture](/public/thumb.jpg)
+![capture](./public/images/thumb.jpg)
 
 ## tech
 
