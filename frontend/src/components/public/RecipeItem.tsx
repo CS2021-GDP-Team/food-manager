@@ -51,8 +51,6 @@ const RecipeItem = ({
     ingredients,
     likes
 }: recipeProps) => {
-    console.log(score);
-
     const classes = useStyles();
     const [like, setLike] = useState<number>(score);
     const handleLike = async (type: boolean) => {

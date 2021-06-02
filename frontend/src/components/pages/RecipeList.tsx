@@ -53,12 +53,10 @@ const Recipe = () => {
     }, []);
     const sortByDefault = () => {
         if (recipeList === defaultList) return;
-        console.log("default", [...defaultList]);
         setRecipeList([...defaultList]);
     };
 
     const sortTotalLikes = () => {
-        console.log([...defaultList].sort((a, b) => b.likes - a.likes));
         setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
     };
 
