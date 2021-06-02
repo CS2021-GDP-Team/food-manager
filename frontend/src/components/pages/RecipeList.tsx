@@ -24,7 +24,7 @@ interface recipeProps {
     likes: number;
 }
 const Recipe = () => {
-    let defaultList: recipeProps[] = [];
+    const [defaultList, setDefaultList] = useState<recipeProps[]>([]);
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
     const history = useHistory();
     const [favorites, setFavorites] = useState<{ [index: number]: number }>({});
@@ -40,8 +40,9 @@ const Recipe = () => {
                     }
                 );
                 setFavorites(favoriteList);
-                defaultList = (await axios.get("/food-manager/api/recommend")).data;
-                setRecipeList([...defaultList]);
+                const data = (await axios.get("/food-manager/api/recommend")).data;
+                setDefaultList(data);
+                setRecipeList(data);
                 setIsLoad(false);
             } catch (e) {
                 console.log(e);
@@ -51,15 +52,15 @@ const Recipe = () => {
         getList();
     }, []);
     const sortByDefault = () => {
+        if (recipeList === defaultList) return;
         console.log([...defaultList]);
-
-        // setRecipeList([...defaultList]);
+        setRecipeList([...defaultList]);
     };
 
     const sortTotalLikes = () => {
+        if (recipeList === defaultList) return;
         console.log([...defaultList].sort((a, b) => b.likes - a.likes));
-
-        // setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
+        setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
     };
 
     return (
