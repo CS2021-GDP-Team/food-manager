@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-    Divider,
-    Avatar,
-    makeStyles,
-    createStyles,
-    Theme,
-    IconButton,
-    Button
-} from "@material-ui/core";
+import { Divider, Avatar, makeStyles, createStyles, Theme, IconButton } from "@material-ui/core";
 import ItemBox from "@material-ui/core/ListItem";
 import { grey } from "@material-ui/core/colors";
 import {
@@ -18,7 +10,6 @@ import {
     PlaylistAdd
 } from "@material-ui/icons";
 import axios from "axios";
-import { isNamedTupleMember } from "typescript";
 
 interface recipeProps {
     id: number;
@@ -32,6 +23,7 @@ interface recipeProps {
     score?: number;
     url: string;
     ingredients: string;
+    likes: number;
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -56,7 +48,8 @@ const RecipeItem = ({
     salt,
     score = 0,
     url,
-    ingredients
+    ingredients,
+    likes
 }: recipeProps) => {
     console.log(score);
 

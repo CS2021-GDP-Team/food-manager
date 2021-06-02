@@ -51,11 +51,15 @@ const Recipe = () => {
         getList();
     }, []);
     const sortByDefault = () => {
-        setRecipeList([...defaultList]);
+        console.log([...defaultList]);
+
+        // setRecipeList([...defaultList]);
     };
 
     const sortTotalLikes = () => {
-        setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
+        console.log([...defaultList].sort((a, b) => b.likes - a.likes));
+
+        // setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
     };
 
     return (
@@ -94,7 +98,8 @@ const Recipe = () => {
                             fat,
                             salt,
                             url,
-                            ingredients
+                            ingredients,
+                            likes
                         }) => (
                             <RecipeItem
                                 id={id}
@@ -108,6 +113,7 @@ const Recipe = () => {
                                 score={favorites[id]}
                                 url={url}
                                 ingredients={ingredients}
+                                likes={likes}
                             />
                         )
                     )}
