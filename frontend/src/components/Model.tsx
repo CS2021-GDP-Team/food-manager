@@ -46,6 +46,7 @@ interface recipeProps {
     salt: string | null;
     url: string;
     ingredients: string;
+    likes: number;
 }
 const RecipeListContext = createContext<recipeProps[]>([]);
 const RecipeListDispatchContext = createContext<Dispatch<recipeProps[]>>(Array);

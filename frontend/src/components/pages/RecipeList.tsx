@@ -10,7 +10,21 @@ interface favoriteProps {
     recipe_id: number;
     score: number;
 }
+interface recipeProps {
+    id: number;
+    name: string;
+    source: string | null;
+    kcal: string | null;
+    protein: string | null;
+    carbo: string | null;
+    fat: string | null;
+    salt: string | null;
+    url: string;
+    ingredients: string;
+    likes: number;
+}
 const Recipe = () => {
+    let defaultList: recipeProps[] = [];
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
     const history = useHistory();
     const [favorites, setFavorites] = useState<{ [index: number]: number }>({});
@@ -26,9 +40,8 @@ const Recipe = () => {
                     }
                 );
                 setFavorites(favoriteList);
-                console.log("전", favorites);
-
-                setRecipeList((await axios.get("/food-manager/api/recommend")).data);
+                defaultList = (await axios.get("/food-manager/api/recommend")).data;
+                setRecipeList([...defaultList]);
                 setIsLoad(false);
             } catch (e) {
                 console.log(e);
@@ -37,21 +50,28 @@ const Recipe = () => {
         };
         getList();
     }, []);
-    console.log("후", favorites);
+    const sortByDefault = () => {
+        setRecipeList([...defaultList]);
+    };
+
+    const sortTotalLikes = () => {
+        setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
+    };
+
     return (
         <div className="recipe-container">
             <div id="recipe-header">
                 <div id="recipe-order">
                     Default
+                    <IconButton aria-label="sort" onClick={sortByDefault}>
+                        <SwapVert style={{ color: grey[50], fontSize: 30 }} />
+                    </IconButton>
+                    My Like
                     <IconButton aria-label="sort">
                         <SwapVert style={{ color: grey[50], fontSize: 30 }} />
                     </IconButton>
-                    Cooking Time
-                    <IconButton aria-label="sort">
-                        <SwapVert style={{ color: grey[50], fontSize: 30 }} />
-                    </IconButton>
-                    Like
-                    <IconButton aria-label="sort">
+                    Total Like
+                    <IconButton aria-label="sort" onClick={sortTotalLikes}>
                         <SwapVert style={{ color: grey[50], fontSize: 30 }} />
                     </IconButton>
                 </div>
