@@ -1,6 +1,5 @@
 {
     "name": "frontend",
-    "homepage": "/food-manager/",
     "proxy": "http://localhost:3001",
     "version": "0.1.0",
     "private": true,
