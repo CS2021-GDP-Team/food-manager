@@ -58,7 +58,6 @@ const Recipe = () => {
     };
 
     const sortTotalLikes = () => {
-        if (recipeList === defaultList) return;
         console.log([...defaultList].sort((a, b) => b.likes - a.likes));
         setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
     };
