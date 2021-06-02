@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { IconButton, List } from "@material-ui/core";
 import { SwapVert, Search } from "@material-ui/icons";
@@ -6,14 +6,26 @@ import { grey } from "@material-ui/core/colors";
 import { ListItem } from "../index";
 import axios from "axios";
 import { useMenuListContext, useMenuListDispatchContext } from "../Model";
+interface itemProps {
+    id: number;
+    user_id: number;
+    ingredient_id: number;
+    put_date: string;
+    expire_date: string;
+    custom_ingredient: string;
+    ingredient_name: string;
+}
 
 const MenuList = () => {
     const history = useHistory();
     const [menuList, setMenuList] = [useMenuListContext(), useMenuListDispatchContext()];
+    const [defaultList, setDefaultList] = useState<itemProps[]>([]);
     useEffect(() => {
         const getList = async () => {
             try {
-                setMenuList((await axios.get("/food-manager/api/user_fridge")).data);
+                const data = (await axios.get("/food-manager/api/user_fridge")).data;
+                setMenuList(data);
+                setDefaultList(data);
             } catch (e) {
                 console.log(e);
                 history.push("/login");
@@ -36,11 +48,27 @@ const MenuList = () => {
               );
         setOrder(!order);
     };
+    let timer: any;
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+            if (e.target.value === "") {
+                setMenuList([...defaultList]);
+            } else {
+                setMenuList(
+                    defaultList.filter((item) => item.ingredient_name.includes(e.target.value))
+                );
+            }
+        }, 500);
+    };
+
     return (
         <div className="list-container">
             <div id="list-header">
                 <div id="list-input">
-                    <input></input>
+                    <input type="text" onChange={handleSearch}></input>
                     <Search id="list-icon" />
                 </div>
                 <IconButton aria-label="sort" onClick={sortByExp}>
