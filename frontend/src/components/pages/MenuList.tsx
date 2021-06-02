@@ -58,7 +58,11 @@ const MenuList = () => {
                 setMenuList([...defaultList]);
             } else {
                 setMenuList(
-                    defaultList.filter((item) => item.ingredient_name.includes(e.target.value))
+                    defaultList.filter(
+                        (item) =>
+                            item.custom_ingredient.includes(e.target.value) ||
+                            item.ingredient_name.includes(e.target.value)
+                    )
                 );
             }
         }, 500);
