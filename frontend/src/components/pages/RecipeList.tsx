@@ -53,7 +53,7 @@ const Recipe = () => {
     }, []);
     const sortByDefault = () => {
         if (recipeList === defaultList) return;
-        console.log([...defaultList]);
+        console.log("default", [...defaultList]);
         setRecipeList([...defaultList]);
     };
 
