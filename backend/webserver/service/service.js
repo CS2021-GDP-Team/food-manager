@@ -47,7 +47,7 @@ Service.updateUserInfo = async (userId, height, weight, isNotified, notifyTime, 
 		query += "is_notified="+isNotified.toString()+", ";
 	}
 	if(notifyTime && notifyTime != ""){
-		query += "notify_time="+notifyTime.toString()+", ";
+		query += "notify_time=\""+notifyTime.toString()+"\", ";
 	}
 	if(filepath && filepath != ""){
 		filepath = filepath.toString().replace('\\', '/');

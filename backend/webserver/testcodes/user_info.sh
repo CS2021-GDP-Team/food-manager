@@ -26,7 +26,7 @@ result=$(curl \
 printf "%s\n" "$result" >> .output.txt
 
 result=$(curl -i \
-"$1/api/user_info" -X PUT \
+"$1/api/user_info" -X POST \
 -d '{"height":170, "weight":70, "isNotified":0, "notifyTime":"19:00"}' \
 -H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
@@ -39,7 +39,7 @@ if [[ "$status_code" -ne 200 ]] ; then
 fi
 
 result=$(curl -i \
-"$1/api/user_info" -X PUT \
+"$1/api/user_info" -X POST \
 -d '{"height":171}' \
 -H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
