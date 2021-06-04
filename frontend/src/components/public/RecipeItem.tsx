@@ -105,7 +105,7 @@ const RecipeItem = ({
                                 <PlaylistAdd style={{ color: grey[50], fontSize: "2rem" }} />
                             </IconButton>
                             {sorted ? (
-                                `${likes}likes`
+                                `${likes} Likes`
                             ) : (
                                 <>
                                     <IconButton title="like" onClick={() => handleLike(true)}>
