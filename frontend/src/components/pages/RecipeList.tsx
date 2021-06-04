@@ -28,17 +28,20 @@ const Recipe = () => {
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
     const history = useHistory();
     const [favorites, setFavorites] = useState<{ [index: number]: number }>({});
+    const [totalFavorites, setTotalFavorites] = useState<(favoriteProps & recipeProps)[]>([]);
     const [isLoad, setIsLoad] = useState(true);
     useEffect(() => {
         const getList = async () => {
             try {
                 setIsLoad(true);
                 const favoriteList: { [index: number]: number } = {};
-                (await axios.get("/food-manager/api/favorite")).data.forEach(
-                    ({ recipe_id, score }: favoriteProps) => {
-                        favoriteList[recipe_id] = score;
-                    }
-                );
+                const favorites: (favoriteProps & recipeProps)[] = (
+                    await axios.get("/food-manager/api/favorite")
+                ).data;
+                favorites.forEach(({ recipe_id, score }) => {
+                    favoriteList[recipe_id] = score;
+                });
+                setTotalFavorites(favorites);
                 setFavorites(favoriteList);
                 const data = (await axios.get("/food-manager/api/recommend")).data;
                 setDefaultList(data);
@@ -56,6 +59,9 @@ const Recipe = () => {
         setRecipeList([...defaultList]);
     };
 
+    const showMyLike = () => {
+        setRecipeList(totalFavorites.filter((item) => item.likes > 0));
+    };
     const sortTotalLikes = () => {
         setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
     };
@@ -69,7 +75,7 @@ const Recipe = () => {
                         <SwapVert style={{ color: grey[50], fontSize: 30 }} />
                     </IconButton>
                     My Like
-                    <IconButton aria-label="sort">
+                    <IconButton aria-label="sort" onClick={showMyLike}>
                         <SwapVert style={{ color: grey[50], fontSize: 30 }} />
                     </IconButton>
                     Total Like
