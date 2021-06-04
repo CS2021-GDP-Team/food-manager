@@ -110,7 +110,7 @@ interface likedProps {
     id: number;
     user_id: number;
     score: number;
-    recipe_name: string;
+    name: string;
 }
 const LikedRecipeContext = createContext<likedProps[]>([]);
 const LikedRecipeDispatchContext = createContext<Dispatch<likedProps[]>>(Array);

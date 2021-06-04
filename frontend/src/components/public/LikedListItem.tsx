@@ -9,7 +9,7 @@ interface InputProps {
     id: number;
     user_id: number;
     score: number;
-    recipe_name: string;
+    name: string;
 }
 
 const useStyles = makeStyles({
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function LikedListItem({ recipe_id, id, user_id, score, recipe_name }: InputProps) {
+export default function LikedListItem({ recipe_id, id, user_id, score, name }: InputProps) {
     const classes = useStyles();
     const [likedRecipe, setLikedRecipe] = [
         useLikedRecipeContext(),
@@ -39,7 +39,7 @@ export default function LikedListItem({ recipe_id, id, user_id, score, recipe_na
 
     return (
         <ListItem>
-            <ListItemText primary={recipe_name} />
+            <ListItemText primary={name} />
             <IconButton onClick={handleDelete}>
                 <Close className={classes.deleteIcon} />
             </IconButton>

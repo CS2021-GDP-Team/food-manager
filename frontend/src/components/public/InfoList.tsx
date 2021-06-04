@@ -152,7 +152,7 @@ const InfoList = () => {
                                         id={value.id}
                                         user_id={value.user_id}
                                         score={value.score}
-                                        recipe_name={value.recipe_name}
+                                        name={value.name}
                                     />
                                 )
                         )}
