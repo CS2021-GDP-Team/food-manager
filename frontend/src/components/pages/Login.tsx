@@ -35,6 +35,9 @@ const Login = () => {
             alert("아이디와 비밀번호를 다시 확인해주세요.");
         }
     };
+    const handleKeyPress = (e: any) => {
+        if (e.key === "Enter") handleLogin();
+    };
     const classes = useStyles();
     return (
         <div className="login-container">
@@ -46,7 +49,7 @@ const Login = () => {
                 ></img>
                 <b className="login-title">Food Manager</b>
             </div>
-            <div className="login-form">
+            <div className="login-form" onKeyPress={handleKeyPress}>
                 <InputField text="ID&nbsp;&nbsp;" hint="Username" setValue={setUserId} />
                 <InputField text="PW" type="password" hint="Password" setValue={setUserPw} />
             </div>
