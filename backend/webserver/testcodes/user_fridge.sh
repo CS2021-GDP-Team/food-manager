@@ -31,7 +31,7 @@ for i in ${ids[@]}
 do
 	result=$(curl -i \
 	"$1/api/user_fridge" -X PUT \
-	-d "{\"id\":$i, \"expireDate\":0}" \
+	-d "{\"id\":$i, \"expireDate\":"1616944220"}" \
 	-H 'content-type: application/json' \
 	--cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 	printf "%s\n" "$result" >> .output.txt
@@ -69,7 +69,7 @@ fi
 
 result=$(curl -i \
 "$1/api/user_fridge" -X POST \
--d '{"ingredientName":"풋사과"}' \
+-d '{"ingredientName":"풋사과", "expireDate":"1617873630"}' \
 -H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt

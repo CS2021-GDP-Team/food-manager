@@ -36,35 +36,22 @@ class DBConnector:
         
     def create_view(self, view_name):
         if self.check_view(view_name):
-            print("Views already exists")
+            print("View already exists")
             return
 
         self.execute(
             '''
-            create view ri_joined_view as
-            (select ri.id, ri.recipe_id, ri.ingredient_id, r.name as recipe_name, i.name as ingredient_name
+            create view {} as
+            (select ri.id, ri.recipe_id, ri.ingredient_id, r.name as recipe_name, i.name as ingredient_name, ri.is_main, i.is_seasoning
             from ingredients i
                 inner join recipe_ingredients ri on i.id = ri.ingredient_id
                 inner join recipes r on ri.recipe_id = r.id
             order by ri.id);
             '''
-        )
-        self.execute(
-            '''
-            create view {} as
-            (select r.id,r.name, ri.ingredients from recipes r
-            left join (
-            select recipe_id, GROUP_CONCAT(ingredient_name SEPARATOR ', ') as ingredients
-            from ri_joined_view
-            group by recipe_id
-            ) ri
-            on r.id = ri.recipe_id
-            );
-            '''
         , (view_name))
 
         if self.check_view(view_name):
-            print("Views are created")
+            print("View created")
             self.execute('show tables')
             print(self.fetchall())
         else:
@@ -88,7 +75,7 @@ if __name__ == '__main__':
     row = db.fetchall()
     print(row)
 
-    print(db.check_view())
+    print(db.check_view(view_name))
     db.create_view(view_name)
 
     db.close()

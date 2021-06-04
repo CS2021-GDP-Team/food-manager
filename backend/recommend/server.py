@@ -4,6 +4,7 @@ import sys,os
 import traceback
 import vectorize
 import match
+from datetime import datetime
 
 host = os.environ["DBHOST"]
 post = 8080
@@ -55,11 +56,9 @@ class RecommendHandler(BaseHTTPRequestHandler):
         print(ingredients)
         vec = vectorize.Vectorizer()
         vec.connect_database()
-
         vec.recipe_embedding()
         result = vec.recommend_recipes(ingredients, self.body["start"], self.body["end"])
         print(result)
-        vec.disconnect_database()
         return self._json(result)
 
     def handleIngredient(self):
@@ -81,10 +80,20 @@ class RecommendHandler(BaseHTTPRequestHandler):
             self._error(f"An exception occured! e : {e}")
 
     def preprocessUserFridge(self, ingredientInfo):
+        if ingredientInfo == []:
+            return list(zip([1,2], [1,2]))
         ingredientIds = []
+        ingredientName = []
+        days = []
         for ing in ingredientInfo:
-            ingredientIds.append(ing["ingredient_name"])
-        return [','.join(str(x) for x in ingredientIds)]
+            ingredientIds.append(ing["ingredient_id"])
+            ingredientName.append(ing["ingredient_name"])
+            _day = datetime.strptime(ing["expire_date"],"%Y-%m-%dT%H:%M:%S.000Z")
+            day = (_day - datetime.now()).days
+            if day < 0: day = 0
+            days.append(day)
+        print(ingredientName)
+        return list(zip(ingredientIds, days))
 
 
 if __name__ == "__main__":        
@@ -96,6 +105,5 @@ if __name__ == "__main__":
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
-
     httpd.server_close()
     print("Server stopped.")
