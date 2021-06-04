@@ -24,6 +24,7 @@ interface recipeProps {
     url: string;
     ingredients: string;
     likes: number;
+    sorted: boolean;
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -49,7 +50,8 @@ const RecipeItem = ({
     score = 0,
     url,
     ingredients,
-    likes
+    likes,
+    sorted
 }: recipeProps) => {
     const classes = useStyles();
     const [like, setLike] = useState<number>(score);
@@ -102,24 +104,34 @@ const RecipeItem = ({
                             <IconButton title="add diet" onClick={handleDiet}>
                                 <PlaylistAdd style={{ color: grey[50], fontSize: "2rem" }} />
                             </IconButton>
-                            <IconButton title="like" onClick={() => handleLike(true)}>
-                                {like === 1 ? (
-                                    <ThumbUp style={{ color: grey[50], fontSize: "2rem" }} />
-                                ) : (
-                                    <ThumbUpAltOutlined
-                                        style={{ color: grey[50], fontSize: "2rem" }}
-                                    />
-                                )}
-                            </IconButton>
-                            <IconButton title="unlike" onClick={() => handleLike(false)}>
-                                {like === -1 ? (
-                                    <ThumbDown style={{ color: grey[50], fontSize: "2rem" }} />
-                                ) : (
-                                    <ThumbDownAltOutlined
-                                        style={{ color: grey[50], fontSize: "2rem" }}
-                                    />
-                                )}
-                            </IconButton>
+                            {sorted ? (
+                                `${likes}likes`
+                            ) : (
+                                <>
+                                    <IconButton title="like" onClick={() => handleLike(true)}>
+                                        {like === 1 ? (
+                                            <ThumbUp
+                                                style={{ color: grey[50], fontSize: "2rem" }}
+                                            />
+                                        ) : (
+                                            <ThumbUpAltOutlined
+                                                style={{ color: grey[50], fontSize: "2rem" }}
+                                            />
+                                        )}
+                                    </IconButton>
+                                    <IconButton title="unlike" onClick={() => handleLike(false)}>
+                                        {like === -1 ? (
+                                            <ThumbDown
+                                                style={{ color: grey[50], fontSize: "2rem" }}
+                                            />
+                                        ) : (
+                                            <ThumbDownAltOutlined
+                                                style={{ color: grey[50], fontSize: "2rem" }}
+                                            />
+                                        )}
+                                    </IconButton>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

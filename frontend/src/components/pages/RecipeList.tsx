@@ -26,9 +26,9 @@ interface recipeProps {
 const Recipe = () => {
     const [defaultList, setDefaultList] = useState<recipeProps[]>([]);
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];
-    const history = useHistory();
     const [favorites, setFavorites] = useState<{ [index: number]: number }>({});
     const [totalFavorites, setTotalFavorites] = useState<(favoriteProps & recipeProps)[]>([]);
+    const [sorted, setSorted] = useState<boolean>(false);
     const [isLoad, setIsLoad] = useState(true);
     useEffect(() => {
         const getList = async () => {
@@ -57,13 +57,16 @@ const Recipe = () => {
     const sortByDefault = () => {
         if (recipeList === defaultList) return;
         setRecipeList([...defaultList]);
+        setSorted(false);
     };
 
     const showMyLike = () => {
         setRecipeList(totalFavorites.filter((item) => item.likes > 0));
+        setSorted(true);
     };
     const sortTotalLikes = () => {
         setRecipeList([...defaultList].sort((a, b) => b.likes - a.likes));
+        setSorted(true);
     };
 
     return (
@@ -118,6 +121,7 @@ const Recipe = () => {
                                 url={url}
                                 ingredients={ingredients}
                                 likes={likes}
+                                sorted={sorted}
                             />
                         )
                     )}
