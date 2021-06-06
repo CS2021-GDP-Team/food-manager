@@ -1,9 +1,9 @@
-import React from "react";
-import Badge from "@material-ui/core/Badge";
-import Avatar from "@material-ui/core/Avatar";
+import React, { memo, useEffect } from "react";
+import { Badge, Avatar, Box } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { useUserInfoContext, useUserInfoDispatchContext } from "../Model";
+import axios from "axios";
 
-//TODO : Badge이벤트처리
 const StyledBadge = withStyles({
     badge: {
         background: "linear-gradient(45deg, #00d6af 30%, #00c3cf 90%)",
@@ -28,26 +28,32 @@ const useStyles = makeStyles({
 
 const ProfilePicture = () => {
     const classes = useStyles();
+    const [userInfo, setUserInfo] = [useUserInfoContext(), useUserInfoDispatchContext()];
 
     return (
         <div>
-            <StyledBadge
-                className={classes.root}
-                overlap="circle"
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right"
-                }}
-                badgeContent={"+"}
-            >
-                <Avatar
-                    alt="donghoon"
-                    className={classes.avatar}
-                    src={process.env.PUBLIC_URL + "/images/chichiyasu.jpeg"}
-                />
-            </StyledBadge>
+            {userInfo.map((value) => (
+                <StyledBadge
+                    className={classes.root}
+                    overlap="circle"
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right"
+                    }}
+                    badgeContent={"+"}
+                >
+                    <Avatar
+                        alt={value.user_id}
+                        className={classes.avatar}
+                        src={`https://food-manager.ga/static/${value.filepath}`}
+                        onClick={() => {
+                            alert("뱃지 클릭 됨");
+                        }}
+                    />
+                </StyledBadge>
+            ))}
         </div>
     );
 };
 
-export default ProfilePicture;
+export default memo(ProfilePicture);
