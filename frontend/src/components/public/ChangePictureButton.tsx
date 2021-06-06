@@ -47,11 +47,10 @@ const ChangePictureButton = () => {
                 className={classes.input}
                 id="badge-button-file"
                 type="file"
-                name="image"
                 onChange={handlePicture}
             />
             <label htmlFor="badge-button-file">
-                <IconButton aria-label="upload picture">
+                <IconButton aria-label="upload picture" component="span">
                     <AddIcon fontSize="small" />
                 </IconButton>
             </label>
