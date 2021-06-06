@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles, IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { useUserInfoDispatchContext } from "../Model";
@@ -15,7 +15,6 @@ const ChangePictureButton = () => {
     const setUserInfo = useUserInfoDispatchContext();
     // 사진 변경 이벤트 처리
     const handlePicture = async (e: any) => {
-        console.log(e.target.files[0]);
         const imageFile = e.target.files[0];
         if (!imageFile) {
             alert("이미지 파일을 등록해주세요");
