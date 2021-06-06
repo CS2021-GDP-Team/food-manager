@@ -2,6 +2,7 @@ import React, { memo, useEffect } from "react";
 import { Badge, Avatar, Box } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { useUserInfoContext, useUserInfoDispatchContext } from "../Model";
+import ChangePictureButton from "./ChangePictureButton";
 import axios from "axios";
 
 const StyledBadge = withStyles({
@@ -40,15 +41,12 @@ const ProfilePicture = () => {
                         vertical: "bottom",
                         horizontal: "right"
                     }}
-                    badgeContent={"+"}
+                    badgeContent={<ChangePictureButton />}
                 >
                     <Avatar
                         alt={value.user_id}
                         className={classes.avatar}
                         src={`https://food-manager.ga/static/${value.filepath}`}
-                        onClick={() => {
-                            alert("뱃지 클릭 됨");
-                        }}
                     />
                 </StyledBadge>
             ))}
