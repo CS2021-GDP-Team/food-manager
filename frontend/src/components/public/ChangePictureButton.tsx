@@ -12,7 +12,7 @@ const useStyles = makeStyles({
 
 const ChangePictureButton = () => {
     const classes = useStyles();
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState(null);
     const setUserInfo = useUserInfoDispatchContext();
     // 사진 변경 이벤트 처리
     const handlePicture = async (e: any) => {
@@ -43,13 +43,15 @@ const ChangePictureButton = () => {
     return (
         <>
             <input
+                accept="image/*"
                 className={classes.input}
                 id="badge-button-file"
                 type="file"
+                name="image"
                 onChange={handlePicture}
             />
             <label htmlFor="badge-button-file">
-                <IconButton aria-label="changePicture">
+                <IconButton aria-label="upload picture">
                     <AddIcon fontSize="small" />
                 </IconButton>
             </label>
