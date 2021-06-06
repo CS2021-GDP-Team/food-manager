@@ -1,10 +1,9 @@
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 import numpy as np
 import os
 
 import database
+import recommender
 from params import params
 
 class Vectorizer:
@@ -18,6 +17,7 @@ class Vectorizer:
         self.view_name = "ri_view"
         self.rem = None
         self.iids = None
+        self.recommender = recommender.cos_sim
 
     def connect_database(self):
         self.db = database.DBConnector(**self.config)
@@ -75,7 +75,7 @@ class Vectorizer:
         uem = self.user_embedding(ingredients)
         print("user X ingredients:\t",uem.shape)
 
-        sim_ing = cosine_similarity(uem, self.rem).argsort()[:, ::-1]
+        sim_ing = self.recommender(uem, self.rem)
         print("user X recipes: \t",sim_ing.shape)
         
         if sim_ing.shape[1] < end:
