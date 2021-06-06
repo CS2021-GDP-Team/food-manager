@@ -145,6 +145,7 @@ interface userInfoProps {
     weight: number;
     is_notified: number;
     notify_time: string;
+    filepath: string;
 }
 const UserInfoContext = createContext<userInfoProps[]>([]);
 const UserInfoDispatchContext = createContext<Dispatch<userInfoProps[]>>(Array);
@@ -170,4 +171,4 @@ export const useUserInfoDispatchContext = () => {
     const context = useContext(UserInfoDispatchContext);
     return context;
 };
-// =========  Liked Recipe
+// =========  User Info
