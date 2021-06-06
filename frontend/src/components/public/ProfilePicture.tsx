@@ -46,7 +46,7 @@ const ProfilePicture = () => {
                     <Avatar
                         alt={value.user_id}
                         className={classes.avatar}
-                        src={`https://food-manager.ga/static/${value.filepath}`}
+                        src={`https://food-manager.ga/food-manager/static/${value.filepath}`}
                     />
                 </StyledBadge>
             ))}
