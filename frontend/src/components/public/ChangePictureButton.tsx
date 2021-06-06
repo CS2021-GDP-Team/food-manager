@@ -12,22 +12,21 @@ const useStyles = makeStyles({
 
 const ChangePictureButton = () => {
     const classes = useStyles();
-    const [image, setImage] = useState("");
     const setUserInfo = useUserInfoDispatchContext();
     // 사진 변경 이벤트 처리
     const handlePicture = async (e: any) => {
         console.log(e.target.files[0]);
-        setImage(e.target.files[0]);
-        if (image === "") {
+        const imageFile = e.target.files[0];
+        if (!imageFile) {
             alert("이미지 파일을 등록해주세요");
             return;
         }
-        postImage();
+        postImage(imageFile);
     };
     // 프로필 사진 수정 api 요청
-    const postImage = async () => {
+    const postImage = async (imageFile: any) => {
         const formData = new FormData();
-        formData.append("image", image);
+        formData.append("image", imageFile);
         await axios
             .post("/food-manager/api/user_info", formData)
             .then(async () => {
