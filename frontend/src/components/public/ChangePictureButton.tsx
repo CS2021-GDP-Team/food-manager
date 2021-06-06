@@ -12,10 +12,11 @@ const useStyles = makeStyles({
 
 const ChangePictureButton = () => {
     const classes = useStyles();
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState("");
     const setUserInfo = useUserInfoDispatchContext();
     // 사진 변경 이벤트 처리
     const handlePicture = async (e: any) => {
+        console.log(e.target.files[0]);
         setImage(e.target.files[0]);
         if (image === "") {
             alert("이미지 파일을 등록해주세요");
@@ -25,10 +26,10 @@ const ChangePictureButton = () => {
     };
     // 프로필 사진 수정 api 요청
     const postImage = async () => {
+        const formData = new FormData();
+        formData.append("image", image);
         await axios
-            .post("/food-manager/api/user_info", {
-                image: image
-            })
+            .post("/food-manager/api/user_info", formData)
             .then(async () => {
                 setUserInfo((await axios.get("/food-manager/api/user_info")).data);
                 alert("프로필 사진이 정상적으로 변경되었습니다.");
@@ -41,12 +42,13 @@ const ChangePictureButton = () => {
             });
     };
     return (
-        <>
+        <form method="POST" action="/user_info" encType="multipart/form-data">
             <input
                 accept="image/*"
                 className={classes.input}
                 id="badge-button-file"
                 type="file"
+                name="image"
                 onChange={handlePicture}
             />
             <label htmlFor="badge-button-file">
@@ -54,7 +56,7 @@ const ChangePictureButton = () => {
                     <AddIcon fontSize="small" />
                 </IconButton>
             </label>
-        </>
+        </form>
     );
 };
 
