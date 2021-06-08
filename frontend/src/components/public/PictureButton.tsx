@@ -47,6 +47,8 @@ const PictureButton = ({ handleBarcode }: any) => {
             async (result) => {
                 try {
                     if (result.codeResult) {
+                        console.log(result.codeResult.code);
+
                         handleBarcode(
                             (
                                 await axios.post("/food-manager/api/barcode", {
