@@ -55,8 +55,8 @@ class DBConnector:
             create view ri_str_view as
             (select r.id,r.name, ri.ingredients from recipes r
             left join (
-            select recipe_id, GROUP_CONCAT(ingredient_name SEPARATOR ', ') as ingredients
-            from {}
+            select recipe_id, GROUP_CONCAT(ing_name_org SEPARATOR ', ') as ingredients
+            from recipe_ingredients
             group by recipe_id
             ) ri
             on r.id = ri.recipe_id

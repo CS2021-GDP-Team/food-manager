@@ -38,19 +38,19 @@ Service.getUserInfo = async (userId) => {
 Service.updateUserInfo = async (userId, height, weight, isNotified, notifyTime, filepath) => {
 	var query = ""
 	if(height && height != ""){
-		query += "height="+height.toString()+", ";
+		query += "height="+height.toString().replace(";","")+", ";
 	}
 	if(weight && weight != ""){
-		query += "weight="+weight.toString()+", ";
+		query += "weight="+weight.toString().replace(";","")+", ";
 	}
 	if(isNotified && isNotified != ""){
-		query += "is_notified="+isNotified.toString()+", ";
+		query += "is_notified="+isNotified.toString().replace(";","")+", ";
 	}
 	if(notifyTime && notifyTime != ""){
-		query += "notify_time=\""+notifyTime.toString()+"\", ";
+		query += "notify_time=\""+notifyTime.toString().replace(";","")+"\", ";
 	}
 	if(filepath && filepath != ""){
-		filepath = filepath.toString().replace('\\', '/');
+		filepath = filepath.toString().replace('\\', '/').replace(";","");
 		query += "filepath=\""+filepath+"\", ";
 	}
 	if(query == "") return;
