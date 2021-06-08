@@ -89,7 +89,7 @@ class RecommendHandler(BaseHTTPRequestHandler):
                 ingredientName.append(ing["ingredient_name"])
             else:
                 ingredientName.append("none")
-            if "expire_date" in ing:
+            if "expire_date" in ing and ing["expire_date"] is not None:
                 _day = datetime.strptime(ing["expire_date"],"%Y-%m-%dT%H:%M:%S.000Z")
                 day = (_day - datetime.now()).days
                 if day < 0: day = 0

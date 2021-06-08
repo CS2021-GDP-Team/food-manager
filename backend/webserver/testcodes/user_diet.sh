@@ -23,7 +23,7 @@ fi
 
 result=$(curl -i \
 "$1/api/user_diet" -X POST \
--d '{"recipeId":100001}' \
+-d '{"recipeId":25}' \
 -H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt

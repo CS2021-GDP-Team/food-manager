@@ -41,7 +41,7 @@ fi
 
 result=$(curl -i \
 "$1/api/favorite" -X POST \
--d "{\"recipeId\":100001,\"score\":1}" \
+-d "{\"recipeId\":25,\"score\":1}" \
 -H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
