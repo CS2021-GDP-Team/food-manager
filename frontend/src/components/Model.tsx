@@ -38,15 +38,11 @@ export const useMenuListDispatchContext = () => {
 interface recipeProps {
     id: number;
     name: string;
-    source: string | null;
     kcal: string | null;
-    protein: string | null;
-    carbo: string | null;
-    fat: string | null;
-    salt: string | null;
-    url: string;
+    image_url: string;
     ingredients: string;
     likes: number;
+    source_url: string;
 }
 const RecipeListContext = createContext<recipeProps[]>([]);
 const RecipeListDispatchContext = createContext<Dispatch<recipeProps[]>>(Array);
