@@ -1,3 +1,4 @@
+
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -27,8 +28,11 @@ def j_sim(uem, rem):
             if uem[iid]>0 and rem[rid,iid]>0:
                 ing_w-=(uem[iid]*rem[rid,iid]) 
             # 없을시에 레시피 재료 가중치를 더함
+
             #else:
             #    ing_w+=rem[rid,iid]
+            else:
+                ing_w+=rem[rid,iid]*0.1
         ing_w_list.append(ing_w)
     return np.array(ing_w_list).argsort()
 
