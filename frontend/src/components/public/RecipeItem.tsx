@@ -14,17 +14,13 @@ import axios from "axios";
 interface recipeProps {
     id: number;
     name: string;
-    source: string | null;
     kcal: string | null;
-    protein: string | null;
-    carbo: string | null;
-    fat: string | null;
-    salt: string | null;
-    score?: number;
-    url: string;
+    image_url: string;
     ingredients: string;
     likes: number;
+    source_url?: string;
     sorted: boolean;
+    score?: number;
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -41,14 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const RecipeItem = ({
     id,
     name,
-    source,
     kcal,
-    protein,
-    carbo,
-    fat,
-    salt,
     score = 0,
-    url,
+    image_url,
+    source_url,
     ingredients,
     likes,
     sorted
@@ -80,7 +72,10 @@ const RecipeItem = ({
         }
     };
     const handleLink = () => {
-        window.open(`https://www.youtube.com/results?search_query=${name}`, "_blank");
+        const url = source_url
+            ? source_url.slice(0, -2)
+            : `https://www.youtube.com/results?search_query=${name}`;
+        window.open(url, "_blank");
     };
     return (
         <>
@@ -89,7 +84,7 @@ const RecipeItem = ({
                     <Avatar
                         variant="square"
                         alt="food"
-                        src={url}
+                        src={image_url}
                         className={classes.large}
                         onClick={handleLink}
                     />

@@ -12,15 +12,11 @@ interface favoriteProps {
 interface recipeProps {
     id: number;
     name: string;
-    source: string | null;
     kcal: string | null;
-    protein: string | null;
-    carbo: string | null;
-    fat: string | null;
-    salt: string | null;
-    url: string;
+    image_url: string;
     ingredients: string;
     likes: number;
+    source_url: string;
 }
 const Recipe = () => {
     const [defaultList, setDefaultList] = useState<recipeProps[]>([]);
@@ -94,30 +90,14 @@ const Recipe = () => {
             ) : (
                 <List id="recipe-items">
                     {recipeList.map(
-                        ({
-                            id,
-                            name,
-                            source,
-                            kcal,
-                            protein,
-                            carbo,
-                            fat,
-                            salt,
-                            url,
-                            ingredients,
-                            likes
-                        }) => (
+                        ({ id, name, source_url, kcal, image_url, ingredients, likes }) => (
                             <RecipeItem
                                 id={id}
                                 name={name}
-                                source={source}
+                                source_url={source_url}
                                 kcal={kcal}
-                                protein={protein}
-                                carbo={carbo}
-                                fat={fat}
-                                salt={salt}
                                 score={favorites[id]}
-                                url={url}
+                                image_url={image_url}
                                 ingredients={ingredients}
                                 likes={likes}
                                 sorted={sorted}
