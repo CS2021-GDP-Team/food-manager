@@ -73,7 +73,7 @@ const RecipeItem = ({
     };
     const handleLink = () => {
         const url = source_url
-            ? source_url.slice(0, -2)
+            ? source_url.slice(0, -1)
             : `https://www.youtube.com/results?search_query=${name}`;
         window.open(url, "_blank");
     };
