@@ -1,6 +1,37 @@
 import os, re
 import database
 
+rep = {
+    "다진":"",
+    "삶은":"",
+    "재료":"",
+    "달걀":"계란",
+    "쇠":"소",
+    "후춧" : "후추",
+    "케찹" :"케첩",
+    "강황" : "카레",
+    "와사비" :"고추냉이",
+    "땡초":"청양고추",
+    "스위트콘" : "옥수수",
+    "국수":"소면",
+    "스파게티":"파스타",
+    "시나몬":"계피",
+    "요구르트":"요거트",
+    "쨈":"잼",
+    "가쓰오부시":"가다랑어포",
+    "크래미":"게맛살",
+    "돼지호박":"주키니호박",
+    "햇반":"밥",
+    "새싹":"어린잎채소",
+    "사골":"육수",
+    "오뎅":"어묵",
+    "허브":"민트",
+    "야채":"채소"
+}
+
+rep = dict((re.escape(k), v) for k, v in rep.items()) 
+pattern = re.compile("|".join(rep.keys()))
+
 class Matcher:
     def __init__(self):
         print("==Initialize matcher==")
@@ -60,13 +91,23 @@ class Matcher:
         return result, errors
 
     def cleansing(self, ing):
-        return ''.join(re.compile('[가-힣+]').findall(ing))
+        try:
+            text = ''.join(re.compile('[가-힣+]').findall(ing))
+            text = pattern.sub(lambda m: rep[re.escape(m.group(0))], text)
+        except Exception as e:
+            print(e, text)
+            return ing
+        return text
 
 if __name__ == '__main__':
     mat = Matcher()
     mat.connect_database()
-    print(mat.get_matched_id("풋사과"), end="\n\n")
-    print(mat.get_matched_id("버섯"), end="\n\n")
+    mat.ingredients_db()
+    print(mat.get_matched_id("재료: 가쓰오부시와 달걀과 다짐육(쇠고기)"), end="\n\n")
+    print(mat.get_matched_id("오렌지"), end="\n\n")
+    print(mat.get_matched_id("오렌지주스"), end="\n\n")
+    print(mat.get_matched_id("고구마"), end="\n\n")
+    print(mat.get_matched_id("고구마전분"), end="\n\n")
     print(mat.get_matched_id("곰곰 돌돌말이 무연골 대패 삼겹살 (냉동), 1kg, 1개입"), end="\n\n")
     print(mat.get_matched_id("제스프리 썬골드 키위, XL, 1.5kg(12개입), 1개"), end="\n\n")
     print(mat.get_matched_id("충남세도 GAP 인증 대추방울토마토, 2kg, 1박스"), end="\n\n")
