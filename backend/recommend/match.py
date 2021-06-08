@@ -3,6 +3,7 @@ import database
 
 class Matcher:
     def __init__(self):
+        print("==Initialize matcher==")
         self.config = {
             'user': os.environ["DBID"],
             'password': os.environ["DBPW"],
@@ -19,14 +20,8 @@ class Matcher:
         self.db.close()
 
     def get_matched_id(self, user_ing):
-        # Get data
-        if not self.ings:
-            self.ingredients_db()
-            print("Length of ingredients: ", len(self.ings))
-
         # Select candidates
         res, err = self.jaccard(user_ing)
-        print("Errors: ", len(err))
 
         # Most matched
         res.sort(key=lambda x:x[2], reverse=True)
@@ -43,6 +38,7 @@ class Matcher:
             return
         for r in row:
             self.ings.append(list(r))
+        print("Length of ingredients: ", len(self.ings))
 
     def jaccard(self, user_ing):
         result = []

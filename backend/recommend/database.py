@@ -12,7 +12,7 @@ class DBConnector:
         except mysql.connector.Error as err:
             print(err)
         self.curs = self.cnx.cursor()
-        print("Databse '{}' connected".format(database))
+        print("Database '{}' connected".format(database))
 
     def close(self):
         self.fetchall()
@@ -47,6 +47,20 @@ class DBConnector:
                 inner join recipe_ingredients ri on i.id = ri.ingredient_id
                 inner join recipes r on ri.recipe_id = r.id
             order by ri.id);
+            '''
+        , (view_name))
+
+        self.execute(
+            '''
+            create view ri_str_view as
+            (select r.id,r.name, ri.ingredients from recipes r
+            left join (
+            select recipe_id, GROUP_CONCAT(ingredient_name SEPARATOR ', ') as ingredients
+            from {}
+            group by recipe_id
+            ) ri
+            on r.id = ri.recipe_id
+            );
             '''
         , (view_name))
 

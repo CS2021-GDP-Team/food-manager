@@ -8,6 +8,7 @@ from params import params
 
 class Vectorizer:
     def __init__(self):
+        print("==Initialize vectorizer==")
         self.config = {
             'user': os.environ["DBID"],
             'password': os.environ["DBPW"],
@@ -48,7 +49,6 @@ class Vectorizer:
 
         # Get Ingredient Ids
         self.iids = self.rem.columns.tolist()
-
         print("recipe X ingredients:\t",self.rem.shape)
 
     # 유통기한 가중치 함수
@@ -70,19 +70,19 @@ class Vectorizer:
             # top 10
             start = 0
             end = 10
-        print(start,"~", end)
         
         uem = self.user_embedding(ingredients)
-        print("user X ingredients:\t",uem.shape)
+        # print("user X ingredients:\t",uem.shape)
 
         sim_ing = self.recommender(uem, self.rem)
-        print("user X recipes: \t",sim_ing.shape)
+        # print("user X recipes: \t",sim_ing.shape)
         
         if sim_ing.shape[1] < end:
             sim_idx = sim_ing[:, start:].reshape(-1)
         else:
             sim_idx = sim_ing[:, start:end].reshape(-1)
-        return sim_idx.tolist()
+
+        return self.rem.iloc[sim_idx.tolist()].index.tolist()
 
     def print_recipe_names(self, recipe_idx):
         num = len(recipe_idx)
@@ -100,8 +100,8 @@ if __name__ == '__main__':
     vec.connect_database()
 
     vec.recipe_embedding()
-    
-    ids = [1,3,13,87,112,134,152]
+    # 두부 된장 콩나물 표고버섯 토마토 메추리알
+    ids = [1001,1005,1032,1065,1105,1147]
     days = [90,20,0,1,28,20,3]
     info = list(zip(ids,days))
     print(info)

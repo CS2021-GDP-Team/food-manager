@@ -15,6 +15,9 @@ def flush():
     sys.stderr.flush()
 
 class RecommendHandler(BaseHTTPRequestHandler):
+    vec = None
+    mat = None
+
     def _set_headers(self, status):
         self.send_response(status)
         self.send_header("Content-type", 'application/json') # request and response only in json
@@ -43,36 +46,31 @@ class RecommendHandler(BaseHTTPRequestHandler):
             self._error("Content type error: use json to send data")
 
         content_length = int(self.headers['Content-Length'])
-        self.body = json.loads(self.rfile.read(content_length))
+        body = json.loads(self.rfile.read(content_length))
         if self.path == "/recommend":
-            self.checkParameter("ingredientInfo")
-            self.handleRecommend()
+            self.checkParameter(body, "ingredientInfo")
+            self.handleRecommend(body)
         elif self.path == "/ingredient":
-            self.checkParameter("ingredientName")
-            self.handleIngredient()
+            self.checkParameter(body, "ingredientName")
+            self.handleIngredient(body)
 
-    def handleRecommend(self):
-        ingredients = self.preprocessUserFridge(self.body["ingredientInfo"])
-        print(ingredients)
-        vec = vectorize.Vectorizer()
-        vec.connect_database()
-        vec.recipe_embedding()
-        result = vec.recommend_recipes(ingredients, self.body["start"], self.body["end"])
-        print(result)
+    def handleRecommend(self, body):
+        ingredients = self.preprocessUserFridge(body["ingredientInfo"])
+        start = body["start"] if "start" in body else None
+        end = body["end"] if "end" in body else None
+        result = self.vec.recommend_recipes(ingredients, start, end)
+        print(result,end="\n\n")
         return self._json(result)
 
-    def handleIngredient(self):
-        mat = match.Matcher()
-        mat.connect_database()
-        result = mat.get_matched_id(self.body["ingredientName"])
-        print(result)
-        mat.disconnect_database()
+    def handleIngredient(self, body):
+        result = self.mat.get_matched_id(body["ingredientName"])
+        print(result,end="\n\n")
         return self._json(result)
 
-    def checkParameter(self, param):
+    def checkParameter(self, body, param):
         try:
-            if param in self.body:
-                print(self.body)
+            if param in body:
+                print(body)
             else:
                 self._error(f"{param} is missing")        
         except Exception as e:
@@ -81,29 +79,50 @@ class RecommendHandler(BaseHTTPRequestHandler):
 
     def preprocessUserFridge(self, ingredientInfo):
         if ingredientInfo == []:
-            return list(zip([1,2], [1,2]))
+            return list(zip([1001,1002], [1,2]))
         ingredientIds = []
         ingredientName = []
         days = []
         for ing in ingredientInfo:
             ingredientIds.append(ing["ingredient_id"])
-            ingredientName.append(ing["ingredient_name"])
-            _day = datetime.strptime(ing["expire_date"],"%Y-%m-%dT%H:%M:%S.000Z")
-            day = (_day - datetime.now()).days
-            if day < 0: day = 0
-            days.append(day)
+            if "ingredient_name" in ing:
+                ingredientName.append(ing["ingredient_name"])
+            else:
+                ingredientName.append("none")
+            if "expire_date" in ing:
+                _day = datetime.strptime(ing["expire_date"],"%Y-%m-%dT%H:%M:%S.000Z")
+                day = (_day - datetime.now()).days
+                if day < 0: day = 0
+                days.append(day)
+            else:
+                days.append(1)
         print(ingredientName)
         return list(zip(ingredientIds, days))
 
+class http_server:
+    def __init__(self, vec, mat):
+        RecommendHandler.vec = vec
+        RecommendHandler.mat = mat
+        server = HTTPServer((host, post), RecommendHandler)
+        print("Server started on http://%s:%s" % (host, post))
+        flush()
+
+        try:
+            server.serve_forever()
+        except KeyboardInterrupt:
+            pass
+
+class main:
+    def __init__(self):
+        self.vec = vectorize.Vectorizer()
+        self.vec.connect_database()
+        self.vec.recipe_embedding()
+
+        self.mat = match.Matcher()
+        self.mat.connect_database()
+        self.mat.ingredients_db()
+
+        self.server = http_server(self.vec, self.mat)
 
 if __name__ == "__main__":        
-    httpd = HTTPServer((host, post), RecommendHandler)
-    print("Server started on http://%s:%s" % (host, post))
-    flush()
-
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    httpd.server_close()
-    print("Server stopped.")
+    m = main()
