@@ -18,7 +18,7 @@ class Vectorizer:
         self.view_name = "ri_view"
         self.rem = None
         self.iids = None
-        self.recommender = recommender.cos_sim
+        self.recommender = recommender.j_sim
 
     def connect_database(self):
         self.db = database.DBConnector(**self.config)
@@ -51,13 +51,9 @@ class Vectorizer:
         self.iids = self.rem.columns.tolist()
         print("recipe X ingredients:\t",self.rem.shape)
 
-    # 유통기한 가중치 함수
-    def user_weight(self, days):
-        return 1+(1/(days + 1.1)) # 임시
-
     def user_embedding(self, ingredients):
         udf = pd.DataFrame(ingredients, columns=['iid','days'])
-        udf["weight"] = self.user_weight(udf["days"])
+        udf["weight"] = recommender.user_weight(udf["days"])
         uem = pd.pivot_table(udf, index=None, columns='iid', values='weight').fillna(0)
         for i in self.iids:
             if i not in uem:
@@ -65,7 +61,7 @@ class Vectorizer:
         uem = uem.reindex(sorted(uem.columns), axis=1)
         return uem
 
-    def recommend_recipes(self, ingredients, start=None, end=None): # form of ingredients: ['ing1,ing2,ing3']
+    def recommend_recipes(self, ingredients, start=None, end=None): # form of ingredients: [(ing1, day1), (ing2, day2) ...]
         if (start is None) and (end is None):
             # top 10
             start = 0
@@ -74,15 +70,14 @@ class Vectorizer:
         uem = self.user_embedding(ingredients)
         # print("user X ingredients:\t",uem.shape)
 
-        sim_ing = self.recommender(uem, self.rem)
-        # print("user X recipes: \t",sim_ing.shape)
+        sim_ing = self.recommender(uem.to_numpy(), self.rem.to_numpy())
         
-        if sim_ing.shape[1] < end:
-            sim_idx = sim_ing[:, start:].reshape(-1)
+        if len(sim_ing) < end:
+            sim_idx = sim_ing[start:]
         else:
-            sim_idx = sim_ing[:, start:end].reshape(-1)
+            sim_idx = sim_ing[start:end]
 
-        return self.rem.iloc[sim_idx.tolist()].index.tolist()
+        return self.rem.iloc[sim_idx].index.tolist()
 
     def print_recipe_names(self, recipe_idx):
         num = len(recipe_idx)
