@@ -31,6 +31,9 @@
             color: $fnt-green;
         }
         .remain-date {
+            color: $fnt-green;
+        }
+        .remain-date-warn {
             color: $fnt-red;
         }
     }
@@ -53,9 +56,11 @@
         font-size: 2.1em;
         text-align: center;
         color: $fnt-green;
+        cursor: pointer;
     }
     .recipe-ingredients {
-        font-size: 1.4em;
+        font-size: 1.2em;
         text-align: center;
+        cursor: pointer;
     }
 }

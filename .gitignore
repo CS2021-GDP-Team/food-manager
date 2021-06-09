@@ -1,4 +1,5 @@
 images/
+yarn.lock
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -11,6 +12,7 @@ __pycache__/
 .cookies.txt
 .output.txt
 package-lock.json
+yarn.lock
 
 # Distribution / packaging
 .Python

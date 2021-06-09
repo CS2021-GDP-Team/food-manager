@@ -1,9 +1,9 @@
-import React from "react";
-import Badge from "@material-ui/core/Badge";
-import Avatar from "@material-ui/core/Avatar";
+import React, { memo, useEffect } from "react";
+import { Badge, Avatar, Box } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-
-//TODO : Badge이벤트처리
+import { useUserInfoContext, useUserInfoDispatchContext } from "../Model";
+import ChangePictureButton from "./ChangePictureButton";
+import axios from "axios";
 
 const StyledBadge = withStyles({
     badge: {
@@ -29,26 +29,29 @@ const useStyles = makeStyles({
 
 const ProfilePicture = () => {
     const classes = useStyles();
+    const [userInfo, setUserInfo] = [useUserInfoContext(), useUserInfoDispatchContext()];
 
     return (
         <div>
-            <StyledBadge
-                className={classes.root}
-                overlap="circle"
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right"
-                }}
-                badgeContent={"+"}
-            >
-                <Avatar
-                    alt="Elon"
-                    className={classes.avatar}
-                    src={process.env.PUBLIC_URL + "images/elon.jpg"}
-                />
-            </StyledBadge>
+            {userInfo.map((value) => (
+                <StyledBadge
+                    className={classes.root}
+                    overlap="circle"
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right"
+                    }}
+                    badgeContent={<ChangePictureButton />}
+                >
+                    <Avatar
+                        alt={value.user_id}
+                        className={classes.avatar}
+                        src={`https://food-manager.ga/food-manager/static/${value.filepath}`}
+                    />
+                </StyledBadge>
+            ))}
         </div>
     );
 };
 
-export default ProfilePicture;
+export default memo(ProfilePicture);

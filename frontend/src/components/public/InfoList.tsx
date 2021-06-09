@@ -1,5 +1,23 @@
-import React from "react";
-import { List, ListItem, ListItemText, Divider, makeStyles } from "@material-ui/core";
+import React, { memo, useState, useEffect } from "react";
+import {
+    List,
+    ListItem,
+    ListItemText,
+    Divider,
+    Collapse,
+    IconButton,
+    makeStyles
+} from "@material-ui/core";
+import { ExpandLess, ExpandMore, Edit } from "@material-ui/icons";
+import LikedListItem from "./LikedListItem";
+import DietRecordListItem from "./DietRecordListItem";
+import {
+    useDietRecordContext,
+    useLikedRecipeContext,
+    useUserInfoContext,
+    useUserInfoDispatchContext
+} from "../Model";
+import { UserInfoModal } from "../index";
 
 const useStyles = makeStyles({
     root: {
@@ -15,58 +33,134 @@ const useStyles = makeStyles({
     },
     content: {
         textAlign: "right"
+    },
+    editIcon: {
+        fontSize: "15px",
+        color: "white"
+    },
+    deleteIcon: {
+        fontSize: "20px",
+        color: "white"
     }
 });
 
-export default function SimpleList() {
+const InfoList = () => {
     const classes = useStyles();
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [likedOpen, setLikedOpen] = useState(false);
+    const [logOpen, setLogOpen] = useState(false);
+    const userInfo = useUserInfoContext();
+
+    const bmiCal = (height: number, weight: number) => {
+        return (weight / ((height / 100) * (height / 100))).toFixed(2);
+    };
+    const bmiMessage = (height: number, weight: number) => {
+        const bmi = weight / ((height / 100) * (height / 100));
+        if (bmi < 18.5) return "Underweight";
+        else if (bmi > 25) return "Overweight";
+        else return "Normal weight";
+    };
+    const likedHandleClick = () => {
+        setLikedOpen(!likedOpen);
+    };
+    const logHandleClick = () => {
+        setLogOpen(!logOpen);
+    };
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
 
     return (
         <div className={classes.root}>
-            <List component="nav" aria-label="main mailbox folders">
+            <List component="nav" aria-label="total user info">
                 <ListItem>
                     <ListItemText className={classes.title} primary="My body info" />
-                    <ListItemText className={classes.content} primary="190cm / 90kg" />
+                    {userInfo.map((value) =>
+                        value.height ? (
+                            <ListItemText
+                                className={classes.content}
+                                primary={`${value.height}cm / ${value.weight}kg`}
+                            />
+                        ) : (
+                            <ListItemText
+                                className={classes.content}
+                                primary={"No body info exists."}
+                            />
+                        )
+                    )}
+                    <IconButton onClick={() => setModalOpen(true)}>
+                        <Edit className={classes.editIcon} />
+                    </IconButton>
+                    {userInfo.map((value) => (
+                        <UserInfoModal
+                            open={modalOpen}
+                            handleClose={handleModalClose}
+                            userHeight={value.height}
+                            userWeight={value.weight}
+                        />
+                    ))}
                 </ListItem>
                 <Divider className={classes.border} />
                 <ListItem>
-                    <ListItemText className={classes.title} primary="Exp date notify" />
-                    <ListItemText className={classes.content} primary="Once a day / 12:00PM" />
+                    <ListItemText className={classes.title} primary="BMI" />
+                    {userInfo.map((value) =>
+                        value.height ? (
+                            <ListItemText
+                                className={classes.content}
+                                primary={`${bmiCal(value.height, value.weight)} / ${bmiMessage(
+                                    value.height,
+                                    value.weight
+                                )}`}
+                            />
+                        ) : (
+                            <ListItemText
+                                className={classes.content}
+                                primary={"No body info exists."}
+                            />
+                        )
+                    )}
                 </ListItem>
                 <Divider className={classes.border} />
-                <ListItem>
+                <ListItem button onClick={logHandleClick}>
+                    <ListItemText className={classes.title} primary="Diet records" />
+                    {logOpen ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={logOpen} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        {useDietRecordContext().map((value) => (
+                            <DietRecordListItem
+                                id={value.id}
+                                recipe_id={value.recipe_id}
+                                put_date={value.put_date}
+                                recipe_name={value.recipe_name}
+                            />
+                        ))}
+                    </List>
+                </Collapse>
+                <Divider className={classes.border} />
+                <ListItem button onClick={likedHandleClick}>
                     <ListItemText className={classes.title} primary="Liked recipe" />
+                    {likedOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-                <Divider className={classes.border} />
-                <ListItem>
-                    <ListItemText primary="2021.3.20" />
-                    <ListItemText primary="대패삼겹살을 넣은 두부김치" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="2021.3.18" />
-                    <ListItemText primary="콘꼬노미야키 만들기" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="2021.3.11" />
-                    <ListItemText primary="밥도둑 반찬 고추장 달걀조림" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="2021.3.10" />
-                    <ListItemText primary="얼큰한 순두부찌개" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="2021.3.8" />
-                    <ListItemText primary="리코타치즈 샐러드" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="2021.3.7" />
-                    <ListItemText primary="야식으로 먹기 좋은 불막창" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="2021.3.5" />
-                    <ListItemText primary="간단하게 만드는 규동" />
-                </ListItem>
+                <Collapse in={likedOpen} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        {useLikedRecipeContext().map(
+                            (value) =>
+                                value.score > 0 && (
+                                    <LikedListItem
+                                        recipe_id={value.recipe_id}
+                                        id={value.id}
+                                        user_id={value.user_id}
+                                        score={value.score}
+                                        name={value.name}
+                                    />
+                                )
+                        )}
+                    </List>
+                </Collapse>
             </List>
         </div>
     );
-}
+};
+
+export default memo(InfoList);
