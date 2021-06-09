@@ -1,0 +1,66 @@
+.listitem-container {
+    width: 100%;
+    display: flex;
+}
+.listitem-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding-left: 5px;
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    .register-date {
+        font-size: 0.8rem;
+    }
+    .listitem-name {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+        white-space: nowrap;
+    }
+    .listitem-type {
+        font-size: 0.8rem;
+    }
+    .remain-dates {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1rem;
+        .expire-date {
+            color: $fnt-green;
+        }
+        .remain-date {
+            color: $fnt-green;
+        }
+        .remain-date-warn {
+            color: $fnt-red;
+        }
+    }
+}
+.recipeitem-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    justify-content: space-between;
+    padding-left: 5px;
+    @media all and (max-width: 700px) {
+        font-size: 10px;
+    }
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    .recipe-title {
+        font-size: 2.1em;
+        text-align: center;
+        color: $fnt-green;
+        cursor: pointer;
+    }
+    .recipe-ingredients {
+        font-size: 1.2em;
+        text-align: center;
+        cursor: pointer;
+    }
+}

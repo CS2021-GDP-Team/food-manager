@@ -1,0 +1,9 @@
+1 [38;5;69mRUNNING[0m	./testcodes/login.sh http://localhost:3001
+
+1 [0;31mFAILED[0m	./testcodes/login.sh
+
+2 [38;5;69mRUNNING[0m	./testcodes/logout.sh http://localhost:3001
+
+2 [0;31mFAILED[0m	./testcodes/logout.sh
+
+[0;32mpasses[0m/all : [0;32m0[0m/2

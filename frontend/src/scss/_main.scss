@@ -1,3 +1,10 @@
+$bg-black: #414141;
+$bdr-gray: #606060;
+$fnt-white: #ffffff;
+$fnt-green: #00d6af;
+$fnt-blue: #00c3cf;
+$fnt-red: #f05600;
+$fnt-yellow: #ccff00;
 html,
 body,
 #root,
@@ -9,25 +16,30 @@ body,
 .background-container {
     width: 100%;
     height: 100%;
-    // background-image: url("../res/fresh.jpg");
-    background-color: rgb(232, 246, 248);
+    background-color: $bg-black;
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     .main-container {
-        width: 40%;
-        height: 90%;
+        background-color: $bg-black;
+        width: 50%;
+        height: 100%;
+        color: $fnt-white;
         overflow: hidden;
+        position: relative;
+        @media all and (max-width: 1200px) {
+            width: 65%;
+        }
+        @media all and (max-width: 1000px) {
+            width: 80%;
+        }
+        @media all and (max-width: 800px) {
+            width: 100%;
+        }
         .main-content {
             width: 100%;
-            height: 93%;
-        }
-        .footer {
-            background-color: rgb(182, 178, 178);
-            width: 100%;
-            height: 7%;
-            margin-top: auto;
+            height: 90%;
         }
     }
 }
