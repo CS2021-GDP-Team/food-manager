@@ -20,10 +20,19 @@ if [[ "$status_code" -ne 200 ]] ; then
 fi
 
 result=$(curl -i \
-"$1/api/recommend" -X POST \
--H 'content-type: application/json' \
--d '{"userIngredients":[0,1,2,3,4,7]}' \
---cookie-jar .cookies.txt --silent)
+"$1/api/recommend" -X GET \
+--cookie .cookies.txt --silent)
+printf "%s\n" "$result" >> .output.txt
+
+status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
+
+if [[ "$status_code" -ne 200 ]] ; then
+	exit 1
+fi
+
+result=$(curl -i \
+"$1/api/recommend?start=0&end=10" -X GET \
+--cookie .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
 
 status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`

@@ -9,7 +9,7 @@ fi
 # 로그인
 result=$(curl -i \
 "$1/api/login" -X POST \
--d '{"userId":"darae","password":"darae12"}' \
+-d '{"userId":"barcode","password":"barcode"}' \
 -H 'content-type: application/json' \
 --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
@@ -21,55 +21,13 @@ if [[ "$status_code" -ne 200 ]] ; then
 fi
 
 result=$(curl \
-"$1/api/user_fridge" -X GET \
+"$1/api/user_info" -X GET \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
 
-ids=(""$(echo "$result" | jq -r ".[].id")"")
-
-for i in ${ids[@]}
-do
-	result=$(curl -i \
-	"$1/api/user_fridge" -X PUT \
-	-d "{\"id\":$i, \"expireDate\":"1616944220"}" \
-	-H 'content-type: application/json' \
-	--cookie .cookies.txt --cookie-jar .cookies.txt --silent)
-	printf "%s\n" "$result" >> .output.txt
-
-	status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
-
-	if [[ "$status_code" -ne 200 ]] ; then
-		exit 1
-	fi
-
-	result=$(curl -i \
-	"$1/api/user_fridge" -X DELETE \
-	-d "{\"id\":$i}" \
-	-H 'content-type: application/json' \
-	--cookie .cookies.txt --cookie-jar .cookies.txt --silent)
-	printf "%s\n" "$result" >> .output.txt
-
-	status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
-
-	if [[ "$status_code" -ne 200 ]] ; then
-		exit 1
-	fi
-done
-
 result=$(curl -i \
-"$1/api/user_fridge" -X GET \
---cookie .cookies.txt --cookie-jar .cookies.txt --silent)
-printf "%s\n" "$result" >> .output.txt
-
-status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
-
-if [[ "$status_code" -ne 200 ]] ; then
-	exit 1
-fi
-
-result=$(curl -i \
-"$1/api/user_fridge" -X POST \
--d '{"ingredientName":"풋사과", "expireDate":"1617873630"}' \
+"$1/api/user_info" -X POST \
+-d '{"height":170, "weight":70, "isNotified":0, "notifyTime":"19:00"}' \
 -H 'content-type: application/json' \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
@@ -77,11 +35,24 @@ printf "%s\n" "$result" >> .output.txt
 status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
 
 if [[ "$status_code" -ne 200 ]] ; then
-	exit 1
+    exit 1
 fi
 
 result=$(curl -i \
-"$1/api/user_fridge" -X GET \
+"$1/api/user_info" -X POST \
+-d '{"height":171}' \
+-H 'content-type: application/json' \
+--cookie .cookies.txt --cookie-jar .cookies.txt --silent)
+printf "%s\n" "$result" >> .output.txt
+
+status_code=`printf "%s" "$result" | awk 'NR==1 {print $2}'`
+
+if [[ "$status_code" -ne 200 ]] ; then
+    exit 1
+fi
+
+result=$(curl -i \
+"$1/api/user_info" -X GET \
 --cookie .cookies.txt --cookie-jar .cookies.txt --silent)
 printf "%s\n" "$result" >> .output.txt
 

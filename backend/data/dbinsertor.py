@@ -3,7 +3,7 @@ import requests
 import json
 import re
 from parse import parse
-from dbaccessor DBAccessor
+from dbaccessor import DBAccessor
 
 def fetch_items_from_file(path):
 	with open(path, 'r') as f:
@@ -15,12 +15,13 @@ db = DBAccessor()
 for item in fetch_items_from_file('result'):
 	recipe = db.get_recipe_by_name(item['name'])
 	if not recipe:
-		recipe_id = db.insert_recipe(item['name'])
+		recipe_id = db.insert_recipe(item['name'], item['url'])
 	else:
 		recipe_id = recipe['id']
 
 	names = item['recipe_ingredients']['names']
 	amounts = item['recipe_ingredients']['amounts']
+	url = item['url']
 
 	for i in range(len(names)):
 		ing = db.get_ingredient_by_name(names[i])

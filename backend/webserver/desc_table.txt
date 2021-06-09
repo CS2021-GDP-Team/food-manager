@@ -1,52 +1,98 @@
 MariaDB [food_manager]> desc fridges;
-+---------------+----------+------+-----+---------+----------------+
-| Field         | Type     | Null | Key | Default | Extra          |
-+---------------+----------+------+-----+---------+----------------+
-| id            | int(11)  | NO   | PRI | NULL    | auto_increment |
-| user_id       | int(11)  | NO   | MUL | NULL    |                |
-| ingredient_id | int(11)  | NO   | MUL | NULL    |                |
-| put_date      | datetime | NO   |     | NULL    |                |
-| expire_date   | datetime | YES  |     | NULL    |                |
-+---------------+----------+------+-----+---------+----------------+
++-------------------+--------------+------+-----+---------+----------------+
+| Field             | Type         | Null | Key | Default | Extra          |
++-------------------+--------------+------+-----+---------+----------------+
+| id                | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_id           | int(11)      | NO   | MUL | NULL    |                |
+| ingredient_id     | int(11)      | NO   | MUL | NULL    |                |
+| put_date          | datetime     | NO   |     | NULL    |                |
+| expire_date       | datetime     | YES  |     | NULL    |                |
+| custom_ingredient | varchar(255) | YES  |     | NULL    |                |
++-------------------+--------------+------+-----+---------+----------------+
+* user_id 와 recipe_id는 unique key.
+* custom_ingredient 는 유저가 입력한 재료명.
+
+MariaDB [food_manager]> desc diets;
++-----------+----------+------+-----+---------+----------------+
+| Field     | Type     | Null | Key | Default | Extra          |
++-----------+----------+------+-----+---------+----------------+
+| id        | int(11)  | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11)  | NO   | MUL | NULL    |                |
+| recipe_id | int(11)  | NO   | MUL | NULL    |                |
+| put_date  | datetime | NO   |     | NULL    |                |
++-----------+----------+------+-----+---------+----------------+
+* user_id 와 recipe_id는 unique key.
 
 MariaDB [food_manager]> desc ingredients;
-+-------+-----------+------+-----+---------+----------------+
-| Field | Type      | Null | Key | Default | Extra          |
-+-------+-----------+------+-----+---------+----------------+
-| id    | int(11)   | NO   | PRI | NULL    | auto_increment |
-| name  | char(255) | NO   |     | NULL    |                |
-| hours | int(11)   | YES  |     | NULL    |                |
-+-------+-----------+------+-----+---------+----------------+
++--------------+-----------+------+-----+---------+----------------+
+| Field        | Type      | Null | Key | Default | Extra          |
++--------------+-----------+------+-----+---------+----------------+
+| id           | int(11)   | NO   | PRI | NULL    | auto_increment |
+| name         | char(255) | NO   |     | NULL    |                |
+| is_seasoning | int(11)   | YES  |     | NULL    |                |
++--------------+-----------+------+-----+---------+----------------+
+
 
 MariaDB [food_manager]> desc users;
-+----------+--------------+------+-----+---------+----------------+
-| Field    | Type         | Null | Key | Default | Extra          |
-+----------+--------------+------+-----+---------+----------------+
-| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
-| user_id  | varchar(255) | NO   |     | NULL    |                |
-| password | varchar(255) | NO   |     | NULL    |                |
-+----------+--------------+------+-----+---------+----------------+
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_id     | varchar(255) | NO   | UNI | NULL    |                |
+| password    | varchar(255) | NO   |     | NULL    |                |
+| height      | int(11)      | YES  |     | NULL    |                |
+| weight      | int(11)      | YES  |     | NULL    |                |
+| is_notified | int(11)      | YES  |     | 0       |                |
+| notify_time | varchar(10)  | YES  |     | 18:00   |                |
+| filepath    | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
 
 MariaDB [food_manager]> desc recipe_ingredients;
-+---------------+---------+------+-----+---------+----------------+
-| Field         | Type    | Null | Key | Default | Extra          |
-+---------------+---------+------+-----+---------+----------------+
-| id            | int(11) | NO   | PRI | NULL    | auto_increment |
-| recipe_id     | int(11) | NO   | MUL | NULL    |                |
-| ingredient_id | int(11) | NO   | MUL | NULL    |                |
-| grams         | int(11) | YES  |     | NULL    |                |
-+---------------+---------+------+-----+---------+----------------+
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| id            | int(11)      | NO   | PRI | NULL    |       |
+| recipe_id     | int(11)      | NO   | MUL | NULL    |       |
+| ingredient_id | int(11)      | NO   | MUL | NULL    |       |
+| ing_name_org  | varchar(255) | YES  |     | NULL    |       |
+| is_main       | int(11)      | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+
+* recipe_id 와 ingredient_id 는 unique key.
 
 MariaDB [food_manager]> desc recipes;
-+---------+-----------+------+-----+---------+----------------+
-| Field   | Type      | Null | Key | Default | Extra          |
-+---------+-----------+------+-----+---------+----------------+
-| id      | int(11)   | NO   | PRI | NULL    | auto_increment |
-| name    | char(255) | NO   |     | NULL    |                |
-| source  | char(255) | YES  |     | NULL    |                |
-| kcal    | int(11)   | YES  |     | NULL    |                |
-| protein | int(11)   | YES  |     | NULL    |                |
-| carbo   | int(11)   | YES  |     | NULL    |                |
-| fat     | int(11)   | YES  |     | NULL    |                |
-| salt    | int(11)   | YES  |     | NULL    |                |
-+---------+-----------+------+-----+---------+----------------+
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name       | char(255)    | NO   |     | NULL    |                |
+| kcal       | int(11)      | YES  |     | NULL    |                |
+| minutes    | int(11)      | YES  |     | NULL    |                |
+| image_url  | varchar(255) | YES  |     | NULL    |                |
+| source_url | varchar(255) | YES  |     | NULL    |                |
+| likes      | int(11)      | YES  |     | 0       |                |
++------------+--------------+------+-----+---------+----------------+
+
+MariaDB [food_manager]> desc favorites;
++-----------+---------+------+-----+---------+----------------+
+| Field     | Type    | Null | Key | Default | Extra          |
++-----------+---------+------+-----+---------+----------------+
+| id        | int(11) | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11) | NO   | MUL | NULL    |                |
+| recipe_id | int(11) | NO   | MUL | NULL    |                |
+| score     | int(11) | NO   |     | NULL    |                |
++-----------+---------+------+-----+---------+----------------+
+* user_id 와 recipe_id 는 unique key.
+
+MariaDB [food_manager]> desc barcodes;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| barcode | varchar(30)  | YES  |     | NULL    |                |
+| name    | varchar(255) | YES  |     | NULL    |                |
+| hours   | int(11)      | YES  |     | NULL    |                |
+| url     | varchar(255) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+
