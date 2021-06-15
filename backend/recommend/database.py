@@ -2,6 +2,11 @@ import mysql.connector
 from mysql.connector import errorcode
 import os
 
+"""
+Python 과 MySQL 의 연결을 위한 클래스 및 메소드 선언
+레시피 임베딩을 위한 view 가 있는지 확인하고, 없으면 생성한다.
+"""
+
 # https://dev.mysql.com/doc/connector-python/en/
 
 class DBConnector:

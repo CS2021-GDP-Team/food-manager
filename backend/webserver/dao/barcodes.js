@@ -1,3 +1,7 @@
+/**
+ * 바코드 DB CRUD 구현
+ */
+
 class Barcodes {}
 
 require('../utils/dbconnector')(Barcodes);

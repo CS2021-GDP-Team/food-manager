@@ -1,3 +1,9 @@
+/**
+ * 요청으로 받은 입력 처리 후 dao 와 연결하여 서비스 구현
+ * insertUserIngredient 과 recommendRecipes 는 python 서버와 연결된다.
+ */
+
+
 const users = require('../dao/users.js');
 const recipes = require('../dao/recipes.js');
 const recipeIngredients = require('../dao/recipeIngredients.js');

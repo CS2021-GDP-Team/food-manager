@@ -1,3 +1,7 @@
+/**
+ * 레시피 DB get 구현
+ */
+
 class Recipes {}
 
 require('../utils/dbconnector')(Recipes);

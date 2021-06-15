@@ -1,3 +1,7 @@
+/**
+ * 사용자 DB CRUD 구현
+ */
+
 class Users {}
 
 require('../utils/dbconnector')(Users);

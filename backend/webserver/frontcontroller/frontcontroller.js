@@ -1,3 +1,7 @@
+/**
+ * 로그인 여부를 확인하기 위한 frontcontroller
+ */
+
 const APIError = require('../exceptions/apierror.js');
 const sc = require('../enums/httpstatuscode.js');
 const util = require('../utils/util.js');

@@ -1,3 +1,7 @@
+/**
+ * 좋아요/싫어요 DB CRUD 구현
+ */
+
 class Favorites {}
 
 require('../utils/dbconnector')(Favorites);

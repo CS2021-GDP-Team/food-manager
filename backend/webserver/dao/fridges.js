@@ -1,3 +1,7 @@
+/**
+ * 사용자 식재료 DB CRUD 구현
+ */
+
 class Fridges {}
 
 require('../utils/dbconnector')(Fridges);

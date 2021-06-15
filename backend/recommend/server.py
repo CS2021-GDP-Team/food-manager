@@ -14,6 +14,12 @@ def flush():
     sys.stdout.flush()
     sys.stderr.flush()
 
+
+"""
+레시피 추천과 재료 이름 매칭을 담당하는 파이썬 서버.
+서버는 실행되면 레시피 임베딩을 생성하고 재료 DB 를 불러와 클래스 변수에 저장한다.
+"""
+
 class RecommendHandler(BaseHTTPRequestHandler):
     vec = None
     mat = None

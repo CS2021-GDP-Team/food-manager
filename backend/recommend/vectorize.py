@@ -6,6 +6,14 @@ import database
 import recommender
 from params import params
 
+"""
+레시피 임베딩을 생성 후 클래스 변수로 가지고 있는다.
+재료와 유통기한의 튜플 리스트가 입력으로 주어지면
+레시피 임베딩 중 가장 유사한 레시피 아이디를 반환한다.
+
+유사도 함수와 가중치는 변경 가능하다.
+"""
+
 class Vectorizer:
     def __init__(self):
         print("==Initialize vectorizer==")

@@ -1,3 +1,8 @@
+/**
+ * url 과 요청 메소드에 따라 다른 처리를 하기 위한 컨트롤러.
+ * 세부적인 내용은 service.js 에서 처리된다.
+ */
+
 const fctl = require('../frontcontroller/frontcontroller.js');
 const util = require('../utils/util.js');
 const service = require('../service/service.js');

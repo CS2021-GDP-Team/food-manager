@@ -1,3 +1,7 @@
+/**
+ * 식단기록 DB CRUD 구현
+ */
+
 class Diets {}
 
 require('../utils/dbconnector')(Diets);
