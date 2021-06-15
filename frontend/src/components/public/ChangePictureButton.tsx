@@ -9,7 +9,9 @@ const useStyles = makeStyles({
         display: "none"
     }
 });
-
+/**
+ * 프로필 사진 변경 컴포넌트
+ */
 const ChangePictureButton = () => {
     const classes = useStyles();
     const setUserInfo = useUserInfoDispatchContext();

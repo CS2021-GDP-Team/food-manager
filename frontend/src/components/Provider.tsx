@@ -6,6 +6,9 @@ import {
     DietRecordContextProvider,
     UserInfoContextProvider
 } from "./Model";
+/**
+ * Model 데이터의 변경을 바인딩하는 파일
+ */
 const Provider = () => (
     <DietRecordContextProvider>
         <LikedRecipeContextProvider>

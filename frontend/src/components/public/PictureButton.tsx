@@ -19,7 +19,9 @@ const useStyles = makeStyles({
         fontSize: 72
     }
 });
-
+/**
+ * 냉장고 재료 사진 바코드처리 컴포넌트
+ */
 const PictureButton = ({ handleBarcode }: any) => {
     const classes = useStyles();
     const handlePicture = async (e: any) => {

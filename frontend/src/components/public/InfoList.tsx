@@ -43,7 +43,9 @@ const useStyles = makeStyles({
         color: "white"
     }
 });
-
+/**
+ * 사용자 신체 정보 컴포넌트
+ */
 const InfoList = () => {
     const classes = useStyles();
     const [modalOpen, setModalOpen] = useState<boolean>(false);

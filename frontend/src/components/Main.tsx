@@ -2,7 +2,9 @@ import React from "react";
 import { Route, useLocation } from "react-router-dom";
 import { Login, MenuList, SignUp, Picture, Info, RecipeList, BottomNavBar } from "./index";
 import { CssBaseline, Paper } from "@material-ui/core";
-
+/**
+ * 전체 페이지들을 route하는 메인 컴포넌트
+ */
 const Main: React.FC = () => {
     // 현재 페이지에 login 이나 signup text가 있으면 checkUrl 이 true
     const location = useLocation();

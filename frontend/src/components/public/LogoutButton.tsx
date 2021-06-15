@@ -10,7 +10,9 @@ const useStyles = makeStyles({
         color: "#FFFFFF"
     }
 });
-
+/**
+ * 로그아웃 버튼 컴포넌트
+ */
 const LogoutButton = () => {
     const history = useHistory();
     const classes = useStyles();

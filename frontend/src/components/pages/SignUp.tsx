@@ -13,7 +13,9 @@ const useStyles = makeStyles({
         background: "linear-gradient(45deg, #00d6af 30%, #00c3cf 90%)"
     }
 });
-
+/**
+ * 회원가입 페이지
+ */
 const SignUp = () => {
     const history = useHistory();
     const [userId, setUserId] = useState("");

@@ -13,7 +13,9 @@ const useStyles = makeStyles({
         background: "linear-gradient(45deg, #00d6af 30%, #00c3cf 90%)"
     }
 });
-
+/**
+ * 사용자 로그인 페이지
+ */
 const Login = () => {
     const [userId, setUserId] = useState("");
     const [userPw, setUserPw] = useState("");

@@ -18,6 +18,9 @@ interface recipeProps {
     likes: number;
     source_url: string;
 }
+/**
+ * 레시피 추천 페이지
+ */
 const Recipe = () => {
     const [defaultList, setDefaultList] = useState<recipeProps[]>([]);
     const [recipeList, setRecipeList] = [useRecipeListContext(), useRecipeListDispatchContext()];

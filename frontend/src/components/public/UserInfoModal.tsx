@@ -32,7 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     })
 );
-
+/**
+ * 사용자 정보 관련 모달 컴포넌트
+ */
 const UserInfoModal = ({ open, handleClose, userHeight, userWeight }: modalProps) => {
     const classes = useStyles();
     const [_userHeight, setUserHeight] = useState(userHeight);
