@@ -17,7 +17,9 @@ const useStyles = makeStyles({
         color: "white"
     }
 });
-
+/**
+ * 사용자 식단 기록 컴포넌트
+ */
 export default function DietRecordListItem({ id, put_date, recipe_id, recipe_name }: recordProps) {
     const [dietRecord, setDietRecord] = [useDietRecordContext(), useDietRecordDispatchContext()];
     const classes = useStyles();

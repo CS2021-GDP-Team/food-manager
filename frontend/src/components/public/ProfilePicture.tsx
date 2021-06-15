@@ -26,7 +26,9 @@ const useStyles = makeStyles({
         height: "8rem"
     }
 });
-
+/**
+ * 사용자 프로필 사진 컴포넌트
+ */
 const ProfilePicture = () => {
     const classes = useStyles();
     const [userInfo, setUserInfo] = [useUserInfoContext(), useUserInfoDispatchContext()];

@@ -14,7 +14,9 @@ interface itemProps {
     ingredient_name: string;
     url?: string;
 }
-
+/**
+ * 냉장고 메뉴 리스트 컴포넌트
+ */
 const ListItem = ({
     id,
     user_id,

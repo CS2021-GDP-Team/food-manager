@@ -33,7 +33,9 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     })
 );
-
+/**
+ * 냉장고 메뉴 모달 컴포넌트
+ */
 const TransitionsModal = ({
     open,
     handleClose,

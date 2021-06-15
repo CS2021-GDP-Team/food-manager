@@ -30,7 +30,9 @@ const useStyles = makeStyles({
         fontSize: "30px"
     }
 });
-
+/**
+ * 전체 레이아웃에 쓰일 footer 컴포넌트
+ */
 const BottomNavBar = () => {
     const classes = useStyles();
     const [value, setValue] = React.useState(1);

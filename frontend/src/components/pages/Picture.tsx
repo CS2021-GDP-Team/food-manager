@@ -28,7 +28,9 @@ function getCurrentDate(date?: Date) {
 
     return [year, month, day].join("-");
 }
-
+/**
+ * 사용자 냉장고 정보 입력 페이지
+ */
 const Picture = () => {
     const [ingredient, setIngredient] = useState<string>("");
     const [expDate, setExpDate] = useState<string>(getCurrentDate());

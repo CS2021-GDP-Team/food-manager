@@ -15,7 +15,9 @@ interface itemProps {
     custom_ingredient: string;
     ingredient_name: string;
 }
-
+/**
+ * 냉장고 메뉴 가져오는 페이지
+ */
 const MenuList = () => {
     const history = useHistory();
     const [menuList, setMenuList] = [useMenuListContext(), useMenuListDispatchContext()];

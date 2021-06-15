@@ -62,6 +62,9 @@ const FullCssTextField = withStyles({
         }
     }
 })(Input);
+/**
+ * 텍스트 입력 공통 컴포넌트
+ */
 const InputField = ({
     text,
     hint,

@@ -1,5 +1,7 @@
 import React, { useState, createContext, useContext, Dispatch } from "react";
-
+/**
+ * 모든 전역데이터들을 관리하는 파일
+ */
 // =========  menuList
 interface itemProps {
     id: number;

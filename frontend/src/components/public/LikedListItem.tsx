@@ -18,7 +18,9 @@ const useStyles = makeStyles({
         color: "white"
     }
 });
-
+/**
+ * 좋아요한 리스트 컴포넌트
+ */
 export default function LikedListItem({ recipe_id, id, user_id, score, name }: InputProps) {
     const classes = useStyles();
     const [likedRecipe, setLikedRecipe] = [
