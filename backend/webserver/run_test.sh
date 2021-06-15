@@ -41,13 +41,17 @@ function run(){
 run $PWD/testcodes/login.sh "$URL"
 run $PWD/testcodes/logout.sh "$URL"
 run $PWD/testcodes/register_unregister.sh "$URL"
-run $PWD/testcodes/ingredients.sh "$URL"
+#run $PWD/testcodes/ingredients.sh "$URL"
 run $PWD/testcodes/picture.sh "$URL"
 run $PWD/testcodes/user_fridge.sh "$URL"
 run $PWD/testcodes/recommend.sh "$URL"
 run $PWD/testcodes/recipe.sh "$URL"
-run $PWD/testcodes/info.sh "$URL"
+#run $PWD/testcodes/info.sh "$URL"
+run $PWD/testcodes/favorite.sh "$URL"
+run $PWD/testcodes/user_diet.sh "$URL"
 # run $PWD/testcodes/favorite.sh "$URL"
+run $PWD/testcodes/barcode.sh "$URL"
+run $PWD/testcodes/user_info.sh "$URL"
 ####################
 
 printf "${GREEN}passes${NC}/all : ${GREEN}$pass_count${NC}/$all_count\n" | tee -a .output.txt

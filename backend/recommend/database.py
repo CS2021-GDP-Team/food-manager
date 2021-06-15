@@ -2,17 +2,22 @@ import mysql.connector
 from mysql.connector import errorcode
 import os
 
+"""
+Python 과 MySQL 의 연결을 위한 클래스 및 메소드 선언
+레시피 임베딩을 위한 view 가 있는지 확인하고, 없으면 생성한다.
+"""
+
 # https://dev.mysql.com/doc/connector-python/en/
 
 class DBConnector:
     def __init__(self, host, user, password, database):
         self.database = database
         try:
-            self.cnx = mysql.connector.connect(user=user,password=password,host=host,database=database)
+            self.cnx = mysql.connector.connect(user=user,password=password,host=host,database=database,port=3306,charset='utf8')
         except mysql.connector.Error as err:
             print(err)
         self.curs = self.cnx.cursor()
-        print("Databse '{}' connected".format(database))
+        print("Database '{}' connected".format(database))
 
     def close(self):
         self.fetchall()
@@ -26,34 +31,37 @@ class DBConnector:
     def fetchall(self):
         return self.curs.fetchall()
 
-    def check_view(self):
-        self.execute("show full tables in food_manager where table_type like '%VIEW%'", (self.database))
-        if not self.fetchall():
-            return False
-        return True
+    def check_view(self, view_name):
+        self.execute("show full tables in {} where table_type like '%VIEW%'", (self.database))
+        view_list = self.fetchall()
+        for (view, _) in view_list:
+            if view == view_name:
+                return True
+        return False
         
     def create_view(self, view_name):
-        if self.check_view():
-            print("Views already exists")
+        if self.check_view(view_name):
+            print("View already exists")
             return
 
         self.execute(
             '''
-            create view ri_joined_view as
-            (select ri.id, ri.recipe_id, ri.ingredient_id, r.name as recipe_name, i.name as ingredient_name
+            create view {} as
+            (select ri.id, ri.recipe_id, ri.ingredient_id, r.name as recipe_name, i.name as ingredient_name, ri.is_main, i.is_seasoning
             from ingredients i
                 inner join recipe_ingredients ri on i.id = ri.ingredient_id
                 inner join recipes r on ri.recipe_id = r.id
             order by ri.id);
             '''
-        )
+        , (view_name))
+
         self.execute(
             '''
-            create view {} as
+            create view ri_str_view as
             (select r.id,r.name, ri.ingredients from recipes r
             left join (
-            select recipe_id, GROUP_CONCAT(ingredient_name SEPARATOR ', ') as ingredients
-            from ri_joined_view
+            select recipe_id, GROUP_CONCAT(ing_name_org SEPARATOR ', ') as ingredients
+            from recipe_ingredients
             group by recipe_id
             ) ri
             on r.id = ri.recipe_id
@@ -61,8 +69,8 @@ class DBConnector:
             '''
         , (view_name))
 
-        if self.check_view():
-            print("Views are created")
+        if self.check_view(view_name):
+            print("View created")
             self.execute('show tables')
             print(self.fetchall())
         else:
@@ -75,7 +83,7 @@ if __name__ == '__main__':
     config = {
     'user': os.environ["DBID"],
     'password': os.environ["DBPW"],
-    'host': '127.0.0.1',
+    'host': os.environ["DBHOST"],
     'database': 'food_manager',
     }
     view_name = "ri_view"
@@ -86,7 +94,7 @@ if __name__ == '__main__':
     row = db.fetchall()
     print(row)
 
-    print(db.check_view())
+    print(db.check_view(view_name))
     db.create_view(view_name)
 
     db.close()
